@@ -39,7 +39,7 @@ class SetupActivity : AetherNetActivity(), OverlayHostActivity {
     companion object {
         const val PRIVACY_POLICY_URL = "https://github.com/jhaiian/ClintBrowser/blob/main/PRIVACY_POLICY.md"
         const val TERMS_URL = "https://github.com/jhaiian/ClintBrowser/blob/main/TERMS_OF_SERVICE.md"
-        private const val PAGE_RESTORE = 1
+        private const val PAGE_WELCOME = 0
         private const val PAGE_ENGINE = 4
 
         private const val KEY_PENDING_PAGE = "setup_pending_page"
@@ -53,8 +53,8 @@ class SetupActivity : AetherNetActivity(), OverlayHostActivity {
 
         onBackPressedDispatcher.addCallback(this) {
             if (uiState.currentPage > 0) {
-                // Back skips the appearance and layout pages, which this build does not show.
-                uiState.currentPage = if (uiState.currentPage == PAGE_ENGINE) PAGE_RESTORE else uiState.currentPage - 1
+                // Back skips the restore, appearance and layout pages, which this build does not show.
+                uiState.currentPage = if (uiState.currentPage == PAGE_ENGINE) PAGE_WELCOME else uiState.currentPage - 1
             } else {
                 isEnabled = false
                 onBackPressedDispatcher.onBackPressed()
@@ -142,7 +142,7 @@ class SetupActivity : AetherNetActivity(), OverlayHostActivity {
                     uiState.customEngineUrl = url
                     uiState.engine = "custom"
                 },
-                onContinueFromWelcome = { uiState.currentPage = 1 },
+                onContinueFromWelcome = { uiState.currentPage = PAGE_ENGINE },
                 onSkipRestore = { uiState.currentPage = PAGE_ENGINE },
                 onRestoreComplete = { restartAppAfterRestore() },
                 onNextFromLayoutPage = { onNextFromLayoutPage() },
