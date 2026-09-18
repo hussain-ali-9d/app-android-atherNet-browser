@@ -19,8 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.delay
 
 private const val EXPERIMENTAL_COUNTDOWN_SECONDS = 3
@@ -28,7 +28,7 @@ private const val EXPERIMENTAL_COUNTDOWN_SECONDS = 3
 @Composable
 fun ExperimentalDialog(open: Boolean, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
     if (!open) return
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var secondsRemaining by remember { mutableStateOf(EXPERIMENTAL_COUNTDOWN_SECONDS) }
 
     LaunchedEffect(Unit) {
@@ -38,7 +38,7 @@ fun ExperimentalDialog(open: Boolean, hideStatusBar: Boolean, hideSystemNavigati
         }
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.quiver_guard_experimental_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = {},

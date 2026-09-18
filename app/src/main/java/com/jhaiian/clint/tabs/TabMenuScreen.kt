@@ -65,7 +65,7 @@ import com.jhaiian.clint.browser.MainActivity
 import com.jhaiian.clint.browser.delegates.saveTabs
 import com.jhaiian.clint.ui.TabMenuOverflowMenu
 import com.jhaiian.clint.ui.TabSelectionOverflowMenu
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 private sealed class TabMenuItem {
     data class SectionHeader(val isIncognitoSection: Boolean) : TabMenuItem()
@@ -86,7 +86,7 @@ private fun buildRenderList(tabs: List<TabPreview>): List<TabMenuItem> {
 
 @Composable
 fun TabMenuScreen(activity: MainActivity, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val density = LocalDensity.current
     val uiState = remember { TabMenuUiState() }
     val tabs = remember { mutableStateListOf<TabPreview>().apply { addAll(activity.tabManager.previews()) } }
@@ -310,7 +310,7 @@ private fun TabMenuTopBar(
     onNewIncognitoTab: () -> Unit,
     onCloseAllTabs: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var overflowMenuExpanded by remember { mutableStateOf(false) }
     Row(
         Modifier.fillMaxWidth().padding(start = 20.dp, end = 8.dp, top = 8.dp, bottom = 4.dp),

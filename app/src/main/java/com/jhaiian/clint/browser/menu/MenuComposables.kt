@@ -80,16 +80,16 @@ import com.jhaiian.clint.R
 import com.jhaiian.clint.bookmarks.BookmarkManager
 import com.jhaiian.clint.browser.MainActivity
 import com.jhaiian.clint.browser.sheets.LongPressContentMaxWidth
-import com.jhaiian.clint.browser.webview.ClintWebViewClient
-import com.jhaiian.clint.downloads.ClintDownloadManager
+import com.jhaiian.clint.browser.webview.AetherNetWebViewClient
+import com.jhaiian.clint.downloads.AetherNetDownloadManager
 import com.jhaiian.clint.downloads.DownloadStatus
 import com.jhaiian.clint.quiver.engine.BlockedRequestCounter
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionDatabase
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionManager
 import com.jhaiian.clint.userscripts.UserScriptState
-import com.jhaiian.clint.ui.ClintDialogStatusBarEffect
+import com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect
 import com.jhaiian.clint.ui.listscreen.PopupShape
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 internal data class BrowserMenuSnapshot(
     val showNavRow: Boolean,
@@ -148,7 +148,7 @@ internal fun MainActivity.buildMenuSnapshot(): BrowserMenuSnapshot {
     val currentUrl = wv?.url ?: ""
     val currentUri = currentUrl.takeIf { it.isNotEmpty() }
         ?.let { runCatching { android.net.Uri.parse(it) }.getOrNull() }
-    val webClient = wv?.webViewClient as? ClintWebViewClient
+    val webClient = wv?.webViewClient as? AetherNetWebViewClient
     val appMatches = if (currentUri != null && webClient != null &&
         (currentUri.scheme == "http" || currentUri.scheme == "https")
     ) {
@@ -173,7 +173,7 @@ internal fun MainActivity.buildMenuSnapshot(): BrowserMenuSnapshot {
         isLoading = uiState.isPageLoading,
         isDesktopMode = isDesktopMode,
         isDataSaverEnabled = prefs.getBoolean("data_saver_enabled", false),
-        pendingDownloadCount = ClintDownloadManager.downloadsFlow.value
+        pendingDownloadCount = AetherNetDownloadManager.downloadsFlow.value
             .count { it.status in DownloadStatus.RUNNING_OR_QUEUED }.toLong(),
         isUserScriptsEnabled = UserScriptState.isEnabled(this),
         isQuiverGuardEnabled = prefs.getBoolean("quiver_guard_enabled", false),
@@ -222,7 +222,7 @@ internal fun MainActivity.buildMenuActions(dismiss: () -> Unit): BrowserMenuActi
 internal fun MenuTriggerButton(activity: MainActivity, modifier: Modifier = Modifier) {
     var expanded by remember { mutableStateOf(false) }
     var snapshot by remember { mutableStateOf<BrowserMenuSnapshot?>(null) }
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val configuration = LocalConfiguration.current
     val maxMenuHeight = configuration.screenHeightDp.dp * 0.9f
     val actions = remember(activity) { activity.buildMenuActions(dismiss = { expanded = false }) }
@@ -268,7 +268,7 @@ private fun BrowserMenuBottomSheet(
     actions: BrowserMenuActions,
     onDismissRequest: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
     val configuration = LocalConfiguration.current
     val hideStatusBar = remember {
@@ -298,7 +298,7 @@ private fun BrowserMenuBottomSheet(
         containerColor = colors.popupBackground,
         dragHandle = { BottomSheetDefaults.DragHandle(color = colors.divider) }
     ) {
-        ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         LazyColumn(
             Modifier.fillMaxWidth().heightIn(max = maxSheetHeight).nestedScroll(flingBoundaryConnection),
             state = listState
@@ -318,7 +318,7 @@ private fun BrowserMenuContent(
     actions: BrowserMenuActions,
     modifier: Modifier = Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Column(
         modifier = modifier
             .clip(RoundedCornerShape(16.dp))
@@ -437,14 +437,14 @@ private fun MenuItemRowFor(item: CustomizableMenuItem, snapshot: BrowserMenuSnap
 @Composable
 private fun MenuDivider() {
     HorizontalDivider(
-        color = LocalClintColors.current.popupStroke,
+        color = LocalAetherNetColors.current.popupStroke,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 2.dp)
     )
 }
 
 @Composable
 private fun RowScope.MenuNavIcon(iconRes: androidx.compose.ui.graphics.vector.ImageVector, description: String, enabled: Boolean, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     IconButton(onClick = onClick, modifier = Modifier.weight(1f).fillMaxHeight()) {
         Icon(
             imageVector = iconRes,
@@ -466,7 +466,7 @@ private fun MenuItemRow(
     onClick: () -> Unit,
     onLongClick: (() -> Unit)? = null
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier

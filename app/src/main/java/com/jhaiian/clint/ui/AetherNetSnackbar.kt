@@ -18,14 +18,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.launch
 
 interface SnackbarHostActivity {
     val snackbarHostState: SnackbarHostState
 }
 
-fun <T> T.showClintSnackbar(
+fun <T> T.showAetherNetSnackbar(
     message: String,
     actionLabel: String? = null,
     onAction: (() -> Unit)? = null
@@ -42,8 +42,8 @@ fun <T> T.showClintSnackbar(
 }
 
 @Composable
-fun ClintSnackbarHost(hostState: SnackbarHostState) {
-    val colors = LocalClintColors.current
+fun AetherNetSnackbarHost(hostState: SnackbarHostState) {
+    val colors = LocalAetherNetColors.current
     Box(
         modifier = Modifier
             .fillMaxSize()

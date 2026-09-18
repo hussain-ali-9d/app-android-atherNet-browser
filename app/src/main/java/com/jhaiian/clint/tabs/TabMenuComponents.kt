@@ -58,8 +58,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintCheckbox
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetCheckbox
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 private val IncognitoCardBackground = Color(0xFF2A2A31)
 private val IncognitoOnCard = Color(0xFFEDEDF2)
@@ -80,7 +80,7 @@ internal fun TabMenuCard(
     onClose: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val favicon = rememberTabFavicon(preview)
     val interactionSource = remember { MutableInteractionSource() }
     var pressed by remember { mutableStateOf(false) }
@@ -125,7 +125,7 @@ internal fun TabMenuCard(
                     exit = fadeOut(tween(120)) + scaleOut(targetScale = 0.6f)
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        ClintCheckbox(checked = selected, onCheckedChange = { onToggleSelect() }, modifier = Modifier.size(20.dp))
+                        AetherNetCheckbox(checked = selected, onCheckedChange = { onToggleSelect() }, modifier = Modifier.size(20.dp))
                         Spacer(Modifier.width(6.dp))
                     }
                 }
@@ -221,7 +221,7 @@ internal fun TabMenuCard(
 
 @Composable
 internal fun TabMenuSectionHeader(isIncognitoSection: Boolean, modifier: Modifier = Modifier) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         modifier.fillMaxWidth().padding(top = 10.dp, bottom = 2.dp, start = 4.dp),
         verticalAlignment = Alignment.CenterVertically

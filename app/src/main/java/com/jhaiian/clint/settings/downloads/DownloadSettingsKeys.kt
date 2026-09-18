@@ -33,5 +33,5 @@ object DownloadSettingsKeys {
     const val PREF_PUSH_NOTIFICATIONS      = "download_push_notifications"
     const val DEFAULT_PUSH_NOTIFICATIONS   = true
     const val PREF_DOWNLOAD_MANAGER        = "download_manager_app"
-    const val DEFAULT_DOWNLOAD_MANAGER     = com.jhaiian.clint.downloads.DownloadManagerAppIds.CLINT
+    const val DEFAULT_DOWNLOAD_MANAGER     = com.jhaiian.clint.downloads.DownloadManagerAppIds.BUILT_IN
 }

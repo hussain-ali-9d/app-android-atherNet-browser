@@ -5,8 +5,8 @@ import android.widget.Toast
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
 import com.jhaiian.clint.settings.downloads.DownloadSettingsKeys
-import com.jhaiian.clint.ui.showClintSnackbar
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.showAetherNetSnackbar
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 
 internal fun DownloadsActivity.showRedownloadDialog(item: DownloadItem) {
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
@@ -19,7 +19,7 @@ internal fun DownloadsActivity.showRedownloadDialog(item: DownloadItem) {
     val dismiss: () -> Unit = { overlayContent = null }
 
     overlayContent = {
-        ClintComposeTheme(theme = theme) {
+        AetherNetComposeTheme(theme = theme) {
             DownloadRequestDialog(
                 hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
                 url = item.url,
@@ -55,13 +55,13 @@ internal fun DownloadsActivity.showRedownloadDialog(item: DownloadItem) {
                         locationMode = submission.locationMode,
                         customLocationUri = submission.customLocationUri,
                         onDismiss = {
-                            this@showRedownloadDialog.showClintSnackbar(
+                            this@showRedownloadDialog.showAetherNetSnackbar(
                                 message = getString(R.string.toast_downloading, submission.filename),
                                 actionLabel = getString(R.string.download_started_view_action),
                                 onAction = { DownloadsActivity.open(this@showRedownloadDialog) }
                             )
                             dismiss()
-                            ClintDownloadManager.remove(this@showRedownloadDialog, item.id, true)
+                            AetherNetDownloadManager.remove(this@showRedownloadDialog, item.id, true)
                             lastRefreshMs = 0L
                         }
                     )
@@ -93,7 +93,7 @@ private fun DownloadsActivity.performRedownload(
 ) {
     fun startRedownload(effectiveUnmeteredOnly: Boolean) {
         if (DownloadFileHelper.isCustomLocationAccessible(this, locationMode, customLocationUri)) onDismiss()
-        ClintDownloadManager.enqueue(this, item.url, filename, item.userAgent, item.referer, item.cookies, retryEnabled, effectiveUnmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri)
+        AetherNetDownloadManager.enqueue(this, item.url, filename, item.userAgent, item.referer, item.cookies, retryEnabled, effectiveUnmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri)
     }
     val cm = getSystemService(android.net.ConnectivityManager::class.java)
     val isMetered = cm?.isActiveNetworkMetered ?: false

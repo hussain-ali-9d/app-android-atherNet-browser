@@ -11,16 +11,16 @@ import androidx.activity.compose.setContent
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
 import com.jhaiian.clint.ui.rememberMaxContentWidth
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class BookmarksActivity : ClintActivity() {
+class BookmarksActivity : AetherNetActivity() {
 
     private lateinit var uiState: BookmarksUiState
 
@@ -46,7 +46,7 @@ class BookmarksActivity : ClintActivity() {
         loadBookmarks()
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 val maxContentWidth = rememberMaxContentWidth(this)
 
                 BookmarksScreen(

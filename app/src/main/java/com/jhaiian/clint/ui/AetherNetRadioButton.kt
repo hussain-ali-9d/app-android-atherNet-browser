@@ -4,11 +4,11 @@ import androidx.compose.material3.RadioButton
 import androidx.compose.material3.RadioButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
-fun ClintRadioButton(selected: Boolean, modifier: Modifier = Modifier) {
-    val colors = LocalClintColors.current
+fun AetherNetRadioButton(selected: Boolean, modifier: Modifier = Modifier) {
+    val colors = LocalAetherNetColors.current
     RadioButton(
         selected = selected,
         onClick = null,

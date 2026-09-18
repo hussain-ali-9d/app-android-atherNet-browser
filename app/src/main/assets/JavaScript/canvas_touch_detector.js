@@ -1,6 +1,6 @@
 (function() {
-    if (window.__clintCanvasTouchTracked) return;
-    window.__clintCanvasTouchTracked = true;
+    if (window.__aetherNetCanvasTouchTracked) return;
+    window.__aetherNetCanvasTouchTracked = true;
 
     function isTouchOverCanvas(x, y) {
         var canvases = document.querySelectorAll('canvas');

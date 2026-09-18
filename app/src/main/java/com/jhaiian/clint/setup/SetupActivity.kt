@@ -18,13 +18,13 @@ import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.browser.MainActivity
 import com.jhaiian.clint.crash.CrashHandler
 import com.jhaiian.clint.ui.DocumentViewer
 import com.jhaiian.clint.ui.OverlayHostActivity
 
-class SetupActivity : ClintActivity(), OverlayHostActivity {
+class SetupActivity : AetherNetActivity(), OverlayHostActivity {
 
     private lateinit var uiState: SetupUiState
 
@@ -39,6 +39,9 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
     companion object {
         const val PRIVACY_POLICY_URL = "https://github.com/jhaiian/ClintBrowser/blob/main/PRIVACY_POLICY.md"
         const val TERMS_URL = "https://github.com/jhaiian/ClintBrowser/blob/main/TERMS_OF_SERVICE.md"
+        private const val PAGE_RESTORE = 1
+        private const val PAGE_ENGINE = 4
+
         private const val KEY_PENDING_PAGE = "setup_pending_page"
         private const val KEY_PENDING_SCROLL = "setup_pending_scroll"
         private const val KEY_PENDING_HIDE_STATUS_BAR = "setup_pending_hide_status_bar"
@@ -50,7 +53,8 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
 
         onBackPressedDispatcher.addCallback(this) {
             if (uiState.currentPage > 0) {
-                uiState.currentPage -= 1
+                // Back skips the appearance and layout pages, which this build does not show.
+                uiState.currentPage = if (uiState.currentPage == PAGE_ENGINE) PAGE_RESTORE else uiState.currentPage - 1
             } else {
                 isEnabled = false
                 onBackPressedDispatcher.onBackPressed()
@@ -61,6 +65,7 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         if (prefs.getBoolean("setup_complete", false)) { startMainActivity(); return }
+        seedDefaultPreferences(prefs)
 
         var hideStatusBar = prefs.getBoolean("hide_status_bar", false)
         var hideSystemNavigation = prefs.getBoolean("hide_system_navigation", false)
@@ -91,10 +96,10 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
         uiState = SetupUiState(
             initialPage = initialPage,
             initialScrollY = initialScroll,
-            initialTheme = prefs.getString("app_theme", "dark") ?: "dark",
+            initialTheme = prefs.getString("app_theme", "system") ?: "system",
             initialAccent = prefs.getString("accent_color", "material_you") ?: "material_you",
             initialIntensity = prefs.getString("surface_intensity", "soft_tint") ?: "soft_tint",
-            initialAddressBarPosition = prefs.getString("address_bar_position", "top") ?: "top",
+            initialAddressBarPosition = prefs.getString("address_bar_position", "split") ?: "split",
             initialMenuStyle = prefs.getString("menu_style", "popup") ?: "popup",
             initialScrollHideMode = prefs.getString("scroll_hide_mode", "off") ?: "off",
             initialHideStatusBar = hideStatusBar, initialHideSystemNavigation = hideSystemNavigation,
@@ -104,7 +109,7 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
         if (uiState.currentPage == 5) refreshDefaultBrowserState()
 
         setContent {
-          com.jhaiian.clint.ui.theme.ClintComposeTheme(theme = uiState.theme) {
+          com.jhaiian.clint.ui.theme.AetherNetComposeTheme(theme = uiState.theme) {
             SetupScreen(
                 activity = this,
                 state = uiState,
@@ -138,7 +143,7 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
                     uiState.engine = "custom"
                 },
                 onContinueFromWelcome = { uiState.currentPage = 1 },
-                onSkipRestore = { uiState.currentPage = 2 },
+                onSkipRestore = { uiState.currentPage = PAGE_ENGINE },
                 onRestoreComplete = { restartAppAfterRestore() },
                 onNextFromLayoutPage = { onNextFromLayoutPage() },
                 onNextFromEnginePage = { onNextFromEnginePage() },
@@ -166,10 +171,10 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
     }
 
     private fun refreshDefaultBrowserState() {
-        uiState.isDefaultBrowser = isClintDefaultBrowser()
+        uiState.isDefaultBrowser = isAetherNetDefaultBrowser()
     }
 
-    private fun isClintDefaultBrowser(): Boolean {
+    private fun isAetherNetDefaultBrowser(): Boolean {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://"))
         val info = packageManager.resolveActivity(intent, PackageManager.MATCH_DEFAULT_ONLY)
         return info?.activityInfo?.packageName == packageName
@@ -256,6 +261,9 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
             .putString("search_engine", uiState.engine)
             .putString(com.jhaiian.clint.browser.CustomSearchEngineNameKey, uiState.customEngineName)
             .putString(com.jhaiian.clint.browser.CustomSearchEngineUrlKey, uiState.customEngineUrl)
+            .putString("app_theme", uiState.theme)
+            .putString("accent_color", uiState.accent)
+            .putString("surface_intensity", uiState.intensity)
             .putString("address_bar_position", uiState.addressBarPosition)
             .putString("menu_style", uiState.menuStyle)
             .putString("scroll_hide_mode", uiState.scrollHideMode)
@@ -264,6 +272,24 @@ class SetupActivity : ClintActivity(), OverlayHostActivity {
             .putBoolean("setup_complete", true)
             .apply()
         startMainActivity()
+    }
+
+    /**
+     * Appearance and layout are not asked during setup any more, so the values the rest of the app
+     * reads are written once here. Only on a first run: a restored backup or a user's own later
+     * choice must not be overwritten.
+     */
+    private fun seedDefaultPreferences(prefs: android.content.SharedPreferences) {
+        if (prefs.contains("app_theme")) return
+        prefs.edit()
+            .putString("app_theme", "system")
+            .putString("accent_color", "material_you")
+            .putString("surface_intensity", "soft_tint")
+            .putString("address_bar_position", "split")
+            .putString("menu_style", "popup")
+            .putString("scroll_hide_mode", "off")
+            .apply()
+        (application as? com.jhaiian.clint.app.AetherNetApplication)?.applyNightMode()
     }
 
     private fun startMainActivity() {

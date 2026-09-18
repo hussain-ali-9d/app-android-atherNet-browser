@@ -50,11 +50,11 @@ import androidx.compose.ui.unit.sp
 import android.text.format.DateFormat
 import com.jhaiian.clint.R
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.ClintSwitch
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetSwitch
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import java.util.Date
 
 @Composable
@@ -67,7 +67,7 @@ fun AdditionalWebsitesScreen(
     onAddHosts: (List<String>) -> Unit,
     onDeleteSelected: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val displayed = remember(state.rules, state.searchQuery) { filterRules(state.rules, state.searchQuery) }
     val showDeleteFab = state.isInSelectionMode && state.selectedIds.isNotEmpty()
     val showAddFab = !state.isInSelectionMode
@@ -94,7 +94,7 @@ fun AdditionalWebsitesScreen(
                     Text(stringResource(R.string.additional_websites_master_switch_title), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(R.string.additional_websites_master_switch_summary), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
                 }
-                ClintSwitch(checked = state.isEnabled)
+                AetherNetSwitch(checked = state.isEnabled)
             }
 
             Box(Modifier.weight(1f).fillMaxWidth()) {
@@ -176,7 +176,7 @@ private fun AdditionalWebsitesToolbar(
     displayed: List<AdditionalWebsiteRule>,
     onBack: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
 
     Surface(color = colors.surface, shadowElevation = 4.dp, modifier = Modifier.statusBarsPadding()) {
@@ -190,7 +190,7 @@ private fun AdditionalWebsitesToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.additional_websites_search_hint),
@@ -229,7 +229,7 @@ private fun AdditionalWebsiteRuleRow(
     onLongClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
     Row(
         Modifier
@@ -281,7 +281,7 @@ private fun AdditionalWebsiteAddDialog(
     invalidHostMessage: String,
     onConfirm: (List<String>) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val validHost = remember { Regex("^[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?(\\.[a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?)+$") }
 
     fun submit() {
@@ -294,7 +294,7 @@ private fun AdditionalWebsiteAddDialog(
         }
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.additional_websites_add_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = { state.isAddDialogOpen = false },
@@ -315,7 +315,7 @@ private fun AdditionalWebsiteAddDialog(
             fontSize = 13.sp,
             modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 8.dp)
         )
-        ClintOutlinedTextField(
+        AetherNetOutlinedTextField(
             value = state.addDialogText,
             onValueChange = { state.addDialogText = it; state.addDialogError = null },
             label = { Text(stringResource(R.string.additional_websites_add_hint)) },

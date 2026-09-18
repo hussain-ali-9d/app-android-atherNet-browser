@@ -28,7 +28,7 @@ private val WebView.hostActivity: android.app.Activity?
     get() = generateSequence(context) { (it as? android.content.ContextWrapper)?.baseContext }
         .firstNotNullOfOrNull { it as? android.app.Activity }
 
-class ClintWebViewClient(
+class AetherNetWebViewClient(
     private val prefs: SharedPreferences,
     private val isActive: () -> Boolean = { true },
     private val onPageStartedCallback: (String) -> Unit = {},
@@ -114,7 +114,7 @@ class ClintWebViewClient(
             return handleIntentScheme(view, uri.toString())
         }
 
-        if (scheme == "clint") {
+        if (scheme == com.jhaiian.clint.browser.delegates.HOME_PAGE_SCHEME) {
             (view.hostActivity as? com.jhaiian.clint.browser.MainActivity)?.handleHomePageLink(uri)
             return true
         }

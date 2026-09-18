@@ -1,6 +1,6 @@
 (function() {
-    if (window.__clintTracked) return;
-    window.__clintTracked = true;
+    if (window.__aetherNetTracked) return;
+    window.__aetherNetTracked = true;
     document.addEventListener('scroll', function(e) {
         var t = e.target;
         var isRoot = !t || t === document || t === document.documentElement || t === document.body;

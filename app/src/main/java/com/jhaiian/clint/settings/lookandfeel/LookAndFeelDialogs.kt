@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import com.jhaiian.clint.ui.ClintRadioButton
+import com.jhaiian.clint.ui.AetherNetRadioButton
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.material3.Text
@@ -32,7 +32,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
+import com.jhaiian.clint.ui.AetherNetDialog
 import com.jhaiian.clint.ui.scrollToSelection
 import com.jhaiian.clint.settings.common.SettingsPickerOptionBottomSpacing
 import com.jhaiian.clint.settings.common.SettingsPickerOptionContentPadding
@@ -49,7 +49,7 @@ import com.jhaiian.clint.setup.navBarSlotTitleRes
 import com.jhaiian.clint.setup.rememberIntensitySwatchColors
 import com.jhaiian.clint.setup.scrollCardVisible
 import com.jhaiian.clint.ui.ThemeSwatchUtils
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.LocaleHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -68,11 +68,18 @@ private fun rememberBgSurface(theme: String, accent: String): Pair<Color, Color>
 
 @Composable
 fun ThemeSelectorDialog(current: String, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onSelect: (String) -> Unit, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val scrollState = rememberScrollState()
-    ClintDialog(title = stringResource(R.string.pref_app_theme_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_app_theme_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         data class ThemeOption(val key: String, val titleRes: Int, val descRes: Int, val drawableRes: Int)
+        // The system option's swatch shows whichever palette the device is on right now.
+        val systemSwatch = if (androidx.compose.foundation.isSystemInDarkTheme()) {
+            R.drawable.theme_swatch_dark
+        } else {
+            R.drawable.theme_swatch_light
+        }
         listOf(
+            ThemeOption("system", R.string.theme_system, R.string.theme_system_desc, systemSwatch),
             ThemeOption("dark", R.string.theme_dark, R.string.theme_dark_desc, R.drawable.theme_swatch_dark),
             ThemeOption("light", R.string.theme_light, R.string.theme_light_desc, R.drawable.theme_swatch_light)
         ).forEach { option ->
@@ -95,10 +102,10 @@ fun ThemeSelectorDialog(current: String, hideStatusBar: Boolean, hideSystemNavig
 
 @Composable
 fun AccentColorDialog(current: String, theme: String, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onSelect: (String) -> Unit, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    ClintDialog(title = stringResource(R.string.pref_accent_color_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_accent_color_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         data class AccentOption(val key: String, val titleRes: Int, val descRes: Int)
         listOf(
             AccentOption("material_you", R.string.accent_material_you, R.string.accent_material_you_desc),
@@ -181,12 +188,12 @@ fun SurfaceIntensityDialog(
     onSelect: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val strongVisible = accent in setOf("purple", "deep_purple", "royal_purple", "amethyst", "lavender", "teal", "pink", "indigo", "cyan", "amber", "mint", "crimson", "slate", "graphite", "obsidian", "onyx", "coral", "midnight", "sepia", "forest", "plum", "sand", "ruby", "sky", "charcoal", "peach", "emerald", "blue", "yellow", "lemon", "gold", "red", "green", "orange", "deep_orange", "tangerine", "apricot", "copper", "scarlet", "lime", "olive", "default", "material_you", "violet", "titanium", "azure", "mustard", "burgundy", "terracotta", "sage")
     val swatches = rememberIntensitySwatchColors(theme, accent)
     val scrollState = rememberScrollState()
 
-    ClintDialog(title = stringResource(R.string.pref_surface_intensity_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_surface_intensity_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         SelectableCard(
             selected = current == "no_tint", onClick = { onSelect("no_tint") },
             cardBackground = colors.surfaceVariant, primary = colors.primary,
@@ -272,12 +279,12 @@ fun AddressBarPositionDialog(
     onSelect: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val (bg, surface) = rememberBgSurface(theme, accent)
     val onSurface = colors.onSurface
     val scrollState = rememberScrollState()
 
-    ClintDialog(title = stringResource(R.string.pref_address_bar_position_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_address_bar_position_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         data class AddrOption(val key: String, val titleRes: Int, val descRes: Int)
         listOf(
             AddrOption("top", R.string.address_bar_position_top, R.string.address_bar_position_top_desc),
@@ -311,13 +318,13 @@ fun MenuStyleDialog(
     onSelect: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val (bg, surface) = rememberBgSurface(theme, accent)
     val onSurface = colors.onSurface
     val panelBg = colors.popupBackground
     val scrollState = rememberScrollState()
 
-    ClintDialog(title = stringResource(R.string.pref_menu_style_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_menu_style_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         data class MenuOption(val key: String, val variant: String, val titleRes: Int, val descRes: Int)
         listOf(
             MenuOption("popup", "popup", R.string.menu_style_popup, R.string.menu_style_popup_desc),
@@ -349,11 +356,11 @@ fun TabMenuStyleDialog(
     onSelect: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val (bg, surface) = rememberBgSurface(theme, accent)
     val scrollState = rememberScrollState()
 
-    ClintDialog(title = stringResource(R.string.pref_tab_menu_style_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_tab_menu_style_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         data class TabMenuOption(val key: String, val titleRes: Int, val descRes: Int)
         listOf(
             TabMenuOption("grid", R.string.tab_menu_style_grid, R.string.tab_menu_style_grid_desc),
@@ -449,12 +456,12 @@ fun ScrollHideModeDialog(
     onSelect: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val (bg, surface) = rememberBgSurface(theme, accent)
     val onSurface = colors.onSurface
     val scrollState = rememberScrollState()
 
-    ClintDialog(title = stringResource(R.string.pref_nested_scroll_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_nested_scroll_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         listOf("off", "search_bar", "navigation_bar", "both").forEach { kind ->
             if (scrollCardVisible(kind, addressBarPosition)) {
                 val (titleRes, descRes) = when (kind) {
@@ -494,11 +501,11 @@ fun ExitConfirmationDialog(
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var selected by remember(current) { mutableStateOf(current) }
     val scrollState = rememberScrollState()
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.exit_confirmation_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -527,7 +534,7 @@ fun ExitConfirmationDialog(
                 contentPadding = OptionContentPadding, bottomSpacing = OptionBottomSpacing,
                 modifier = Modifier.scrollToSelection(scrollState, sel)
             ) {
-                ClintRadioButton(selected = sel)
+                AetherNetRadioButton(selected = sel)
                 Column(Modifier.weight(1f).padding(start = 12.dp, end = 8.dp)) {
                     Text(stringResource(option.titleRes), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(option.descRes), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
@@ -540,7 +547,7 @@ fun ExitConfirmationDialog(
 
 @Composable
 fun LanguageSelectorDialog(current: String, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onSelect: (String) -> Unit, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
     var options by remember { mutableStateOf(emptyList<LanguageOption>()) }
     val scrollState = rememberScrollState()
@@ -549,7 +556,7 @@ fun LanguageSelectorDialog(current: String, hideStatusBar: Boolean, hideSystemNa
         options = withContext(Dispatchers.Default) { collectLanguageOptions(context) }
     }
 
-    ClintDialog(title = stringResource(R.string.pref_language_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
+    AetherNetDialog(title = stringResource(R.string.pref_language_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss, scrollState = scrollState) {
         val systemSelected = current == LocaleHelper.LANGUAGE_SYSTEM
         SelectableCard(
             selected = systemSelected, onClick = { onSelect(LocaleHelper.LANGUAGE_SYSTEM) },

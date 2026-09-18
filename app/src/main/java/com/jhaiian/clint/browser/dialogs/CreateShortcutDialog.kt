@@ -36,10 +36,10 @@ import androidx.compose.ui.unit.dp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
 import com.jhaiian.clint.browser.delegates.createHomeScreenShortcut
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.rememberClintFavicon
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.rememberAetherNetFavicon
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class CreateShortcutRequest(
     val pageUrl: String,
@@ -53,17 +53,17 @@ internal fun CreateShortcutDialog(
     hideStatusBar: Boolean, hideSystemNavigation: Boolean,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var name by remember(request) { mutableStateOf(request.initialName) }
     var customIcon by remember(request) { mutableStateOf<Bitmap?>(null) }
-    val faviconBitmap = rememberClintFavicon(pageUrl = request.pageUrl)
+    val faviconBitmap = rememberAetherNetFavicon(pageUrl = request.pageUrl)
     val displayedIcon = customIcon ?: faviconBitmap
 
     DisposableEffect(Unit) {
         onDispose { activity.pendingShortcutIconCallback = null }
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.create_shortcut_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -128,7 +128,7 @@ internal fun CreateShortcutDialog(
                     )
                 }
             }
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = name,
                 onValueChange = { name = it },
                 modifier = Modifier.weight(1f).padding(start = 16.dp),

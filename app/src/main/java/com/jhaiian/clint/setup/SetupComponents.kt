@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.content.ContextCompat
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun SelectableCard(
@@ -126,7 +126,7 @@ fun SetupPrimaryButton(
 
 @Composable
 fun DefaultChip(text: String, color: Color, modifier: Modifier = Modifier) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Box(
         modifier
             .clip(RoundedCornerShape(12.dp))

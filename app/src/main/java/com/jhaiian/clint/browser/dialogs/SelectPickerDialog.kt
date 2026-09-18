@@ -30,11 +30,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlin.math.roundToInt
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintCheckbox
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintDialogCancelFooter
-import com.jhaiian.clint.ui.ClintRadioButton
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetCheckbox
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetDialogCancelFooter
+import com.jhaiian.clint.ui.AetherNetRadioButton
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class SelectPickerOption(
     val value: String,
@@ -54,7 +54,7 @@ data class SelectPickerRequest(
 
 @Composable
 internal fun SelectPickerDialog(request: SelectPickerRequest, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val selectedValues = remember(request) {
         mutableStateListOf<String>().apply { addAll(request.options.filter { it.selected }.map { it.value }) }
     }
@@ -70,10 +70,10 @@ internal fun SelectPickerDialog(request: SelectPickerRequest, hideStatusBar: Boo
         val safeId = request.id.replace("'", "")
         val json = org.json.JSONArray(values).toString()
         val quotedJson = org.json.JSONObject.quote(json)
-        webView.evaluateJavascript("window.__clintApplySelect && window.__clintApplySelect('$safeId', $quotedJson)", null)
+        webView.evaluateJavascript("window.__aetherNetApplySelect && window.__aetherNetApplySelect('$safeId', $quotedJson)", null)
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = request.title.ifBlank { stringResource(R.string.select_picker_default_title) },
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -89,7 +89,7 @@ internal fun SelectPickerDialog(request: SelectPickerRequest, hideStatusBar: Boo
                     }
                 }
             } else {
-                ClintDialogCancelFooter(onDismiss)
+                AetherNetDialogCancelFooter(onDismiss)
             }
         }
     ) {
@@ -118,7 +118,7 @@ internal fun SelectPickerDialog(request: SelectPickerRequest, hideStatusBar: Boo
 
 @Composable
 private fun SelectPickerGroupHeader(label: String) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Text(
         label,
         color = colors.secondaryText,
@@ -130,7 +130,7 @@ private fun SelectPickerGroupHeader(label: String) {
 
 @Composable
 private fun SelectPickerOptionRow(option: SelectPickerOption, selected: Boolean, multiple: Boolean, modifier: Modifier = Modifier, onToggle: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         modifier
             .fillMaxWidth()
@@ -142,9 +142,9 @@ private fun SelectPickerOptionRow(option: SelectPickerOption, selected: Boolean,
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (multiple) {
-            ClintCheckbox(checked = selected, onCheckedChange = { if (!option.disabled) onToggle() })
+            AetherNetCheckbox(checked = selected, onCheckedChange = { if (!option.disabled) onToggle() })
         } else {
-            ClintRadioButton(selected = selected)
+            AetherNetRadioButton(selected = selected)
         }
         Text(
             option.label,

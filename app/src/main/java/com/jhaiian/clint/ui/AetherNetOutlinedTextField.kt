@@ -6,10 +6,10 @@ import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.VisualTransformation
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
-fun ClintOutlinedTextField(
+fun AetherNetOutlinedTextField(
     value: String,
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -23,7 +23,7 @@ fun ClintOutlinedTextField(
     trailingIcon: @Composable (() -> Unit)? = null,
     supportingText: @Composable (() -> Unit)? = null
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     OutlinedTextField(
         value = value,
         onValueChange = onValueChange,

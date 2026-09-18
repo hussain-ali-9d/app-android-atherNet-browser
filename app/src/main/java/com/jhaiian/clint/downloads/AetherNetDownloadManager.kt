@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 import okhttp3.ConnectionPool
 import okhttp3.OkHttpClient
 
-object ClintDownloadManager {
+object AetherNetDownloadManager {
 
     internal const val CHANNEL_ID = "clint_downloads"
     internal const val EVENT_CHANNEL_ID = "clint_download_events_v2"

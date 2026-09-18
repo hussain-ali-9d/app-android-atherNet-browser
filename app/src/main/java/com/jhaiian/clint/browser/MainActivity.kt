@@ -34,22 +34,22 @@ import androidx.compose.ui.graphics.luminance
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.R
 import com.jhaiian.clint.BuildConfig
 import com.jhaiian.clint.crash.CrashHandler
-import com.jhaiian.clint.downloads.ClintDownloadManager
+import com.jhaiian.clint.downloads.AetherNetDownloadManager
 import com.jhaiian.clint.tabs.TabManager
-import com.jhaiian.clint.ui.ClintSnackbarHost
+import com.jhaiian.clint.ui.AetherNetSnackbarHost
 import com.jhaiian.clint.ui.OverlayHostActivity
 import com.jhaiian.clint.ui.SnackbarHostActivity
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import com.jhaiian.clint.update.UpdateChecker
 import androidx.webkit.ScriptHandler
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 
-class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity {
+class MainActivity : AetherNetActivity(), OverlayHostActivity, SnackbarHostActivity {
 
     companion object {
         const val EXTRA_REFRESH_LINK_MODE = "extra_refresh_link_mode"
@@ -77,7 +77,7 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
     override val snackbarHostState = SnackbarHostState()
 
     internal lateinit var webContainer: FrameLayout
-    internal lateinit var swipeRefreshView: ClintSwipeRefreshLayout
+    internal lateinit var swipeRefreshView: AetherNetSwipeRefreshLayout
     internal lateinit var fullscreenContainerView: FrameLayout
 
     internal lateinit var prefs: SharedPreferences
@@ -141,7 +141,7 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
         val pending = pendingDownload
         pendingDownload = null
         if (granted && pending != null) {
-            ClintDownloadManager.enqueue(this, pending.url, pending.filename, pending.userAgent, pending.referer, pending.cookies)
+            AetherNetDownloadManager.enqueue(this, pending.url, pending.filename, pending.userAgent, pending.referer, pending.cookies)
         }
     }
 
@@ -226,7 +226,7 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
         if (granted && origin != null) {
             showWebNotificationPermissionFromBridge(wv, safeId, origin)
         } else {
-            wv.evaluateJavascript("window._ClintResolvePermission('$safeId','denied')", null)
+            wv.evaluateJavascript("window._AetherNetResolvePermission('$safeId','denied')", null)
         }
     }
 
@@ -300,6 +300,7 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
 
     private val prefsListener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
         when (key) {
+            "app_theme", "accent_color", "surface_intensity" -> pushThemeToHomePages()
             "javascript_enabled" -> applyJavaScript()
             "block_third_party_cookies" -> applyCookiePolicy()
             "custom_user_agent" -> applyUserAgent()
@@ -324,6 +325,14 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
     }
 
     @SuppressLint("SetJavaScriptEnabled")
+    override fun onConfigurationChanged(newConfig: android.content.res.Configuration) {
+        super.onConfigurationChanged(newConfig)
+        // No recreate happens for uiMode (see configChanges in the manifest), so the home pages,
+        // being web content, have to be repainted by hand.
+        pushThemeToHomePages()
+        applyWindowChrome()
+    }
+
     override fun windowChromeTheme(): String = if (uiState.isIncognito) "dark" else super.windowChromeTheme()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -332,7 +341,7 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         webContainer = FrameLayout(this)
-        swipeRefreshView = ClintSwipeRefreshLayout(this).apply {
+        swipeRefreshView = AetherNetSwipeRefreshLayout(this).apply {
             addView(webContainer, ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT))
         }
         fullscreenContainerView = FrameLayout(this)
@@ -357,10 +366,10 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
         val startTheme = prefs.getString("app_theme", "dark") ?: "dark"
         val showLaunchSplash = savedInstanceState == null && intent?.action == android.content.Intent.ACTION_MAIN
         setContent {
-            ClintComposeTheme(theme = if (uiState.isIncognito) "dark" else startTheme) {
+            AetherNetComposeTheme(theme = if (uiState.isIncognito) "dark" else startTheme) {
                 MainScreen(activity = this, state = uiState)
                 overlayContent?.invoke()
-                ClintSnackbarHost(hostState = snackbarHostState)
+                AetherNetSnackbarHost(hostState = snackbarHostState)
                 var splashVisible by androidx.compose.runtime.saveable.rememberSaveable { mutableStateOf(showLaunchSplash) }
                 if (splashVisible) {
                     com.jhaiian.clint.ui.brand.AetherNetSplash(
@@ -371,8 +380,8 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
             }
         }
 
-        ClintDownloadManager.createNotificationChannel(this)
-        ClintDownloadManager.init(this)
+        AetherNetDownloadManager.createNotificationChannel(this)
+        AetherNetDownloadManager.init(this)
         initializeQuiverGuardEngine()
         initializeWebsiteBlockerEngine()
         observeQuiverGuardCounter()
@@ -652,7 +661,7 @@ class MainActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity 
     fun onMenuOpenInApp() {
         val currentUrl = tabManager.activeTab?.webView?.url ?: return
         val currentUri = runCatching { android.net.Uri.parse(currentUrl) }.getOrNull() ?: return
-        val webClient = tabManager.activeTab?.webView?.webViewClient as? com.jhaiian.clint.browser.webview.ClintWebViewClient ?: return
+        val webClient = tabManager.activeTab?.webView?.webViewClient as? com.jhaiian.clint.browser.webview.AetherNetWebViewClient ?: return
         val appMatches = webClient.resolveAppMatches(currentUri, this)
         if (appMatches.size == 1) {
             val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, currentUri)
@@ -892,7 +901,7 @@ td,th{border:1px solid $secondaryColor;padding:6px 8px;}
                 val tab = tabManager.tabs.find { it.webView == webView }
                 val safeId = callbackId.replace("'", "")
                 if (tab?.isIncognito == true) {
-                    webView.evaluateJavascript("window._ClintResolvePermission('$safeId','denied')", null)
+                    webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','denied')", null)
                     return@runOnUiThread
                 }
                 val rawOrigin = origin.trim()
@@ -910,11 +919,11 @@ td,th{border:1px solid $secondaryColor;padding:6px 8px;}
                             pendingBridgeNotifWebView = webView
                             webNotificationPermissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
                         } else {
-                            webView.evaluateJavascript("window._ClintResolvePermission('$safeId','granted')", null)
+                            webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','granted')", null)
                         }
                     }
                     com.jhaiian.clint.settings.sitepermissions.SitePermissionDatabase.STATE_DENY -> {
-                        webView.evaluateJavascript("window._ClintResolvePermission('$safeId','denied')", null)
+                        webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','denied')", null)
                     }
                     else -> {
                         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU &&
@@ -935,7 +944,7 @@ td,th{border:1px solid $secondaryColor;padding:6px 8px;}
                                         pendingBridgeNotifCallbackId = null
                                         pendingBridgeNotifOrigin = null
                                         pendingBridgeNotifWebView = null
-                                        webView.evaluateJavascript("window._ClintResolvePermission('$safeId','denied')", null)
+                                        webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','denied')", null)
                                     }
                                 )
                             } else {
@@ -1101,7 +1110,7 @@ td,th{border:1px solid $secondaryColor;padding:6px 8px;}
                 if (!details.has("headers") || details.optJSONObject("headers")?.has("User-Agent") != true) {
                     builder.header("User-Agent", android.webkit.WebSettings.getDefaultUserAgent(this@MainActivity))
                 }
-                val call = com.jhaiian.clint.downloads.ClintDownloadManager.httpClient.newCall(builder.build())
+                val call = com.jhaiian.clint.downloads.AetherNetDownloadManager.httpClient.newCall(builder.build())
                 calls[safeId] = call
                 call.enqueue(object : okhttp3.Callback {
                     override fun onFailure(call: okhttp3.Call, e: java.io.IOException) {

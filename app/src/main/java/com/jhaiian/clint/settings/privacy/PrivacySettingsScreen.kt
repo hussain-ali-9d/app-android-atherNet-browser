@@ -5,7 +5,7 @@ import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.Lock
 
 import androidx.compose.foundation.layout.padding
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -16,7 +16,7 @@ import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.setup.SectionLabel
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun PrivacySettingsScreen(
@@ -26,7 +26,7 @@ fun PrivacySettingsScreen(
     onHttpsOnlyClick: () -> Unit,
     onHistoryClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold {
 
@@ -39,7 +39,7 @@ fun PrivacySettingsScreen(
                 colors = colors,
                 onClick = onBlockThirdPartyCookiesClick,
                 trailing = {
-                    ClintSwitch(checked = state.blockThirdPartyCookies)
+                    AetherNetSwitch(checked = state.blockThirdPartyCookies)
                 }
             )
             RowDivider(colors.divider)
@@ -50,7 +50,7 @@ fun PrivacySettingsScreen(
                 colors = colors,
                 onClick = onCustomUserAgentClick,
                 trailing = {
-                    ClintSwitch(checked = state.customUserAgent)
+                    AetherNetSwitch(checked = state.customUserAgent)
                 }
             )
             RowDivider(colors.divider)
@@ -61,7 +61,7 @@ fun PrivacySettingsScreen(
                 colors = colors,
                 onClick = onHttpsOnlyClick,
                 trailing = {
-                    ClintSwitch(checked = state.httpsOnly)
+                    AetherNetSwitch(checked = state.httpsOnly)
                 }
             )
         }

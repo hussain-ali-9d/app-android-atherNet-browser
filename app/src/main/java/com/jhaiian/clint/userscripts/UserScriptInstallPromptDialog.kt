@@ -15,8 +15,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class UserScriptInstallPromptRequest(
     val url: String,
@@ -33,9 +33,9 @@ internal fun UserScriptInstallPromptDialog(
     hideSystemNavigation: Boolean,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.user_script_install_prompt_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         cancelable = !request.isInstalling,

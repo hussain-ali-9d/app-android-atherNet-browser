@@ -63,14 +63,14 @@ import com.jhaiian.clint.R
 import com.jhaiian.clint.quiver.FilterListItemOptionsMenu
 import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.ClintSwitch
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
+import com.jhaiian.clint.ui.AetherNetSwitch
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
 import com.jhaiian.clint.ui.listscreen.ListFastScroller
 import com.jhaiian.clint.ui.listscreen.SelectionOptionsMenu
 import com.jhaiian.clint.ui.listscreen.ListSortKey
 import com.jhaiian.clint.ui.listscreen.SortMenu
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 import java.util.Date
 
@@ -143,7 +143,7 @@ fun WebsiteBlockerScreen(
     onSelectionCopyLink: () -> Unit,
     onSelectionShareLink: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val categoryTitles = state.categories.associate { it.id to stringResource(categoryTitleRes(it.id)) }
     fun titleOf(category: WebsiteBlockerCategory): String = categoryTitles[category.id] ?: category.id
     val displayed = filterAndSortCategories(state.categories, state.searchQuery, state.sortKey, state.sortOrder) { titleOf(it) }
@@ -266,7 +266,7 @@ fun WebsiteBlockerScreen(
 
 @Composable
 private fun MasterSwitchRow(masterEnabled: Boolean, onToggle: (Boolean) -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     SettingsRow(
         icon = androidx.compose.material.icons.Icons.Filled.Shield,
         title = stringResource(R.string.website_blocker_master_switch_title),
@@ -274,7 +274,7 @@ private fun MasterSwitchRow(masterEnabled: Boolean, onToggle: (Boolean) -> Unit)
         colors = colors,
         onClick = { onToggle(!masterEnabled) },
         trailing = {
-            ClintSwitch(checked = masterEnabled)
+            AetherNetSwitch(checked = masterEnabled)
         }
     )
 }
@@ -286,7 +286,7 @@ private fun AdditionalWebsitesRow(
     interactionLocked: Boolean,
     onClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier
             .fillMaxWidth()
@@ -331,7 +331,7 @@ private fun WebsiteBlockerToolbar(
     onSelectionCopyLink: () -> Unit,
     onSelectionShareLink: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
     var selectionItemOptionsMenuOpen by remember { mutableStateOf(false) }
 
@@ -345,7 +345,7 @@ private fun WebsiteBlockerToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.website_blocker_search_hint),
@@ -450,7 +450,7 @@ private fun WebsiteBlockerCategoryRow(
     onShareLink: () -> Unit
 ) {
     var optionsMenuOpen by remember { mutableStateOf(false) }
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
     val rowAlpha = when {
@@ -493,7 +493,7 @@ private fun WebsiteBlockerCategoryRow(
             Text(statusText, color = colors.secondaryText, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 2.dp))
         }
         if (!isInSelectionMode) {
-            ClintSwitch(checked = category.isEnabled)
+            AetherNetSwitch(checked = category.isEnabled)
         }
         Box {
             IconButton(onClick = { optionsMenuOpen = true }, enabled = masterEnabled && !interactionLocked) {
@@ -522,7 +522,7 @@ private fun BoxScope.WebsiteBlockerFab(
     onDeleteClick: () -> Unit,
     onPrimaryClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     if (showDeleteFab) {
         FloatingActionButton(
             onClick = onDeleteClick,

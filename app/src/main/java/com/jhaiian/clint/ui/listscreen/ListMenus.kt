@@ -23,7 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 val PopupCornerRadius = 16.dp
 val PopupShape = RoundedCornerShape(PopupCornerRadius)
@@ -40,7 +40,7 @@ fun SortMenu(
     onSortDescending: () -> Unit,
     secondarySortLabel: String = stringResource(R.string.bookmarks_sort_by_date_added)
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -72,7 +72,7 @@ fun SelectionOptionsMenu(
     onInvertSelection: () -> Unit,
     onDeselectAll: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -96,7 +96,7 @@ fun SelectionOptionsMenu(
 
 @Composable
 fun ListMenuItem(icon: androidx.compose.ui.graphics.vector.ImageVector, label: String, checked: Boolean, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenuItem(
         text = { Text(label, color = colors.popupText, fontSize = 14.sp) },
         leadingIcon = {

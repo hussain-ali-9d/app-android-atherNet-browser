@@ -10,15 +10,15 @@ import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.browser.menu.BrowserMenuCustomizationStore
 import com.jhaiian.clint.browser.menu.CustomizableMenuItem
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
 import com.jhaiian.clint.ui.rememberMaxContentWidth
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 
-class MenuCustomizationActivity : ClintActivity() {
+class MenuCustomizationActivity : AetherNetActivity() {
 
     private lateinit var uiState: MenuCustomizationUiState
 
@@ -45,7 +45,7 @@ class MenuCustomizationActivity : ClintActivity() {
         uiState = MenuCustomizationUiState(buildEntries(prefs))
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 val maxContentWidth = rememberMaxContentWidth(this)
                 var resetConfirm by remember { mutableStateOf<ConfirmDialogConfig?>(null) }
 

@@ -13,7 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.jhaiian.clint.ui.listscreen.PopupShape
 import com.jhaiian.clint.ui.listscreen.ListMenuItem
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun WebsiteBlockerActionsMenu(
@@ -25,7 +25,7 @@ fun WebsiteBlockerActionsMenu(
     onForceUpdateAll: () -> Unit,
     onRecompile: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded, onDismissRequest = onDismiss,
         shape = PopupShape,

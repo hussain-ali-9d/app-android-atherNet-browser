@@ -7,7 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 
 object DownloadManagerAppIds {
-    const val CLINT = "clint"
+    const val BUILT_IN = "builtin"
     const val ONEDM = "1dm"
     const val ONEDM_PLUS = "1dm_plus"
     const val ONEDM_LITE = "1dm_lite"

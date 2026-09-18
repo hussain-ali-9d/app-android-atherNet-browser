@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.filled.Edit
-import com.jhaiian.clint.ui.ClintRadioButton
+import com.jhaiian.clint.ui.AetherNetRadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -20,12 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
+import com.jhaiian.clint.ui.AetherNetDialog
 import com.jhaiian.clint.settings.common.SettingsPickerOptionBottomSpacing
 import com.jhaiian.clint.settings.common.SettingsPickerOptionContentPadding
 import com.jhaiian.clint.setup.DefaultChip
 import com.jhaiian.clint.setup.SelectableCard
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun SearchEngineDialog(
@@ -37,7 +37,7 @@ fun SearchEngineDialog(
     onCustomSearchEngineSaved: (name: String, url: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var selected by remember(current) { mutableStateOf(current) }
     var customEditorOpen by remember { mutableStateOf(false) }
     val hasCustomEngine = customName.isNotBlank() && customUrl.isNotBlank()
@@ -56,7 +56,7 @@ fun SearchEngineDialog(
         )
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.choose_search_engine),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -84,7 +84,7 @@ fun SearchEngineDialog(
                 cardBackground = colors.surfaceVariant, primary = colors.primary,
                 contentPadding = SettingsPickerOptionContentPadding, bottomSpacing = SettingsPickerOptionBottomSpacing
             ) {
-                ClintRadioButton(selected = sel)
+                AetherNetRadioButton(selected = sel)
                 Column(Modifier.weight(1f).padding(start = 12.dp, end = 8.dp)) {
                     Text(stringResource(option.titleRes), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(option.descRes), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
@@ -99,7 +99,7 @@ fun SearchEngineDialog(
             cardBackground = colors.surfaceVariant, primary = colors.primary,
             contentPadding = SettingsPickerOptionContentPadding, bottomSpacing = SettingsPickerOptionBottomSpacing
         ) {
-            ClintRadioButton(selected = customSel)
+            AetherNetRadioButton(selected = customSel)
             Column(Modifier.weight(1f).padding(start = 12.dp, end = 8.dp)) {
                 Text(
                     if (hasCustomEngine) customName else stringResource(R.string.engine_custom),
@@ -133,7 +133,7 @@ fun SearchSuggestionsApiDialog(
     onCustomSearchSuggestionsApiSaved: (name: String, url: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var selected by remember(current) { mutableStateOf(current) }
     var customEditorOpen by remember { mutableStateOf(false) }
     val hasCustomApi = customName.isNotBlank() && customUrl.isNotBlank()
@@ -152,7 +152,7 @@ fun SearchSuggestionsApiDialog(
         )
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.choose_search_suggestions_api),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -178,7 +178,7 @@ fun SearchSuggestionsApiDialog(
                 cardBackground = colors.surfaceVariant, primary = colors.primary,
                 contentPadding = SettingsPickerOptionContentPadding, bottomSpacing = SettingsPickerOptionBottomSpacing
             ) {
-                ClintRadioButton(selected = sel)
+                AetherNetRadioButton(selected = sel)
                 Column(Modifier.weight(1f).padding(start = 12.dp, end = 8.dp)) {
                     Text(stringResource(option.titleRes), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(option.descRes), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
@@ -193,7 +193,7 @@ fun SearchSuggestionsApiDialog(
             cardBackground = colors.surfaceVariant, primary = colors.primary,
             contentPadding = SettingsPickerOptionContentPadding, bottomSpacing = SettingsPickerOptionBottomSpacing
         ) {
-            ClintRadioButton(selected = customSel)
+            AetherNetRadioButton(selected = customSel)
             Column(Modifier.weight(1f).padding(start = 12.dp, end = 8.dp)) {
                 Text(
                     if (hasCustomApi) customName else stringResource(R.string.engine_custom),

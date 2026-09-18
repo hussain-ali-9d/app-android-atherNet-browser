@@ -69,15 +69,15 @@ object UserScriptEngine {
             "matches:__match.map(function(r){return r.source;})," +
             "includes:[],excludes:[],resources:__resources,connects:[$connectsArray],grant:[$grantsArray]," +
             "runAt:${quote(meta.runAt)},noframes:${meta.noframes},unwrap:${meta.unwrap}}," +
-            "version:'1.0',scriptHandler:'ClintBrowser',scriptMetaStr:null,scriptWillUpdate:false,isIncognito:false,downloadMode:'native'};" +
+            "version:'1.0',scriptHandler:'AetherNetBrowser',scriptMetaStr:null,scriptWillUpdate:false,isIncognito:false,downloadMode:'native'};" +
             "var unsafeWindow=window;" +
             "function GM_log(){try{console.log.apply(console,arguments);}catch(__e){}}" +
             "function GM_addStyle(css){function __apply(){var __s=document.createElement('style');__s.setAttribute('data-userscript',__scriptName);__s.textContent=css;(document.head||document.documentElement).appendChild(__s);return __s;}if(document.head||document.documentElement)return __apply();document.addEventListener('DOMContentLoaded',__apply);}" +
             "function GM_addElement(a,b,c){var __tag,__attrs,__parent;if(typeof a==='string'){__parent=document.head||document.documentElement;__tag=a;__attrs=b||{};}else{__parent=a;__tag=b;__attrs=c||{};}var __el=document.createElement(__tag);for(var __k in __attrs){if(__attrs.hasOwnProperty(__k)){if(__k==='textContent')__el.textContent=__attrs[__k];else __el.setAttribute(__k,__attrs[__k]);}}__parent.appendChild(__el);return __el;}" +
-            "function GM_getValue(key,def){try{var __v=ClintUserScriptBridge.getValue(__scriptKey,key);return (__v===null||__v===undefined)?def:JSON.parse(__v);}catch(__e){return def;}}" +
-            "function GM_setValue(key,value){try{ClintUserScriptBridge.setValue(__scriptKey,key,JSON.stringify(value===undefined?null:value));}catch(__e){}}" +
-            "function GM_deleteValue(key){try{ClintUserScriptBridge.deleteValue(__scriptKey,key);}catch(__e){}}" +
-            "function GM_listValues(){try{return JSON.parse(ClintUserScriptBridge.listValues(__scriptKey));}catch(__e){return [];}}" +
+            "function GM_getValue(key,def){try{var __v=AetherNetUserScriptBridge.getValue(__scriptKey,key);return (__v===null||__v===undefined)?def:JSON.parse(__v);}catch(__e){return def;}}" +
+            "function GM_setValue(key,value){try{AetherNetUserScriptBridge.setValue(__scriptKey,key,JSON.stringify(value===undefined?null:value));}catch(__e){}}" +
+            "function GM_deleteValue(key){try{AetherNetUserScriptBridge.deleteValue(__scriptKey,key);}catch(__e){}}" +
+            "function GM_listValues(){try{return JSON.parse(AetherNetUserScriptBridge.listValues(__scriptKey));}catch(__e){return [];}}" +
             "var __gmListenerSeq=0;" +
             "function GM_addValueChangeListener(name,cb){var __id='l'+(++__gmListenerSeq);window.__usRuntime.valueListeners[__scriptKey]=window.__usRuntime.valueListeners[__scriptKey]||{};window.__usRuntime.valueListeners[__scriptKey][__id]=function(k,ov,nv,rm){if(k===name)cb(name,ov,nv,rm);};return __id;}" +
             "function GM_removeValueChangeListener(id){var __l=window.__usRuntime.valueListeners[__scriptKey];if(__l)delete __l[id];}" +
@@ -85,7 +85,7 @@ object UserScriptEngine {
             "function GM_setClipboard(text,type){try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(text);return;}}catch(__e){}try{var __ta=document.createElement('textarea');__ta.value=text;__ta.style.position='fixed';__ta.style.opacity='0';document.body.appendChild(__ta);__ta.focus();__ta.select();document.execCommand('copy');document.body.removeChild(__ta);}catch(__e2){}}" +
             "function GM_notification(details,ondone){try{var __opts=(typeof details==='string')?{text:details,title:ondone}:(details||{});" +
             "if(typeof __opts.title!=='string')__opts.title=__scriptName;" +
-            "ClintUserScriptBridge.notify(__scriptName,__opts.title,__opts.text||'',location.hostname||'');" +
+            "AetherNetUserScriptBridge.notify(__scriptName,__opts.title,__opts.text||'',location.hostname||'');" +
             "if(typeof __opts.ondone==='function')setTimeout(__opts.ondone,0);}catch(__e){}}" +
             "var __xhrSeq=0;" +
             "function GM_xmlhttpRequest(details){details=details||{};try{var __id='x'+(++__xhrSeq)+'_'+Date.now();" +
@@ -99,13 +99,13 @@ object UserScriptEngine {
             "if(details.onreadystatechange)try{details.onreadystatechange(__r);}catch(__e3){}" +
             "if(result.status>=200&&result.status<400){if(details.onload)details.onload(__r);}else{if(details.onerror)details.onerror(__r);}" +
             "};" +
-            "ClintUserScriptBridge.xhr(__id,JSON.stringify(__payload));" +
-            "return {abort:function(){try{ClintUserScriptBridge.abort(__id);}catch(__ae){}if(details.onabort)details.onabort();}};" +
+            "AetherNetUserScriptBridge.xhr(__id,JSON.stringify(__payload));" +
+            "return {abort:function(){try{AetherNetUserScriptBridge.abort(__id);}catch(__ae){}if(details.onabort)details.onabort();}};" +
             "}catch(__e){if(details.onerror)details.onerror({error:String(__e)});return {abort:function(){}};}}" +
             "function GM_download(details,filename){try{var __opts=(typeof details==='string')?{url:details,name:filename}:(details||{});" +
             "fetch(__opts.url,{credentials:'same-origin'}).then(function(__r){return __r.blob();}).then(function(__b){" +
             "var __reader=new FileReader();__reader.onloadend=function(){var __b64=String(__reader.result).split(',')[1]||'';" +
-            "ClintUserScriptBridge.download(__b64,__opts.name||'download',__b.type||'application/octet-stream');if(__opts.onload)__opts.onload();};" +
+            "AetherNetUserScriptBridge.download(__b64,__opts.name||'download',__b.type||'application/octet-stream');if(__opts.onload)__opts.onload();};" +
             "__reader.readAsDataURL(__b);}).catch(function(__e){if(__opts.onerror)__opts.onerror(String(__e));});}catch(__e){if(typeof filename==='object'&&filename.onerror)filename.onerror(String(__e));}}" +
             "function GM_getResourceText(name){var __r=__resources[name];if(!__r)return undefined;try{return decodeURIComponent(escape(atob(__r.base64)));}catch(__e){try{return atob(__r.base64);}catch(__e2){return undefined;}}}" +
             "function GM_getResourceURL(name){var __r=__resources[name];if(!__r)return undefined;return 'data:'+__r.mime+';base64,'+__r.base64;}" +

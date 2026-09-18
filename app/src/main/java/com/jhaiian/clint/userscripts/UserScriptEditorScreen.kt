@@ -51,11 +51,11 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialogStatusBarEffect
+import com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect
 import com.jhaiian.clint.ui.listscreen.ListMenuItem
 import com.jhaiian.clint.ui.listscreen.PopupShape
-import com.jhaiian.clint.ui.theme.ClintColors
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,7 +67,7 @@ fun UserScriptEditorScreen(
     hideStatusBar: Boolean = false,
     hideSystemNavigation: Boolean = false
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val fallbackName = stringResource(
         if (state.isNew) R.string.user_scripts_editor_new_title else R.string.user_scripts_editor_edit_title
     )
@@ -174,7 +174,7 @@ fun UserScriptEditorScreen(
 @Composable
 private fun ScriptInfoSheet(
     metadata: UserScriptMetadata,
-    colors: ClintColors,
+    colors: AetherNetColors,
     hideStatusBar: Boolean,
     hideSystemNavigation: Boolean,
     onDismiss: () -> Unit
@@ -192,7 +192,7 @@ private fun ScriptInfoSheet(
         containerColor = colors.popupBackground,
         dragHandle = { BottomSheetDefaults.DragHandle(color = colors.divider) }
     ) {
-        ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         Column(
             Modifier
                 .fillMaxWidth()
@@ -234,7 +234,7 @@ private fun ScriptInfoSheet(
 }
 
 @Composable
-private fun InfoRow(label: String, value: String, colors: ClintColors) {
+private fun InfoRow(label: String, value: String, colors: AetherNetColors) {
     Row(Modifier.fillMaxWidth().padding(vertical = 5.dp)) {
         Text(label, color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.width(96.dp))
         Text(value, color = colors.onSurface, fontSize = 13.sp, modifier = Modifier.weight(1f))
@@ -242,7 +242,7 @@ private fun InfoRow(label: String, value: String, colors: ClintColors) {
 }
 
 @Composable
-private fun InfoListSection(label: String, items: List<String>, colors: ClintColors) {
+private fun InfoListSection(label: String, items: List<String>, colors: AetherNetColors) {
     if (items.isEmpty()) return
     Text(
         "$label (${items.size})",

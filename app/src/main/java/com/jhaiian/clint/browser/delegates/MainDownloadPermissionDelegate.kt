@@ -12,7 +12,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
-import com.jhaiian.clint.downloads.ClintDownloadManager
+import com.jhaiian.clint.downloads.AetherNetDownloadManager
 import com.jhaiian.clint.downloads.DownloadFileHelper
 import com.jhaiian.clint.settings.downloads.DownloadSettingsKeys
 import java.io.File
@@ -164,7 +164,7 @@ private fun MainActivity.checkConflictAndEnqueue(
     onDismiss: () -> Unit,
     onRename: () -> Unit
 ) {
-    val existing = ClintDownloadManager.findActiveDownloadForUrl(url)
+    val existing = AetherNetDownloadManager.findActiveDownloadForUrl(url)
     if (existing != null) {
         uiState.confirmDialogConfig = com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig(
             title = getString(R.string.download_already_active_title),
@@ -208,19 +208,19 @@ private fun MainActivity.checkFilenameConflictAndEnqueue(
 
     if (!fileExists) {
         onDismiss()
-        ClintDownloadManager.enqueue(this, url, filename, userAgent, referer, cookies, retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
+        AetherNetDownloadManager.enqueue(this, url, filename, userAgent, referer, cookies, retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
         return
     }
 
     uiState.conflictDialogRequest = com.jhaiian.clint.downloads.DownloadConflictDialogRequest(
         onAddDuplicate = {
             onDismiss()
-            ClintDownloadManager.enqueue(this, url, filename, userAgent, referer, cookies, retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
+            AetherNetDownloadManager.enqueue(this, url, filename, userAgent, referer, cookies, retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
         },
         onOverride = {
             deleteExistingDownload(filename, locationMode, customLocationUri)
             onDismiss()
-            ClintDownloadManager.enqueue(this, url, filename, userAgent, referer, cookies, retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
+            AetherNetDownloadManager.enqueue(this, url, filename, userAgent, referer, cookies, retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
         },
         onRename = onRename
     )
@@ -231,8 +231,8 @@ private fun MainActivity.deleteExistingDownload(
     locationMode: String,
     customLocationUri: String?
 ) {
-    val matchingIds = ClintDownloadManager.downloadsFlow.value.filter { it.filename == filename }.map { it.id }
-    matchingIds.forEach { ClintDownloadManager.remove(this, it, deleteFile = true) }
+    val matchingIds = AetherNetDownloadManager.downloadsFlow.value.filter { it.filename == filename }.map { it.id }
+    matchingIds.forEach { AetherNetDownloadManager.remove(this, it, deleteFile = true) }
 
     val isSaf = locationMode == DownloadSettingsKeys.MODE_CUSTOM
     if (isSaf) {

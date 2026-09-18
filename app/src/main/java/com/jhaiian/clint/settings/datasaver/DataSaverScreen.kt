@@ -4,7 +4,7 @@ import androidx.compose.material.icons.filled.HideImage
 import androidx.compose.material.icons.filled.PausePresentation
 
 import androidx.compose.foundation.layout.padding
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -15,7 +15,7 @@ import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.setup.SectionLabel
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun DataSaverScreen(
@@ -24,7 +24,7 @@ fun DataSaverScreen(
     onDisableImagesClick: () -> Unit,
     onDisableAutoplayClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold {
         SectionLabel(stringResource(R.string.data_saver_section), colors.primary, Modifier.padding(start = 4.dp, bottom = 8.dp))
@@ -36,7 +36,7 @@ fun DataSaverScreen(
                 colors = colors,
                 onClick = onEnabledClick,
                 trailing = {
-                    ClintSwitch(checked = state.enabled)
+                    AetherNetSwitch(checked = state.enabled)
                 }
             )
             RowDivider(colors.divider)
@@ -48,7 +48,7 @@ fun DataSaverScreen(
                 onClick = onDisableImagesClick,
                 enabled = state.enabled,
                 trailing = {
-                    ClintSwitch(checked = state.disableImages)
+                    AetherNetSwitch(checked = state.disableImages)
                 }
             )
             RowDivider(colors.divider)
@@ -60,7 +60,7 @@ fun DataSaverScreen(
                 onClick = onDisableAutoplayClick,
                 enabled = state.enabled,
                 trailing = {
-                    ClintSwitch(checked = state.disableAutoplay)
+                    AetherNetSwitch(checked = state.disableAutoplay)
                 }
             )
         }

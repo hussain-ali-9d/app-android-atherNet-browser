@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class ConfirmDialogConfig(
     val title: String,
@@ -29,8 +29,8 @@ data class ConfirmDialogConfig(
 @Composable
 fun ConfirmDialogHost(config: ConfirmDialogConfig?, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
     if (config == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = config.title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,

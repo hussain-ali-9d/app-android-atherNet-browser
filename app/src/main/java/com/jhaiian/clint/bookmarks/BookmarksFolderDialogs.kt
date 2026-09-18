@@ -25,10 +25,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintDialogCancelFooter
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetDialogCancelFooter
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun CreateBookmarkFolderDialog(
@@ -36,10 +36,10 @@ fun CreateBookmarkFolderDialog(
     onDismiss: () -> Unit,
     onConfirm: (String) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var name by remember { mutableStateOf("") }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.bookmarks_new_folder_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -54,7 +54,7 @@ fun CreateBookmarkFolderDialog(
             }
         }
     ) {
-        ClintOutlinedTextField(
+        AetherNetOutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text(stringResource(R.string.bookmarks_folder_name_hint)) },
@@ -70,11 +70,11 @@ fun CreateBookmarkDialog(
     onDismiss: () -> Unit,
     onConfirm: (title: String, url: String) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var title by remember { mutableStateOf("") }
     var url by remember { mutableStateOf("") }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.bookmarks_new_bookmark_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -90,14 +90,14 @@ fun CreateBookmarkDialog(
         }
     ) {
         Column(Modifier.fillMaxWidth()) {
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
                 label = { Text(stringResource(R.string.bookmarks_bookmark_title_hint)) },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp)
             )
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = url,
                 onValueChange = { url = it },
                 label = { Text(stringResource(R.string.bookmarks_bookmark_url_hint)) },
@@ -116,10 +116,10 @@ fun RenameBookmarkFolderDialog(
     onDismiss: () -> Unit,
     onConfirm: (String) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var name by remember(folder.id) { mutableStateOf(folder.name) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.bookmarks_rename_folder),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -134,7 +134,7 @@ fun RenameBookmarkFolderDialog(
             }
         }
     ) {
-        ClintOutlinedTextField(
+        AetherNetOutlinedTextField(
             value = name,
             onValueChange = { name = it },
             label = { Text(stringResource(R.string.bookmarks_folder_name_hint)) },
@@ -152,11 +152,11 @@ fun MoveToFolderDialog(
     onSelect: (Long?) -> Unit,
     title: String = stringResource(R.string.bookmarks_move_to_title)
 ) {
-    ClintDialog(
+    AetherNetDialog(
         title = title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
-        footer = { ClintDialogCancelFooter(onDismiss) }
+        footer = { AetherNetDialogCancelFooter(onDismiss) }
     ) {
         Column(Modifier.fillMaxWidth()) {
             MoveToFolderRow(name = stringResource(R.string.bookmarks_title), depth = 0) { onSelect(null) }
@@ -175,11 +175,11 @@ fun BookmarksFormatPickerDialog(
     onSelectHtml: () -> Unit,
     onSelectSqlite: () -> Unit
 ) {
-    ClintDialog(
+    AetherNetDialog(
         title = title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
-        footer = { ClintDialogCancelFooter(onDismiss) }
+        footer = { AetherNetDialogCancelFooter(onDismiss) }
     ) {
         Column(Modifier.fillMaxWidth()) {
             BookmarksFormatRow(
@@ -200,7 +200,7 @@ fun BookmarksFormatPickerDialog(
 
 @Composable
 private fun BookmarksFormatRow(icon: androidx.compose.ui.graphics.vector.ImageVector, name: String, description: String, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier.fillMaxWidth().clickable(onClick = onClick).padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
@@ -214,7 +214,7 @@ private fun BookmarksFormatRow(icon: androidx.compose.ui.graphics.vector.ImageVe
 
 @Composable
 private fun MoveToFolderRow(name: String, depth: Int, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier
             .fillMaxWidth()

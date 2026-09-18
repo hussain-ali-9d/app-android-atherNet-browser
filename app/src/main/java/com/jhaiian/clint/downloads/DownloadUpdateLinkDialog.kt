@@ -26,9 +26,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.ui.unit.dp
 import com.jhaiian.clint.settings.common.dialogSectionBackground
 import com.jhaiian.clint.settings.common.SettingsSection
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -47,7 +47,7 @@ private fun sizesWithinTolerance(a: Long, b: Long): Boolean {
 @Composable
 fun DownloadUpdateLinkDialog(item: DownloadItem, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
     val context = LocalContext.current
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     var text by remember(item.id) { mutableStateOf(item.url) }
     var checking by remember { mutableStateOf(false) }
@@ -72,13 +72,13 @@ fun DownloadUpdateLinkDialog(item: DownloadItem, hideStatusBar: Boolean, hideSys
             try {
                 var size = -1L
                 val headRequest = okhttp3.Request.Builder().url(typed).head().build()
-                val headResponse = ClintDownloadManager.httpClient.newCall(headRequest).execute()
+                val headResponse = AetherNetDownloadManager.httpClient.newCall(headRequest).execute()
                 size = headResponse.header("Content-Length")?.toLongOrNull() ?: -1L
                 headResponse.close()
                 if (size < 0) {
                     val rangeRequest = okhttp3.Request.Builder().url(typed).get()
                         .header("Range", "bytes=0-0").build()
-                    val rangeResponse = ClintDownloadManager.httpClient.newCall(rangeRequest).execute()
+                    val rangeResponse = AetherNetDownloadManager.httpClient.newCall(rangeRequest).execute()
                     val contentRange = rangeResponse.header("Content-Range")
                     if (contentRange != null) {
                         size = contentRange.substringAfterLast("/").trim().toLongOrNull() ?: -1L
@@ -120,7 +120,7 @@ fun DownloadUpdateLinkDialog(item: DownloadItem, hideStatusBar: Boolean, hideSys
     val focusRequester = remember { FocusRequester() }
     LaunchedEffect(Unit) { focusRequester.requestFocus() }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.download_update_link_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -132,7 +132,7 @@ fun DownloadUpdateLinkDialog(item: DownloadItem, hideStatusBar: Boolean, hideSys
                 TextButton(
                     onClick = {
                         val url = verifiedUrl ?: return@TextButton
-                        ClintDownloadManager.updateDownloadUrl(item.id, url)
+                        AetherNetDownloadManager.updateDownloadUrl(item.id, url)
                         onDismiss()
                     },
                     enabled = verifiedUrl != null
@@ -149,7 +149,7 @@ fun DownloadUpdateLinkDialog(item: DownloadItem, hideStatusBar: Boolean, hideSys
         Column(Modifier.padding(horizontal = 16.dp, vertical = 4.dp)) {
             SettingsSection(colors.dialogSectionBackground) {
                 Column(Modifier.padding(16.dp)) {
-                    ClintOutlinedTextField(
+                    AetherNetOutlinedTextField(
                         value = text,
                         onValueChange = { text = it },
                         modifier = Modifier.fillMaxWidth().focusRequester(focusRequester),

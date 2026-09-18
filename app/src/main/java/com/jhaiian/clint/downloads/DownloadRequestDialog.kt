@@ -47,14 +47,14 @@ import androidx.fragment.app.FragmentManager
 import com.jhaiian.clint.settings.common.dialogSectionBackground
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.settings.downloads.DownloadSettingsKeys
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.ClintSlider
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetSlider
+import com.jhaiian.clint.ui.AetherNetSwitch
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
 import com.jhaiian.clint.ui.listscreen.PopupShape
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -100,7 +100,7 @@ fun DownloadRequestDialog(
     onSubmit: (DownloadRequestSubmission, onDismiss: () -> Unit, onRename: () -> Unit) -> Unit
 ) {
     val context = LocalContext.current
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val prefs = remember { androidx.preference.PreferenceManager.getDefaultSharedPreferences(context) }
     val keyboardController = LocalSoftwareKeyboardController.current
     val filenameFocusRequester = remember { FocusRequester() }
@@ -159,7 +159,7 @@ fun DownloadRequestDialog(
         }
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.download_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -247,12 +247,12 @@ fun DownloadRequestDialog(
             SettingsSection(colors.dialogSectionBackground) {
                 Column(Modifier.padding(16.dp)) {
                     Row(Modifier.fillMaxWidth()) {
-                        ClintOutlinedTextField(
+                        AetherNetOutlinedTextField(
                             value = filename, onValueChange = { filename = it },
                             modifier = Modifier.weight(1f).focusRequester(filenameFocusRequester),
                             label = { Text(stringResource(R.string.download_dialog_filename_hint)) }, singleLine = true
                         )
-                        ClintOutlinedTextField(
+                        AetherNetOutlinedTextField(
                             value = extension, onValueChange = { extension = it },
                             modifier = Modifier.width(96.dp).padding(start = 8.dp),
                             label = { Text(stringResource(R.string.download_dialog_extension_hint), maxLines = 1, overflow = TextOverflow.Ellipsis) }, singleLine = true
@@ -325,7 +325,7 @@ fun DownloadRequestDialog(
                                 Text(stringResource(R.string.download_retry_enabled_title), color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                                 Text(stringResource(R.string.download_retry_enabled_summary), color = colors.secondaryText, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp))
                             }
-                            ClintSwitch(checked = retryEnabled)
+                            AetherNetSwitch(checked = retryEnabled)
                         }
                         Row(
                             Modifier.fillMaxWidth().clickable { unmeteredOnly = !unmeteredOnly }.padding(vertical = 10.dp),
@@ -335,7 +335,7 @@ fun DownloadRequestDialog(
                                 Text(stringResource(R.string.download_unmetered_only_title), color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                                 Text(stringResource(R.string.download_dialog_unmetered_summary), color = colors.secondaryText, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp))
                             }
-                            ClintSwitch(checked = unmeteredOnly)
+                            AetherNetSwitch(checked = unmeteredOnly)
                         }
 
                         Text(
@@ -346,7 +346,7 @@ fun DownloadRequestDialog(
                             pluralStringResource(R.plurals.download_split_parts_value, splitParts, splitParts),
                             color = colors.secondaryText, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp)
                         )
-                        ClintSlider(
+                        AetherNetSlider(
                             value = splitParts.toFloat(),
                             onValueChange = { splitParts = it.toInt() },
                             valueRange = 1f..32f, steps = 30
@@ -360,7 +360,7 @@ fun DownloadRequestDialog(
                             pluralStringResource(R.plurals.download_multithreading_value, multithreadingParts, multithreadingParts),
                             color = colors.secondaryText, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp)
                         )
-                        ClintSlider(
+                        AetherNetSlider(
                             value = multithreadingParts.toFloat(),
                             onValueChange = { multithreadingParts = it.toInt() },
                             valueRange = 1f..8f, steps = 6
@@ -375,7 +375,7 @@ fun DownloadRequestDialog(
                             fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp, bottom = 8.dp)
                         )
                         Row(verticalAlignment = Alignment.CenterVertically) {
-                            ClintOutlinedTextField(
+                            AetherNetOutlinedTextField(
                                 value = speedLimitText,
                                 onValueChange = { speedLimitText = it.filter { c -> c.isDigit() } },
                                 modifier = Modifier.weight(1f),
@@ -416,7 +416,7 @@ fun DownloadRequestDialog(
                                     Text(stringResource(R.string.download_schedule_this_title), color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                                     Text(stringResource(R.string.download_schedule_this_summary), color = colors.secondaryText, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp))
                                 }
-                                ClintSwitch(checked = scheduleEnabled)
+                                AetherNetSwitch(checked = scheduleEnabled)
                             }
                             if (scheduleEnabled) {
                                 val dateFmt = remember { android.text.format.DateFormat.getMediumDateFormat(context) }
@@ -462,14 +462,14 @@ fun DownloadRequestDialog(
 
 @Composable
 private fun DialogSectionLabel(text: String) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Text(text, color = colors.primary, fontSize = 12.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 14.dp, bottom = 6.dp))
 }
 
 private fun tryHeadForSize(url: String, userAgent: String): Long {
     return try {
         val request = okhttp3.Request.Builder().url(url).head().header("User-Agent", userAgent).build()
-        val response = ClintDownloadManager.httpClient.newCall(request).execute()
+        val response = AetherNetDownloadManager.httpClient.newCall(request).execute()
         val len = response.header("Content-Length")?.toLongOrNull() ?: -1L
         response.close()
         len
@@ -479,7 +479,7 @@ private fun tryHeadForSize(url: String, userAgent: String): Long {
 private fun tryRangeGetForSize(url: String, userAgent: String): Long {
     return try {
         val request = okhttp3.Request.Builder().url(url).get().header("User-Agent", userAgent).header("Range", "bytes=0-0").build()
-        val response = ClintDownloadManager.httpClient.newCall(request).execute()
+        val response = AetherNetDownloadManager.httpClient.newCall(request).execute()
         val total = response.header("Content-Range")?.substringAfterLast('/')?.toLongOrNull()
             ?: response.header("Content-Length")?.toLongOrNull() ?: -1L
         response.close()

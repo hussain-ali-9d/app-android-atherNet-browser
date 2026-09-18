@@ -3,7 +3,10 @@ package com.jhaiian.clint.backup
 import org.json.JSONArray
 import org.json.JSONObject
 
-const val BACKUP_FORMAT_MAGIC = "clint_backup"
+const val BACKUP_FORMAT_MAGIC = "aethernet_backup"
+
+/** Written by builds before the AetherNet rename; still accepted when restoring. */
+const val LEGACY_BACKUP_FORMAT_MAGIC = "clint_backup"
 const val BACKUP_FORMAT_VERSION = 1
 
 data class BackupManifestEntry(

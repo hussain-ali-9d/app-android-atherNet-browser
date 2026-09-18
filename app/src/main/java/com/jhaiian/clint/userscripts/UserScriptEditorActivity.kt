@@ -11,15 +11,15 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class UserScriptEditorActivity : ClintActivity() {
+class UserScriptEditorActivity : AetherNetActivity() {
 
     private lateinit var db: UserScriptDatabase
     private lateinit var uiState: UserScriptEditorUiState
@@ -49,7 +49,7 @@ class UserScriptEditorActivity : ClintActivity() {
         }
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 Box {
                     UserScriptEditorScreen(
                         state = uiState,

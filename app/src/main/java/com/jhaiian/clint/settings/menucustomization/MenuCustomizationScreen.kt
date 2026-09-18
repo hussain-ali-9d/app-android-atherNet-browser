@@ -53,8 +53,8 @@ import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.menu.icon
 import com.jhaiian.clint.browser.menu.titleRes
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.ClintSwitch
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetSwitch
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun MenuCustomizationScreen(
@@ -65,7 +65,7 @@ fun MenuCustomizationScreen(
     onCommitReorder: (List<String>) -> Unit,
     onResetClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val listState = rememberLazyListState()
     val dragState = remember { MenuCustomizeDragState(listState) }
     val entries = state.entries
@@ -174,7 +174,7 @@ fun MenuCustomizationScreen(
 
 @Composable
 private fun MenuCustomizationToolbar(onBack: () -> Unit, onResetClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Surface(color = colors.surface, shadowElevation = 4.dp, modifier = Modifier.statusBarsPadding()) {
         Row(Modifier.fillMaxWidth().height(56.dp).padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
@@ -203,7 +203,7 @@ private fun MenuCustomizeRow(
     onToggleVisible: () -> Unit,
     dragHandleModifier: Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         modifier
             .fillMaxWidth()
@@ -242,7 +242,7 @@ private fun MenuCustomizeRow(
                 overflow = TextOverflow.Ellipsis,
                 modifier = Modifier.weight(1f).padding(start = 14.dp)
             )
-            ClintSwitch(checked = entry.visible)
+            AetherNetSwitch(checked = entry.visible)
         }
         Icon(
             imageVector = Icons.Filled.DragHandle,
@@ -255,7 +255,7 @@ private fun MenuCustomizeRow(
 
 @Composable
 private fun PinnedSettingsNote() {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier
             .fillMaxWidth()

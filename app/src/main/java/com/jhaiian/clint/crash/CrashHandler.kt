@@ -90,7 +90,7 @@ class CrashHandler(private val context: Context) : Thread.UncaughtExceptionHandl
 
             val report = buildString {
                 appendLine("============================")
-                appendLine("CLINT BROWSER CRASH REPORT")
+                appendLine("AETHERNET BROWSER CRASH REPORT")
                 appendLine("============================")
                 appendLine("Time          : $timestamp")
                 appendLine()

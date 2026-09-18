@@ -1,6 +1,6 @@
 (function() {
-    if (window.__clintSelectPickerInit) return;
-    window.__clintSelectPickerInit = true;
+    if (window.__aetherNetSelectPickerInit) return;
+    window.__aetherNetSelectPickerInit = true;
 
     var nextId = 1;
     var registry = {};
@@ -54,10 +54,10 @@
     }
 
     function openPicker(select) {
-        var id = select.getAttribute('data-clint-select-id');
+        var id = select.getAttribute('data-aethernet-select-id');
         if (!id) {
             id = String(nextId++);
-            select.setAttribute('data-clint-select-id', id);
+            select.setAttribute('data-aethernet-select-id', id);
         }
         registry[id] = select;
         var options = collectOptions(select);
@@ -77,7 +77,7 @@
     document.addEventListener('mousedown', intercept, true);
     document.addEventListener('click', intercept, true);
 
-    window.__clintApplySelect = function(id, valuesJson) {
+    window.__aetherNetApplySelect = function(id, valuesJson) {
         var select = registry[id];
         if (!select) return;
         var values = JSON.parse(valuesJson);

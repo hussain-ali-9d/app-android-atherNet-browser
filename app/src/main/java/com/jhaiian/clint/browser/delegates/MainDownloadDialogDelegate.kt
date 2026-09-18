@@ -12,11 +12,11 @@ import com.jhaiian.clint.downloads.DEFAULT_SPEED_LIMIT_UNIT
 import com.jhaiian.clint.downloads.DownloadRequestDialog
 import com.jhaiian.clint.downloads.DownloadRequestSubmission
 import com.jhaiian.clint.downloads.estimateBase64DecodedSize
-import com.jhaiian.clint.downloads.ClintDownloadManager
+import com.jhaiian.clint.downloads.AetherNetDownloadManager
 import com.jhaiian.clint.downloads.DownloadsActivity
 import com.jhaiian.clint.settings.downloads.DownloadSettingsKeys
-import com.jhaiian.clint.ui.showClintSnackbar
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.showAetherNetSnackbar
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 
 internal fun MainActivity.showDownloadDialog(
     url: String,
@@ -51,7 +51,7 @@ internal fun MainActivity.showDownloadDialog(
         initialSpeedLimitUnit = prefs.getString(DownloadSettingsKeys.PREF_SPEED_LIMIT_UNIT, DEFAULT_SPEED_LIMIT_UNIT) ?: DEFAULT_SPEED_LIMIT_UNIT,
         onSubmit = { submission, dismiss, onRename ->
             if (com.jhaiian.clint.downloads.DownloadFileHelper.isCustomLocationAccessible(this, submission.locationMode, submission.customLocationUri)) {
-                showClintSnackbar(
+                showAetherNetSnackbar(
                     message = getString(R.string.toast_downloading, submission.filename),
                     actionLabel = getString(R.string.download_started_view_action),
                     onAction = { DownloadsActivity.open(this) }
@@ -92,14 +92,14 @@ internal fun MainActivity.showDownloadDialogForBlob(
             val locationMode = prefs.getString(DownloadSettingsKeys.PREF_DOWNLOAD_LOCATION_MODE, DownloadSettingsKeys.MODE_DEFAULT) ?: DownloadSettingsKeys.MODE_DEFAULT
             val customLocationUri = prefs.getString(DownloadSettingsKeys.PREF_DOWNLOAD_CUSTOM_URI, null)
             if (com.jhaiian.clint.downloads.DownloadFileHelper.isCustomLocationAccessible(this, locationMode, customLocationUri)) {
-                showClintSnackbar(
+                showAetherNetSnackbar(
                     message = getString(R.string.toast_downloading, submission.filename),
                     actionLabel = getString(R.string.download_started_view_action),
                     onAction = { DownloadsActivity.open(this) }
                 )
             }
             dismiss()
-            ClintDownloadManager.enqueueBlob(this, base64, submission.filename, mimeType)
+            AetherNetDownloadManager.enqueueBlob(this, base64, submission.filename, mimeType)
         }
     )
 }
@@ -141,7 +141,7 @@ private fun MainActivity.mountDownloadRequestDialog(
     val dismiss: () -> Unit = { overlayContent = null }
 
     overlayContent = {
-        ClintComposeTheme(theme = theme) {
+        AetherNetComposeTheme(theme = theme) {
             DownloadRequestDialog(
                 hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
                 url = url,

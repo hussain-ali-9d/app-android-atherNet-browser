@@ -67,9 +67,9 @@ import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
 import com.jhaiian.clint.ui.listscreen.ListFastScroller
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
-import com.jhaiian.clint.ui.rememberClintFavicon
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.rememberAetherNetFavicon
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatRelativeTimestamp
 
 private sealed class BookmarksEntry {
@@ -95,7 +95,7 @@ fun BookmarksScreen(
     onExportHtml: (android.net.Uri) -> Unit,
     onExportSqlite: (android.net.Uri) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     val importHtmlLauncher = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri -> uri?.let(onImportHtml) }
     val importSqliteLauncher = androidx.activity.compose.rememberLauncherForActivityResult(androidx.activity.result.contract.ActivityResultContracts.OpenDocument()) { uri -> uri?.let(onImportSqlite) }
@@ -320,7 +320,7 @@ private fun BookmarksBreadcrumb(
     onRootClick: () -> Unit,
     onFolderClick: (Long) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(horizontal = 16.dp, vertical = 10.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -359,7 +359,7 @@ private fun BookmarksToolbar(
     onImportClick: () -> Unit,
     onExportClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
 
     Surface(color = colors.surface, shadowElevation = 4.dp, modifier = Modifier.statusBarsPadding()) {
@@ -373,7 +373,7 @@ private fun BookmarksToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.bookmarks_search_hint),
@@ -457,7 +457,7 @@ private fun FolderRow(
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
 
     Row(
@@ -496,7 +496,7 @@ private fun BookmarkRow(
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
 
     Row(
@@ -509,7 +509,7 @@ private fun BookmarkRow(
             .padding(start = 14.dp, end = 14.dp, top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val favicon = rememberClintFavicon(item.url, item.faviconUrl)
+        val favicon = rememberAetherNetFavicon(item.url, item.faviconUrl)
         Box(Modifier.size(40.dp).clip(CircleShape).background(colors.surfaceVariant), contentAlignment = Alignment.Center) {
             if (favicon != null) {
                 Image(bitmap = favicon.asImageBitmap(), contentDescription = null, modifier = Modifier.size(22.dp))
@@ -550,7 +550,7 @@ private fun BoxScope.BookmarksFabMenu(
     onAddFolderClick: () -> Unit,
     onAddBookmarkClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val menuOpen = isOpen && showPrimaryFab
     val rotation by animateFloatAsState(if (menuOpen) 45f else 0f, label = "bookmarksFabMenuRotation")
 
@@ -597,7 +597,7 @@ private fun BoxScope.BookmarksFabMenu(
 
 @Composable
 private fun FabMenuPill(text: String, icon: androidx.compose.ui.graphics.vector.ImageVector, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier
             .clip(RoundedCornerShape(20.dp))

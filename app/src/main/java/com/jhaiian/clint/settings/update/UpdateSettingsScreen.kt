@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -22,17 +22,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.settings.common.RowDivider
-import com.jhaiian.clint.ui.ClintDialog
+import com.jhaiian.clint.ui.AetherNetDialog
 import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.setup.SectionLabel
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 private fun BetaEnrolConfirmDialog(hideStatusBar: Boolean, hideSystemNavigation: Boolean, onConfirm: () -> Unit, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.beta_enrol_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -70,7 +70,7 @@ fun UpdateSettingsScreen(
     onBetaChannelClick: () -> Unit,
     onBetaConfirm: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold(
         overlay = {
@@ -92,7 +92,7 @@ fun UpdateSettingsScreen(
                 colors = colors,
                 onClick = onCheckOnLaunchClick,
                 trailing = {
-                    ClintSwitch(checked = state.checkOnLaunch)
+                    AetherNetSwitch(checked = state.checkOnLaunch)
                 }
             )
             RowDivider(colors.divider)
@@ -104,7 +104,7 @@ fun UpdateSettingsScreen(
                 onClick = onSkipOnMeteredClick,
                 enabled = state.checkOnLaunch,
                 trailing = {
-                    ClintSwitch(checked = state.skipOnMetered)
+                    AetherNetSwitch(checked = state.skipOnMetered)
                 }
             )
             RowDivider(colors.divider)
@@ -134,7 +134,7 @@ fun UpdateSettingsScreen(
                 colors = colors,
                 onClick = onBetaChannelClick,
                 trailing = {
-                    ClintSwitch(checked = state.betaChannel)
+                    AetherNetSwitch(checked = state.betaChannel)
                 }
             )
         }

@@ -116,7 +116,7 @@ private fun DownloadsActivity.checkConflictAndEnqueueManual(
     onDismiss: () -> Unit,
     onRename: () -> Unit
 ) {
-    val existing = ClintDownloadManager.findActiveDownloadForUrl(url)
+    val existing = AetherNetDownloadManager.findActiveDownloadForUrl(url)
     if (existing != null) {
         uiState.confirmDialogConfig = com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig(
             title = getString(R.string.download_already_active_title),
@@ -147,7 +147,7 @@ private fun DownloadsActivity.enqueueManualDownload(
     onDismiss: () -> Unit
 ) {
     if (DownloadFileHelper.isCustomLocationAccessible(this, locationMode, customLocationUri)) onDismiss()
-    ClintDownloadManager.enqueue(this, url, filename, userAgent, "", "", retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
+    AetherNetDownloadManager.enqueue(this, url, filename, userAgent, "", "", retryEnabled, unmeteredOnly, splitParts, multithreadingParts, speedLimitBytesPerSec, locationMode, customLocationUri, scheduledStartAtMillis)
 }
 
 private fun DownloadsActivity.checkFilenameConflictAndEnqueueManual(
@@ -193,8 +193,8 @@ private fun DownloadsActivity.deleteExistingManual(
     locationMode: String,
     customLocationUri: String?
 ) {
-    val matchingIds = ClintDownloadManager.downloadsFlow.value.filter { it.filename == filename }.map { it.id }
-    matchingIds.forEach { ClintDownloadManager.remove(this, it, deleteFile = true) }
+    val matchingIds = AetherNetDownloadManager.downloadsFlow.value.filter { it.filename == filename }.map { it.id }
+    matchingIds.forEach { AetherNetDownloadManager.remove(this, it, deleteFile = true) }
     val isSaf = locationMode == DownloadSettingsKeys.MODE_CUSTOM
     if (isSaf) {
         val treeUri = customLocationUri?.let { Uri.parse(it) } ?: DownloadFileHelper.getSafTreeUri(this)

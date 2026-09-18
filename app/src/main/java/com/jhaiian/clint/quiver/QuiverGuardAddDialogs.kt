@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
-import com.jhaiian.clint.ui.ClintOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -22,8 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 
 @Composable
@@ -35,7 +35,7 @@ fun AddFilterListFromLinkDialog(
     onConfirm: (url: String, title: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var url by remember { mutableStateOf("") }
     var title by remember { mutableStateOf("") }
     var urlError by remember { mutableStateOf<String?>(null) }
@@ -55,7 +55,7 @@ fun AddFilterListFromLinkDialog(
         }
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.filter_list_add_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -86,7 +86,7 @@ fun AddFilterListFromLinkDialog(
         }
     ) {
         Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = url,
                 onValueChange = {
                     url = it
@@ -100,7 +100,7 @@ fun AddFilterListFromLinkDialog(
                 modifier = Modifier.fillMaxWidth()
             )
             if (isFetched) {
-                ClintOutlinedTextField(
+                AetherNetOutlinedTextField(
                     value = title,
                     onValueChange = { title = it },
                     label = { Text(stringResource(R.string.filter_list_add_title_hint)) },
@@ -136,11 +136,11 @@ internal fun AddFilterListFromFileDialog(
     onConfirm: (title: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var title by remember { mutableStateOf(imported.suggestedTitle) }
     var isSaving by remember { mutableStateOf(false) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.filter_list_add_file_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -164,7 +164,7 @@ internal fun AddFilterListFromFileDialog(
                 stringResource(R.string.filter_list_add_file_summary, imported.ruleCount, formatFileSize(imported.sizeBytes)),
                 color = colors.secondaryText, fontSize = 13.sp
             )
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = title,
                 onValueChange = { title = it },
                 label = { Text(stringResource(R.string.filter_list_add_title_hint)) },

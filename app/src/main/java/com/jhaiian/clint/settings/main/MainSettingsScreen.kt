@@ -21,7 +21,7 @@ import com.jhaiian.clint.settings.common.RowDivider
 import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun MainSettingsScreen(
@@ -37,9 +37,9 @@ fun MainSettingsScreen(
     onMiscClick: () -> Unit,
     onDebugClick: () -> Unit,
     onAboutClick: () -> Unit,
-    onSupportClintClick: () -> Unit
+    onSupportUpstreamClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold {
         SettingsSection(colors.cardBackground) {
@@ -135,10 +135,10 @@ fun MainSettingsScreen(
             RowDivider(colors.divider)
             SettingsRow(
                 icon = androidx.compose.material.icons.Icons.Filled.VolunteerActivism,
-                title = stringResource(R.string.support_clint_title),
-                summary = stringResource(R.string.support_clint_summary),
+                title = stringResource(R.string.support_upstream_title),
+                summary = stringResource(R.string.support_upstream_summary),
                 colors = colors,
-                onClick = onSupportClintClick
+                onClick = onSupportUpstreamClick
             )
             RowDivider(colors.divider)
             SettingsRow(

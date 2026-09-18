@@ -33,15 +33,15 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.ui.rememberMaxContentWidth
-import com.jhaiian.clint.ui.theme.ClintColors
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun SettingsScreenScaffold(
     overlay: @Composable () -> Unit = {},
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Surface(color = colors.background, modifier = Modifier.fillMaxSize()) {
         val maxContentWidth = rememberMaxContentWidth(LocalContext.current)
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -57,7 +57,7 @@ fun SettingsScreenScaffold(
     }
 }
 
-val ClintColors.dialogSectionBackground: Color
+val AetherNetColors.dialogSectionBackground: Color
     get() = lerp(popupBackground, Color.White, 0.08f)
 
 @Composable
@@ -82,7 +82,7 @@ fun SettingsRow(
     icon: androidx.compose.ui.graphics.vector.ImageVector,
     title: String,
     summary: String,
-    colors: ClintColors,
+    colors: AetherNetColors,
     onClick: () -> Unit,
     enabled: Boolean = true,
     trailing: @Composable () -> Unit = {}

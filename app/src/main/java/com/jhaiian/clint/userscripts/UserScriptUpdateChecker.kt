@@ -5,7 +5,7 @@ import android.os.SystemClock
 import android.webkit.CookieManager
 import android.webkit.WebSettings
 import com.jhaiian.clint.R
-import com.jhaiian.clint.downloads.ClintDownloadManager
+import com.jhaiian.clint.downloads.AetherNetDownloadManager
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -94,7 +94,7 @@ internal object UserScriptUpdateChecker {
                 }
             }
 
-            val call = ClintDownloadManager.httpClient.newCall(requestBuilder.build())
+            val call = AetherNetDownloadManager.httpClient.newCall(requestBuilder.build())
             currentCoroutineContext()[Job]?.invokeOnCompletion { call.cancel() }
 
             call.execute().use { response ->

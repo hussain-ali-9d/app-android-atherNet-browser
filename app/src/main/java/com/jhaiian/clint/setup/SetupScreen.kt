@@ -22,8 +22,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalLayoutDirection
 import androidx.compose.ui.unit.dp
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 private val WideScreenBreakpointDp = 600
 private val CenteredContentMaxWidth = 480.dp
@@ -52,8 +52,8 @@ fun SetupScreen(
     onSetDefaultBrowser: () -> Unit,
     onSkipDefaultBrowser: () -> Unit
 ) {
-    ClintComposeTheme(theme = state.theme) {
-        val colors = LocalClintColors.current
+    AetherNetComposeTheme(theme = state.theme) {
+        val colors = LocalAetherNetColors.current
         Surface(color = colors.background, modifier = Modifier.fillMaxSize()) {
             val insets = WindowInsets.systemBars.asPaddingValues()
             val layoutDirection = LocalLayoutDirection.current

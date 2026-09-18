@@ -52,8 +52,8 @@ internal object DownloadWorker {
         if (item.unmeteredOnly && !DownloadNetworkMonitor.isNetworkUnmetered(context)) {
             DownloadNetworkMonitor.unmeteredPausedIds.add(item.id)
             item = item.copy(status = DownloadStatus.PAUSED, waitingForUnmetered = true, speedBytesPerSec = 0L)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             context.getSystemService(NotificationManager::class.java).cancel(item.id)
             DownloadNotificationHelper.showWaitingUnmeteredNotification(context, item)
             return
@@ -63,7 +63,7 @@ internal object DownloadWorker {
 
         val safMode = DownloadFileHelper.isSafCustomMode(context, item) &&
             (directCustomDir == null || DownloadFileHelper.isInTempDir(context, item.file))
-        val speedLimiter = ClintDownloadManager.activeSpeedLimiters.getOrPut(item.id) {
+        val speedLimiter = AetherNetDownloadManager.activeSpeedLimiters.getOrPut(item.id) {
             SpeedLimiter(item.speedLimitBytesPerSec)
         }
 
@@ -79,8 +79,8 @@ internal object DownloadWorker {
         try {
             if (resumeEffectiveParts > 1) {
                 item = item.copy(status = DownloadStatus.DOWNLOADING, activeStartedAt = System.currentTimeMillis())
-                ClintDownloadManager.persistDownload(item)
-                ClintDownloadManager.publish(item)
+                AetherNetDownloadManager.persistDownload(item)
+                AetherNetDownloadManager.publish(item)
                 runParallelDownload(
                     context, item, item.file!!, resumeEffectiveParts, item.multithreadingParts, safMode,
                     speedLimiter = speedLimiter,
@@ -90,8 +90,8 @@ internal object DownloadWorker {
             }
 
             item = item.copy(status = DownloadStatus.CONNECTING, speedBytesPerSec = 0L)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             DownloadNotificationHelper.showProgressNotification(context, item)
 
             val request = Request.Builder()
@@ -107,10 +107,10 @@ internal object DownloadWorker {
                 .build()
 
             val response = withContext(Dispatchers.IO) {
-                runInterruptible { ClintDownloadManager.httpClient.newCall(request).execute() }
+                runInterruptible { AetherNetDownloadManager.httpClient.newCall(request).execute() }
             }
 
-            if (ClintDownloadManager.pauseRequested.remove(item.id)) {
+            if (AetherNetDownloadManager.pauseRequested.remove(item.id)) {
                 response.close()
                 handlePauseTransition(context, item)
                 return
@@ -146,7 +146,7 @@ internal object DownloadWorker {
                     bytesDownloaded = 0L
                 )
                 writeStartPos = 0L
-                ClintDownloadManager.publish(item)
+                AetherNetDownloadManager.publish(item)
 
                 val peeked = withContext(Dispatchers.IO) {
                     runInterruptible {
@@ -191,7 +191,7 @@ internal object DownloadWorker {
                     if (allocated == null) return
                     item = allocated
 
-                    if (ClintDownloadManager.pauseRequested.remove(item.id)) {
+                    if (AetherNetDownloadManager.pauseRequested.remove(item.id)) {
                         handlePauseTransition(context, item)
                         return
                     }
@@ -200,8 +200,8 @@ internal object DownloadWorker {
                     if (item.resumable && effectiveParts > 1 && !item.parallelRateLimited) {
                         response.close()
                         item = item.copy(status = DownloadStatus.DOWNLOADING, activeStartedAt = System.currentTimeMillis())
-                        ClintDownloadManager.persistDownload(item)
-                        ClintDownloadManager.publish(item)
+                        AetherNetDownloadManager.persistDownload(item)
+                        AetherNetDownloadManager.publish(item)
                         runParallelDownload(context, item, outputFile, effectiveParts, item.multithreadingParts, safMode, speedLimiter = speedLimiter)
                         return
                     }
@@ -215,8 +215,8 @@ internal object DownloadWorker {
             }
 
             item = item.copy(status = DownloadStatus.DOWNLOADING, activeStartedAt = System.currentTimeMillis())
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
 
             val copyResult = copyToFile(context, item, inputStream, outputFile, writeStartPos, speedLimiter)
             item = copyResult.item
@@ -231,10 +231,10 @@ internal object DownloadWorker {
             } else {
                 item = finalizeElapsed(item)
                 item = item.copy(completedAt = System.currentTimeMillis(), status = DownloadStatus.COMPLETE)
-                ClintDownloadManager.persistDownload(item)
-                ClintDownloadManager.publish(item)
+                AetherNetDownloadManager.persistDownload(item)
+                AetherNetDownloadManager.publish(item)
                 DownloadNotificationHelper.showCompleteNotification(context, item)
-                ClintDownloadManager.tryDequeueNext(context)
+                AetherNetDownloadManager.tryDequeueNext(context)
                 scanCompletedFile(context, item)
             }
         } catch (e: Throwable) {
@@ -246,8 +246,8 @@ internal object DownloadWorker {
     private suspend fun handlePauseTransition(context: Context, item: DownloadItem) {
         var paused = finalizeElapsed(item)
         paused = paused.copy(status = DownloadStatus.PAUSED, speedBytesPerSec = 0L)
-        ClintDownloadManager.persistDownload(paused)
-        ClintDownloadManager.publish(paused)
+        AetherNetDownloadManager.persistDownload(paused)
+        AetherNetDownloadManager.publish(paused)
         context.getSystemService(NotificationManager::class.java).cancel(paused.id)
         if (paused.id in DownloadScheduleMonitor.scheduleWaitingIds) {
             DownloadNotificationHelper.showWaitingScheduleNotification(context, paused)
@@ -256,7 +256,7 @@ internal object DownloadWorker {
         } else {
             DownloadNotificationHelper.showPausedNotification(context, paused)
         }
-        ClintDownloadManager.tryDequeueNext(context)
+        AetherNetDownloadManager.tryDequeueNext(context)
     }
 
     private suspend fun handleAttemptFailure(context: Context, item: DownloadItem, e: Throwable) {
@@ -264,8 +264,8 @@ internal object DownloadWorker {
             if (item.status != DownloadStatus.PAUSED) {
                 if (e is CancellationException) {
                     item.file?.delete()
-                    ClintDownloadManager.persistDownload(item)
-                    ClintDownloadManager.publish(item)
+                    AetherNetDownloadManager.persistDownload(item)
+                    AetherNetDownloadManager.publish(item)
                 } else {
                     fail(context, item, e.message ?: context.getString(R.string.download_error_unknown))
                 }
@@ -298,7 +298,7 @@ internal object DownloadWorker {
         coroutineScope {
             val pauseWatcher = launch(Dispatchers.IO) {
                 while (isActive) {
-                    if (ClintDownloadManager.pauseRequested.contains(current.id)) {
+                    if (AetherNetDownloadManager.pauseRequested.contains(current.id)) {
                         runCatching { inputStream.close() }
                         break
                     }
@@ -313,11 +313,11 @@ internal object DownloadWorker {
                             inputStream.use { input ->
                                 val buffer = ByteArray(65536)
                                 while (true) {
-                                    if (ClintDownloadManager.pauseRequested.contains(current.id)) break
+                                    if (AetherNetDownloadManager.pauseRequested.contains(current.id)) break
                                     val read = try {
                                         input.read(buffer)
                                     } catch (e: IOException) {
-                                        if (ClintDownloadManager.pauseRequested.contains(current.id)) break else throw e
+                                        if (AetherNetDownloadManager.pauseRequested.contains(current.id)) break else throw e
                                     }
                                     if (read == -1) {
                                         reachedEof = true
@@ -337,10 +337,10 @@ internal object DownloadWorker {
                                             lastSpeedTime = now
                                         }
                                         DownloadNotificationHelper.showProgressNotification(context, current)
-                                        ClintDownloadManager.publish(ClintDownloadManager.withLiveSettings(current))
+                                        AetherNetDownloadManager.publish(AetherNetDownloadManager.withLiveSettings(current))
                                         if (now - lastCheckpointTime >= PROGRESS_CHECKPOINT_INTERVAL_MS) {
                                             lastCheckpointTime = now
-                                            ClintDownloadManager.checkpointProgress(current.id, current.bytesDownloaded, 0L, "")
+                                            AetherNetDownloadManager.checkpointProgress(current.id, current.bytesDownloaded, 0L, "")
                                         }
                                     }
                                 }
@@ -363,16 +363,16 @@ internal object DownloadWorker {
         if (treeUri == null || tempFile == null) {
             item = finalizeElapsed(item)
             item = item.copy(completedAt = System.currentTimeMillis(), status = DownloadStatus.COMPLETE)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             DownloadNotificationHelper.showCompleteNotification(context, item)
-            ClintDownloadManager.tryDequeueNext(context)
+            AetherNetDownloadManager.tryDequeueNext(context)
             return
         }
 
         item = item.copy(status = DownloadStatus.COPYING_TEMP, copyProgress = 0)
-        ClintDownloadManager.persistDownload(item)
-        ClintDownloadManager.publish(item)
+        AetherNetDownloadManager.persistDownload(item)
+        AetherNetDownloadManager.publish(item)
         DownloadNotificationHelper.showCopyingTempNotification(context, item)
 
         try {
@@ -407,7 +407,7 @@ internal object DownloadWorker {
                                     if (newProgress != working.copyProgress) {
                                         working = working.copy(copyProgress = newProgress)
                                         DownloadNotificationHelper.showCopyingTempNotification(context, working)
-                                        ClintDownloadManager.publish(working)
+                                        AetherNetDownloadManager.publish(working)
                                         lastNotifiedProgress = newProgress
                                     }
                                 }
@@ -420,17 +420,17 @@ internal object DownloadWorker {
             }
 
             item = item.copy(status = DownloadStatus.DELETING_TEMP)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             DownloadNotificationHelper.showDeletingTempNotification(context, item)
             withContext(Dispatchers.IO) { tempFile.delete() }
 
             item = finalizeElapsed(item)
             item = item.copy(completedAt = System.currentTimeMillis(), status = DownloadStatus.COMPLETE)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             DownloadNotificationHelper.showCompleteNotification(context, item)
-            ClintDownloadManager.tryDequeueNext(context)
+            AetherNetDownloadManager.tryDequeueNext(context)
             scanCompletedFile(context, item)
         } catch (e: Throwable) {
             withContext(Dispatchers.IO) { tempFile.delete() }
@@ -443,14 +443,14 @@ internal object DownloadWorker {
 
     private suspend fun preAllocateFile(context: Context, initialItem: DownloadItem, file: File): DownloadItem? {
         var item = initialItem.copy(status = DownloadStatus.ALLOCATING, allocationProgress = 0)
-        ClintDownloadManager.persistDownload(item)
-        ClintDownloadManager.publish(item)
+        AetherNetDownloadManager.persistDownload(item)
+        AetherNetDownloadManager.publish(item)
         DownloadNotificationHelper.showAllocationNotification(context, item)
 
-        if (item.id in ClintDownloadManager.removedIds) {
+        if (item.id in AetherNetDownloadManager.removedIds) {
             withContext(Dispatchers.IO) { file.delete() }
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             return null
         }
 
@@ -461,7 +461,7 @@ internal object DownloadWorker {
                 }
             }
             item = item.copy(allocationProgress = 100)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.publish(item)
             DownloadNotificationHelper.showAllocationNotification(context, item)
             item
         } catch (e: Throwable) {
@@ -537,7 +537,7 @@ internal object DownloadWorker {
         }
 
         fun stopRequested(): Boolean =
-            firstError.get() != null || rateLimitDetected.get() || ClintDownloadManager.pauseRequested.contains(item.id)
+            firstError.get() != null || rateLimitDetected.get() || AetherNetDownloadManager.pauseRequested.contains(item.id)
 
         coroutineScope {
             val partJobs = mutableListOf<Job>()
@@ -590,13 +590,13 @@ internal object DownloadWorker {
                         lastSpeedTime = now
                     }
                     DownloadNotificationHelper.showProgressNotification(context, item)
-                    ClintDownloadManager.publish(ClintDownloadManager.withLiveSettings(item))
+                    AetherNetDownloadManager.publish(AetherNetDownloadManager.withLiveSettings(item))
                 }
 
                 val now = System.currentTimeMillis()
                 if (now - lastCheckpointTime >= PROGRESS_CHECKPOINT_INTERVAL_MS) {
                     lastCheckpointTime = now
-                    ClintDownloadManager.checkpointProgress(
+                    AetherNetDownloadManager.checkpointProgress(
                         item.id, total, partsToMask(partCompleted), encodePartOffsets(partBytesDownloaded, partCompleted)
                     )
                 }
@@ -659,12 +659,12 @@ internal object DownloadWorker {
     ) {
         var attempt = 0
         while (attempt < MAX_PART_RETRIES) {
-            if (firstError.get() != null || ClintDownloadManager.pauseRequested.contains(item.id) || rateLimitDetected.get()) return
+            if (firstError.get() != null || AetherNetDownloadManager.pauseRequested.contains(item.id) || rateLimitDetected.get()) return
 
             val waitMs = rateLimitUntilMs.get() - System.currentTimeMillis()
             if (waitMs > 0) {
                 delay(waitMs)
-                if (firstError.get() != null || ClintDownloadManager.pauseRequested.contains(item.id) || rateLimitDetected.get()) return
+                if (firstError.get() != null || AetherNetDownloadManager.pauseRequested.contains(item.id) || rateLimitDetected.get()) return
             }
 
             val resumeStart = start + partBytesDownloaded[partIndex].get()
@@ -687,7 +687,7 @@ internal object DownloadWorker {
                     .build()
 
                 val response = withContext(Dispatchers.IO) {
-                    runInterruptible { ClintDownloadManager.httpClient.newCall(request).execute() }
+                    runInterruptible { AetherNetDownloadManager.httpClient.newCall(request).execute() }
                 }
 
                 if (response.code == 429) {
@@ -729,7 +729,7 @@ internal object DownloadWorker {
                                     while (true) {
                                         if (firstError.get() != null
                                             || Thread.currentThread().isInterrupted
-                                            || ClintDownloadManager.pauseRequested.contains(item.id)
+                                            || AetherNetDownloadManager.pauseRequested.contains(item.id)
                                             || rateLimitDetected.get()
                                         ) break
                                         val read = input.read(buffer)
@@ -786,7 +786,7 @@ internal object DownloadWorker {
             )
         }
 
-        if (ClintDownloadManager.pauseRequested.remove(item.id)) {
+        if (AetherNetDownloadManager.pauseRequested.remove(item.id)) {
             item = interruptedProgress()
             handlePauseTransition(context, item)
             return
@@ -795,8 +795,8 @@ internal object DownloadWorker {
         if (rateLimitDetected.get()) {
             item = interruptedProgress().copy(parallelRateLimited = true, speedBytesPerSec = 0L)
             item = finalizeElapsed(item)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             val waitMs = rateLimitUntilMs.get() - System.currentTimeMillis()
             if (waitMs > 0) delay(waitMs)
             run(context, item)
@@ -816,10 +816,10 @@ internal object DownloadWorker {
         } else {
             item = finalizeElapsed(item)
             item = item.copy(completedAt = System.currentTimeMillis(), status = DownloadStatus.COMPLETE)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             DownloadNotificationHelper.showCompleteNotification(context, item)
-            ClintDownloadManager.tryDequeueNext(context)
+            AetherNetDownloadManager.tryDequeueNext(context)
             scanCompletedFile(context, item)
         }
     }
@@ -833,11 +833,11 @@ internal object DownloadWorker {
     private fun isDiskFull(msg: String): Boolean = msg.contains("No space left on device", ignoreCase = true)
 
     suspend fun fail(context: Context, initialItem: DownloadItem, msg: String, scheduleRetry: Boolean = true) {
-        val ctx = ClintDownloadManager.appContext ?: context
+        val ctx = AetherNetDownloadManager.appContext ?: context
         var item = initialItem
 
         if (!isServerError(msg) &&
-            item.id !in ClintDownloadManager.removedIds &&
+            item.id !in AetherNetDownloadManager.removedIds &&
             !DownloadNetworkMonitor.isNetworkAvailable(ctx)
         ) {
             item = finalizeElapsed(item)
@@ -848,14 +848,14 @@ internal object DownloadWorker {
             DownloadNetworkMonitor.networkWaitingIds.add(item.id)
             context.getSystemService(NotificationManager::class.java).cancel(item.id)
             DownloadNotificationHelper.showWaitingNetworkNotification(ctx, item)
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
-            ClintDownloadManager.tryDequeueNext(ctx)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
+            AetherNetDownloadManager.tryDequeueNext(ctx)
             return
         }
 
         val prefs = PreferenceManager.getDefaultSharedPreferences(ctx)
-        val retryEnabled = ClintDownloadManager.withLiveSettings(item).retryEnabled
+        val retryEnabled = AetherNetDownloadManager.withLiveSettings(item).retryEnabled
         val retryUnrecoverable = prefs.getBoolean(
             DownloadSettingsKeys.PREF_RETRY_UNRECOVERABLE, DownloadSettingsKeys.DEFAULT_RETRY_UNRECOVERABLE
         )
@@ -872,7 +872,7 @@ internal object DownloadWorker {
         val canRetry = scheduleRetry &&
             retryEnabled &&
             (retryUnrecoverable || (!serverError && !diskFull)) &&
-            item.id !in ClintDownloadManager.removedIds &&
+            item.id !in AetherNetDownloadManager.removedIds &&
             (retryCount == 0 || item.retryAttempt < retryCount)
 
         if (canRetry) {
@@ -884,31 +884,31 @@ internal object DownloadWorker {
                 errorMessage = null,
                 speedBytesPerSec = 0L
             )
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             if (item.retryAttempt == 1) {
                 DownloadNotificationHelper.showRetryingNotification(ctx, item)
             }
             delay(retryInterval * 1000L)
-            if (item.id in ClintDownloadManager.removedIds) {
+            if (item.id in AetherNetDownloadManager.removedIds) {
 
-            } else if (ClintDownloadManager.pauseRequested.remove(item.id)) {
+            } else if (AetherNetDownloadManager.pauseRequested.remove(item.id)) {
                 item = item.copy(retryDelaySec = 0)
                 handlePauseTransition(context, item)
             } else {
                 item = item.copy(retryDelaySec = 0)
-                ClintDownloadManager.publish(item)
+                AetherNetDownloadManager.publish(item)
                 run(context, item)
             }
-        } else if (item.id !in ClintDownloadManager.removedIds) {
+        } else if (item.id !in AetherNetDownloadManager.removedIds) {
             item = item.copy(
                 retryAttempt = 0, status = DownloadStatus.FAILED,
                 lastErrorWasServerError = serverError, errorMessage = displayMsg
             )
-            ClintDownloadManager.persistDownload(item)
-            ClintDownloadManager.publish(item)
+            AetherNetDownloadManager.persistDownload(item)
+            AetherNetDownloadManager.publish(item)
             DownloadNotificationHelper.showFailedNotification(context, item)
-            ClintDownloadManager.tryDequeueNext(context)
+            AetherNetDownloadManager.tryDequeueNext(context)
         }
     }
 

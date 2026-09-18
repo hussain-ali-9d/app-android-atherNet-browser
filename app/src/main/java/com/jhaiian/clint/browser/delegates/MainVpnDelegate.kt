@@ -10,8 +10,8 @@ import com.jhaiian.clint.vpn.BrowserVpnState
 import com.jhaiian.clint.vpn.VpnCountry
 import org.json.JSONObject
 
-internal const val HOME_PAGE_VPN_URL = "clint://vpn"
-internal const val HOME_PAGE_VPN_TOGGLE_URL = "clint://vpn-toggle"
+internal const val HOME_PAGE_VPN_URL = "aethernet://vpn"
+internal const val HOME_PAGE_VPN_TOGGLE_URL = "aethernet://vpn-toggle"
 
 internal fun MainActivity.openVpnSheet() {
     uiState.vpnSheetOpen = true
@@ -38,7 +38,7 @@ internal fun MainActivity.onVpnPermissionResult(granted: Boolean) {
     }
 }
 
-/** Links on the home page (`clint://…`) that act on the browser instead of navigating. */
+/** Links on the home page (`aethernet://…`) that act on the browser instead of navigating. */
 internal fun MainActivity.handleHomePageLink(uri: Uri) {
     when (uri.toString()) {
         HOME_PAGE_SEARCH_URL -> openSearchOverlayFromHomePage()
@@ -79,6 +79,6 @@ internal fun MainActivity.vpnStateJson(state: BrowserVpnState): String {
 internal fun MainActivity.pushVpnStateToHomePages(state: BrowserVpnState) {
     val script = "window.aethernetVpn && window.aethernetVpn(${vpnStateJson(state)})"
     tabManager.tabs
-        .filter { it.webView.url == HOME_PAGE_URL }
+        .filter { isHomePageUrl(it.webView.url) }
         .forEach { it.webView.evaluateJavascript(script, null) }
 }

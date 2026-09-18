@@ -31,7 +31,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.launch
 
 @Composable
@@ -43,7 +43,7 @@ fun ListFastScroller(
     modifier: Modifier = Modifier,
     headerItemCount: Int = 0
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val coroutineScope = rememberCoroutineScope()
     val textMeasurer = rememberTextMeasurer()
 

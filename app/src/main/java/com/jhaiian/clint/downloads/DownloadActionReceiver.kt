@@ -16,8 +16,8 @@ class DownloadActionReceiver : BroadcastReceiver() {
         val id = intent.getIntExtra(EXTRA_ID, -1)
         if (id == -1) return
         when (intent.action) {
-            ACTION_PAUSE  -> ClintDownloadManager.pause(context, id)
-            ACTION_RESUME -> ClintDownloadManager.resume(context, id)
+            ACTION_PAUSE  -> AetherNetDownloadManager.pause(context, id)
+            ACTION_RESUME -> AetherNetDownloadManager.resume(context, id)
         }
     }
 }

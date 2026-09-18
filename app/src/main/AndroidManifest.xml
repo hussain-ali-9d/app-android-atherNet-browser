@@ -52,7 +52,7 @@
     </queries>
 
     <application
-        android:name=".app.ClintApplication"
+        android:name=".app.AetherNetApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -117,10 +117,10 @@
             android:parentActivityName=".browser.MainActivity" />
 
         <activity-alias
-            android:name=".downloads.ClintDownloaderAlias"
+            android:name=".downloads.AetherNetDownloaderAlias"
             android:targetActivity=".downloads.DownloadsActivity"
             android:exported="true"
-            android:label="@string/clint_downloader_label"
+            android:label="@string/downloader_label"
             android:icon="@mipmap/ic_launcher"
             android:roundIcon="@mipmap/ic_launcher_round">
             <intent-filter>
@@ -205,7 +205,7 @@
             android:parentActivityName=".settings.SettingsActivity" />
 
         <activity
-            android:name=".settings.supportclint.SupportClintActivity"
+            android:name=".settings.supportupstream.SupportUpstreamActivity"
             android:exported="false"
             android:configChanges="uiMode|screenSize|smallestScreenSize|screenLayout|orientation"
             android:parentActivityName=".settings.SettingsActivity" />

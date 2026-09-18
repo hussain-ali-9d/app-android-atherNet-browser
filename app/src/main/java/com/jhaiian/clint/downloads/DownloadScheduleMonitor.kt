@@ -72,21 +72,21 @@ internal object DownloadScheduleMonitor {
 
     fun reconcile(context: Context) {
         if (isWithinWindow(context)) {
-            val toResume = ClintDownloadManager.downloadsFlow.value
+            val toResume = AetherNetDownloadManager.downloadsFlow.value
                 .filter { it.status == DownloadStatus.PAUSED && it.waitingForSchedule }
                 .map { it.id }
             scheduleWaitingIds.clear()
-            toResume.forEach { ClintDownloadManager.resume(context, it) }
-            ClintDownloadManager.tryDequeueNext(context)
+            toResume.forEach { AetherNetDownloadManager.resume(context, it) }
+            AetherNetDownloadManager.tryDequeueNext(context)
         } else {
-            val toPause = ClintDownloadManager.downloadsFlow.value.filter {
+            val toPause = AetherNetDownloadManager.downloadsFlow.value.filter {
                 (it.status == DownloadStatus.QUEUED || it.status in DownloadStatus.ACTIVELY_WORKING) &&
                     it.scheduledStartAtMillis == 0L
             }
             toPause.forEach { item ->
-                ClintDownloadManager.updateItem(item.id) { it.copy(waitingForSchedule = true) }
+                AetherNetDownloadManager.updateItem(item.id) { it.copy(waitingForSchedule = true) }
                 scheduleWaitingIds.add(item.id)
-                ClintDownloadManager.pause(context, item.id)
+                AetherNetDownloadManager.pause(context, item.id)
             }
         }
         scheduleNextCheck(context)

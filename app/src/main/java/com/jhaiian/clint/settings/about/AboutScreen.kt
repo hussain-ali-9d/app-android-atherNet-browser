@@ -24,8 +24,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
-import com.jhaiian.clint.ui.theme.ClintColors
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 private const val AUTHOR_URL = "https://linktr.ee/jhaiian"
 private const val GITHUB_URL = "https://github.com/jhaiian/ClintBrowser"
@@ -52,7 +52,7 @@ private const val CODEVIEW_URL = "https://github.com/AmrDeveloper/CodeView"
 private const val CODEVIEW_LICENSE_URL = "https://opensource.org/licenses/MIT"
 
 @Composable
-private fun AboutCard(label: String, colors: ClintColors, content: @Composable () -> Unit) {
+private fun AboutCard(label: String, colors: AetherNetColors, content: @Composable () -> Unit) {
     Surface(
         color = colors.cardBackground,
         shape = RoundedCornerShape(14.dp),
@@ -81,7 +81,7 @@ private fun AboutThinDivider(color: Color) {
 private fun AboutLinkRow(
     label: String,
     linkText: String,
-    colors: ClintColors,
+    colors: AetherNetColors,
     onClick: () -> Unit,
     labelLineHeight: TextUnit = TextUnit.Unspecified
 ) {
@@ -107,7 +107,7 @@ private fun AboutLinkRow(
 }
 
 @Composable
-private fun AboutStandaloneLink(text: String, colors: ClintColors, onClick: () -> Unit) {
+private fun AboutStandaloneLink(text: String, colors: AetherNetColors, onClick: () -> Unit) {
     Text(
         text,
         color = colors.primary,
@@ -122,7 +122,7 @@ private fun AboutLibraryEntry(
     linkLabel: String,
     licenseLabel: String,
     usageText: String,
-    colors: ClintColors,
+    colors: AetherNetColors,
     onLinkClick: () -> Unit,
     onLicenseClick: () -> Unit
 ) {
@@ -158,7 +158,7 @@ fun AboutScreen(
     onTermsClick: () -> Unit,
     onAttributionClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold {
         Row(
@@ -166,7 +166,7 @@ fun AboutScreen(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Image(
-                painterResource(R.drawable.ic_clint_logo),
+                painterResource(R.drawable.ic_aethernet_logo),
                 contentDescription = stringResource(R.string.app_name),
                 modifier = Modifier.size(80.dp)
             )

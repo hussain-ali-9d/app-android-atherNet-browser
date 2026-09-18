@@ -43,7 +43,7 @@ import com.jhaiian.clint.settings.backuprestore.RestoreCategoryDialog
 import com.jhaiian.clint.settings.backuprestore.RestorePasswordDialog
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.launch
 
 @Composable
@@ -53,7 +53,7 @@ fun SetupRestorePage(
     onSkip: () -> Unit,
     onRestoreComplete: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val scope = rememberCoroutineScope()
     val uiState = remember { BackupRestoreUiState(hideStatusBar, hideSystemNavigation) }
 

@@ -12,7 +12,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 
-class ClintWebChromeClient(
+class AetherNetWebChromeClient(
     private val isActive: () -> Boolean = { true },
     private val onTitleChanged: (String) -> Unit = {},
     private val onProgressChanged: (Int) -> Unit = {},

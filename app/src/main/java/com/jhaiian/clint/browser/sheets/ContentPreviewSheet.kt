@@ -56,15 +56,15 @@ import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
-import com.jhaiian.clint.browser.webview.ClintWebViewClient
+import com.jhaiian.clint.browser.webview.AetherNetWebViewClient
 import com.jhaiian.clint.browser.webview.loadJsAsset
 import com.jhaiian.clint.quiver.engine.BlockedRequestCounter
 import com.jhaiian.clint.quiver.engine.QuiverGuardWebIntegration
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionDatabase
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionManager
-import com.jhaiian.clint.ui.ClintDialogStatusBarEffect
+import com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect
 import com.jhaiian.clint.ui.FaviconCache
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -88,7 +88,7 @@ data class ContentPreviewRequest(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ContentPreviewSheet(request: ContentPreviewRequest, activity: MainActivity, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
     val hideStatusBar = remember { PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("hide_status_bar", false) }
@@ -136,7 +136,7 @@ internal fun ContentPreviewSheet(request: ContentPreviewRequest, activity: MainA
         containerColor = Color.Transparent,
         dragHandle = {}
     ) {
-        ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         Column(Modifier.fillMaxSize()) {
             Surface(color = colors.popupBackground) {
                 Row(Modifier.fillMaxWidth().height(56.dp).padding(start = 12.dp, end = 4.dp), verticalAlignment = Alignment.CenterVertically) {
@@ -252,7 +252,7 @@ private fun PreviewWebView(
                     wv.setOnScrollChangeListener { _, _, scrollY, _, _ -> onScrollYChanged(scrollY) }
                     wv.setOnTouchListener { view, _ -> view.parent?.requestDisallowInterceptTouchEvent(true); false }
 
-                    wv.webViewClient = ClintWebViewClient(
+                    wv.webViewClient = AetherNetWebViewClient(
                         prefs = prefs,
                         isActive = { true },
                         onPageFinishedCallback = { pageUrl ->
@@ -345,7 +345,7 @@ private fun PreviewWebView(
 }
 
 private fun showPreviewLinkFromWebView(webView: WebView, linkUrl: String, onPreviewLinkLongPress: (PreviewLinkLongPressRequest) -> Unit) {
-    val linkTextJs = "(function() { return (window.__clintLastTouchedLinkText || ''); })()"
+    val linkTextJs = "(function() { return (window.__aetherNetLastTouchedLinkText || ''); })()"
     webView.evaluateJavascript(linkTextJs) { raw ->
         val linkText = raw?.removeSurrounding("\"")
             ?.replace("\\n", " ")

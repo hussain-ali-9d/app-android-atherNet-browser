@@ -1,9 +1,9 @@
 (function() {
-    if (window.__clintBottomNavDetected !== undefined) return;
-    window.__clintBottomNavDetected = false;
+    if (window.__aetherNetBottomNavDetected !== undefined) return;
+    window.__aetherNetBottomNavDetected = false;
 
     function check() {
-        if (window.__clintBottomNavDetected) return;
+        if (window.__aetherNetBottomNavDetected) return;
         var vh = window.innerHeight;
         var vw = window.innerWidth;
         var minTop = vh * 0.55;
@@ -18,7 +18,7 @@
             if (s.display === 'none' || s.visibility === 'hidden') continue;
             var r = el.getBoundingClientRect();
             if (r.width >= minWidth && r.height > 0 && r.height <= maxHeight && r.top >= minTop) {
-                window.__clintBottomNavDetected = true;
+                window.__aetherNetBottomNavDetected = true;
                 BottomNavBridge.onBottomNavDetected(true);
                 return;
             }
@@ -35,7 +35,7 @@
     setTimeout(check, 2000);
 
     var observer = new MutationObserver(function() {
-        if (!window.__clintBottomNavDetected) debounceCheck();
+        if (!window.__aetherNetBottomNavDetected) debounceCheck();
     });
 
     function startObserver() {

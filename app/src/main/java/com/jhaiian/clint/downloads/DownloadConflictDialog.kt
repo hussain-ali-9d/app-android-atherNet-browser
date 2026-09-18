@@ -7,8 +7,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.sheets.ActionSheetRow
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintDialogCancelFooter
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetDialogCancelFooter
 
 data class DownloadConflictDialogRequest(
     val onAddDuplicate: () -> Unit,
@@ -18,11 +18,11 @@ data class DownloadConflictDialogRequest(
 
 @Composable
 internal fun DownloadConflictDialog(request: DownloadConflictDialogRequest, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.download_conflict_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
-        footer = { ClintDialogCancelFooter(onDismiss) }
+        footer = { AetherNetDialogCancelFooter(onDismiss) }
     ) {
         ActionSheetRow(androidx.compose.material.icons.Icons.Filled.Download, stringResource(R.string.download_conflict_add_duplicate)) { onDismiss(); request.onAddDuplicate() }
         ActionSheetRow(androidx.compose.material.icons.Icons.Filled.Save, stringResource(R.string.download_conflict_override)) { onDismiss(); request.onOverride() }

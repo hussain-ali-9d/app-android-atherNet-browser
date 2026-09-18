@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import com.jhaiian.clint.ui.listscreen.ListMenuItem
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
 import com.jhaiian.clint.ui.listscreen.PopupShape
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun DownloadsSortMenu(
@@ -43,7 +43,7 @@ fun DownloadsSortMenu(
     onSortAscending: () -> Unit,
     onSortDescending: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -108,7 +108,7 @@ fun DownloadItemOptionsMenu(
     onCopyPath: () -> Unit,
     onProperties: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -146,7 +146,7 @@ fun DownloadsMultiItemOptionsMenu(
     onCopyFilename: () -> Unit,
     onCopyPath: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,

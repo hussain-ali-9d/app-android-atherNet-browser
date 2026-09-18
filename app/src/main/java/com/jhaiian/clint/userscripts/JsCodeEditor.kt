@@ -74,7 +74,7 @@ import com.amrdeveloper.codeview.CodeViewAdapter
 import com.amrdeveloper.codeview.Keyword
 import com.amrdeveloper.codeview.Snippet
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.ClintColors
+import com.jhaiian.clint.ui.theme.AetherNetColors
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.abs
@@ -133,7 +133,7 @@ private fun buildEditorSuggestions(): List<Code> {
  */
 private class IdeAutoCompleteAdapter(
     context: Context,
-    private val colors: ClintColors,
+    private val colors: AetherNetColors,
     codes: List<Code>
 ) : CodeViewAdapter(context, 0, 0, codes) {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -158,7 +158,7 @@ private class IdeAutoCompleteAdapter(
 fun JsCodeEditor(
     code: String,
     onCodeChange: (String) -> Unit,
-    colors: ClintColors,
+    colors: AetherNetColors,
     modifier: Modifier = Modifier,
     findBarVisible: Boolean,
     onCloseFindBar: () -> Unit
@@ -262,7 +262,7 @@ fun JsCodeEditor(
 }
 
 @Composable
-private fun EditorStatusBar(colors: ClintColors, line: Int, column: Int) {
+private fun EditorStatusBar(colors: AetherNetColors, line: Int, column: Int) {
     Surface(color = colors.surface) {
         Row(
             Modifier.fillMaxWidth().height(30.dp).padding(horizontal = 12.dp),
@@ -283,13 +283,13 @@ private fun EditorStatusBar(colors: ClintColors, line: Int, column: Int) {
 }
 
 @Composable
-private fun StatusBarLabel(text: String, colors: ClintColors) {
+private fun StatusBarLabel(text: String, colors: AetherNetColors) {
     Text(text, color = colors.secondaryText, fontSize = 11.sp, fontFamily = FontFamily.Monospace)
 }
 
 @Composable
 private fun AccessoryBar(
-    colors: ClintColors,
+    colors: AetherNetColors,
     canUndo: Boolean,
     canRedo: Boolean,
     onInsert: (String) -> Unit,
@@ -327,7 +327,7 @@ private fun AccessoryBar(
 }
 
 @Composable
-private fun AccessoryDivider(colors: ClintColors) {
+private fun AccessoryDivider(colors: AetherNetColors) {
     Box(
         Modifier
             .padding(horizontal = 4.dp)
@@ -340,7 +340,7 @@ private fun AccessoryDivider(colors: ClintColors) {
 @Composable
 private fun KeyCapButton(
     label: String,
-    colors: ClintColors,
+    colors: AetherNetColors,
     enabled: Boolean = true,
     description: String? = null,
     onClick: () -> Unit
@@ -368,7 +368,7 @@ private fun KeyCapButton(
 @Composable
 private fun FindReplaceBar(
     codeView: IdeCodeView?,
-    colors: ClintColors,
+    colors: AetherNetColors,
     onCodeChanged: (String) -> Unit,
     onClose: () -> Unit
 ) {

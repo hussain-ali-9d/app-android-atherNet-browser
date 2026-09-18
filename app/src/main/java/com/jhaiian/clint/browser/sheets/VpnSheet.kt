@@ -47,7 +47,7 @@ import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
 import com.jhaiian.clint.browser.delegates.requestVpnConnect
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.vpn.BrowserVpn
 import com.jhaiian.clint.vpn.BrowserVpnState
 import com.jhaiian.clint.vpn.VpnCountry
@@ -57,7 +57,7 @@ private val ConnectedGreen = Color(0xFF2E9E5B)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VpnSheet(activity: MainActivity, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val state by BrowserVpn.state.collectAsState()
     val countries by BrowserVpn.countries.collectAsState()
     val countriesError by BrowserVpn.countriesError.collectAsState()
@@ -76,7 +76,7 @@ fun VpnSheet(activity: MainActivity, onDismiss: () -> Unit) {
         containerColor = colors.popupBackground,
         dragHandle = { BottomSheetDefaults.DragHandle(color = colors.divider) }
     ) {
-        com.jhaiian.clint.ui.ClintDialogStatusBarEffect(
+        com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect(
             prefs.getBoolean("hide_status_bar", false),
             prefs.getBoolean("hide_system_navigation", false)
         )
@@ -194,7 +194,7 @@ fun VpnSheet(activity: MainActivity, onDismiss: () -> Unit) {
 
 @Composable
 private fun StatusBadge(state: BrowserVpnState) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val tint = when (state) {
         is BrowserVpnState.Connected -> ConnectedGreen
         is BrowserVpnState.Failed -> colors.colorError
@@ -213,7 +213,7 @@ private fun StatusBadge(state: BrowserVpnState) {
 
 @Composable
 private fun CountryRow(country: VpnCountry, selected: Boolean, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(14.dp),

@@ -15,15 +15,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 
 @Composable
 fun WebsiteBlockerDownloadProgressDialog(progress: WebsiteBlockerDownloadProgress?, categoryName: String?, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onCancel: () -> Unit) {
     if (progress == null || categoryName == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.quiver_guard_download_dialog_title, categoryName),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = {},
@@ -73,8 +73,8 @@ private fun websiteBlockerDownloadStatusText(progress: WebsiteBlockerDownloadPro
 @Composable
 fun WebsiteBlockerCompileProgressDialog(progress: WebsiteBlockerCompileProgressUi?, hideStatusBar: Boolean, hideSystemNavigation: Boolean) {
     if (progress == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.website_blocker_compile_progress_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = {},
@@ -92,8 +92,8 @@ fun WebsiteBlockerCompileProgressDialog(progress: WebsiteBlockerCompileProgressU
 @Composable
 fun WebsiteBlockerCompileResultDialog(result: WebsiteBlockerCompileResultUi?, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
     if (result == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = result.title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,

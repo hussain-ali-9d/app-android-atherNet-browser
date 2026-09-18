@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.CustomSearchSuggestionsApiQueryPlaceholder
 import com.jhaiian.clint.browser.isValidCustomSearchSuggestionsApiUrl
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun CustomSearchSuggestionsApiDialog(
@@ -30,7 +30,7 @@ fun CustomSearchSuggestionsApiDialog(
     onConfirm: (name: String, url: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var name by remember { mutableStateOf(initialName) }
     var url by remember { mutableStateOf(initialUrl) }
     var nameError by remember { mutableStateOf<String?>(null) }
@@ -38,7 +38,7 @@ fun CustomSearchSuggestionsApiDialog(
     val requiredMessage = stringResource(R.string.custom_search_suggestions_api_name_required)
     val invalidUrlMessage = stringResource(R.string.custom_search_suggestions_api_url_error, CustomSearchSuggestionsApiQueryPlaceholder)
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.custom_search_suggestions_api_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -64,7 +64,7 @@ fun CustomSearchSuggestionsApiDialog(
         }
     ) {
         Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = name,
                 onValueChange = { name = it; nameError = null },
                 label = { Text(stringResource(R.string.custom_search_suggestions_api_name_hint)) },
@@ -75,7 +75,7 @@ fun CustomSearchSuggestionsApiDialog(
                 },
                 modifier = Modifier.fillMaxWidth()
             )
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = url,
                 onValueChange = { url = it; urlError = null },
                 label = { Text(stringResource(R.string.custom_search_suggestions_api_url_hint)) },

@@ -18,12 +18,12 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.ui.ThemeRevealHolder
 import com.jhaiian.clint.ui.ThemeRevealOverlay
-import com.jhaiian.clint.ui.theme.resolveClintTheme
+import com.jhaiian.clint.ui.theme.resolveAetherNetTheme
 import com.jhaiian.clint.util.LocaleHelper
 import kotlin.math.hypot
 import kotlin.math.max
 
-abstract class ClintActivity : AppCompatActivity() {
+abstract class AetherNetActivity : AppCompatActivity() {
 
     private var appliedTheme: String? = null
     private var appliedAccent: String? = null
@@ -67,12 +67,21 @@ abstract class ClintActivity : AppCompatActivity() {
 
     protected open fun windowChromeTheme(): String = appliedTheme ?: "dark"
 
+    /** "system" is a preference value, not a palette: resolve it against the current configuration. */
+    protected fun resolveThemeForConfig(theme: String): String = when (theme) {
+        "light", "dark" -> theme
+        else -> {
+            val night = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+            if (night == android.content.res.Configuration.UI_MODE_NIGHT_YES) "dark" else "light"
+        }
+    }
+
     @Suppress("DEPRECATION")
     fun applyWindowChrome() {
-        val theme = windowChromeTheme()
+        val theme = resolveThemeForConfig(windowChromeTheme())
         val accent = appliedAccent ?: "material_you"
         val intensity = appliedIntensity ?: "soft_tint"
-        val resolved = resolveClintTheme(this, theme, accent, intensity)
+        val resolved = resolveAetherNetTheme(this, theme, accent, intensity)
         window.setBackgroundDrawable(ColorDrawable(resolved.background.toArgb()))
         window.statusBarColor = resolved.statusBar.toArgb()
         window.navigationBarColor = resolved.navigationBar.toArgb()

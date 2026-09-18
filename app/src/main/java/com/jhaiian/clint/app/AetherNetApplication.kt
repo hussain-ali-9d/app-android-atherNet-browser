@@ -10,7 +10,7 @@ import com.jhaiian.clint.util.LocaleHelper
 import com.jhaiian.clint.util.loadMeasurementSystemPreference
 import java.lang.ref.WeakReference
 
-class ClintApplication : Application() {
+class AetherNetApplication : Application() {
 
     private var _currentActivity: WeakReference<Activity>? = null
     val currentActivity: Activity? get() = _currentActivity?.get()
@@ -47,7 +47,7 @@ class ClintApplication : Application() {
             when (theme) {
                 "dark" -> AppCompatDelegate.MODE_NIGHT_YES
                 "light" -> AppCompatDelegate.MODE_NIGHT_NO
-                else -> AppCompatDelegate.MODE_NIGHT_NO
+                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
             }
         )
     }

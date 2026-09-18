@@ -2,7 +2,7 @@ package com.jhaiian.clint.ui.theme
 
 import androidx.compose.ui.graphics.Color
 
-object ClintPalette {
+object AetherNetPalette {
     val onSurface = Color(0xFFFFFFFF)
     val onSurfaceMedium = Color(0x99FFFFFF)
     val darkThemeBackground = Color(0xFF121212)

@@ -13,13 +13,13 @@ class DownloadScheduleWorker(appContext: Context, params: WorkerParameters) :
 
     override suspend fun doWork(): Result {
         setForeground(foregroundInfo())
-        ClintDownloadManager.init(applicationContext).join()
+        AetherNetDownloadManager.init(applicationContext).join()
         DownloadScheduleMonitor.reconcile(applicationContext)
         return Result.success()
     }
 
     private fun foregroundInfo(): ForegroundInfo {
-        ClintDownloadManager.createNotificationChannel(applicationContext)
+        AetherNetDownloadManager.createNotificationChannel(applicationContext)
         val notification = DownloadNotificationHelper.buildSummaryNotification(applicationContext, 0)
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ForegroundInfo(DownloadForegroundService.FOREGROUND_ID, notification, ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)

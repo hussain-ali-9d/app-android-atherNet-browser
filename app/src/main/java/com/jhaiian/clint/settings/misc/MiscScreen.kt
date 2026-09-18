@@ -21,13 +21,13 @@ import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.setup.SectionLabel
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 private fun RerunSetupConfirmDialog(hideStatusBar: Boolean, hideSystemNavigation: Boolean, onConfirm: () -> Unit, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.rerun_setup_confirm_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -62,7 +62,7 @@ fun MiscScreen(
     onRerunSetupClick: () -> Unit,
     onRerunSetupConfirm: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold(
         overlay = {

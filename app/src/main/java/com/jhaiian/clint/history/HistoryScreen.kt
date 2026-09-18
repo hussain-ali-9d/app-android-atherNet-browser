@@ -56,8 +56,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.rememberClintFavicon
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
+import com.jhaiian.clint.ui.rememberAetherNetFavicon
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
 import com.jhaiian.clint.ui.listscreen.ListFastScroller
 import com.jhaiian.clint.ui.listscreen.ListMenuItem
 import com.jhaiian.clint.ui.listscreen.ListSortKey
@@ -65,7 +65,7 @@ import com.jhaiian.clint.ui.listscreen.ListSortOrder
 import com.jhaiian.clint.ui.listscreen.PopupShape
 import com.jhaiian.clint.ui.listscreen.SelectionOptionsMenu
 import com.jhaiian.clint.ui.listscreen.SortMenu
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatRelativeTimestamp
 
 @Composable
@@ -77,7 +77,7 @@ fun HistoryScreen(
     onDeleteSelectedClick: () -> Unit,
     onClearAllClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val displayed = remember(state.items, state.searchQuery, state.sortKey, state.sortOrder) {
         filterAndSortHistory(state.items, state.searchQuery, state.sortKey, state.sortOrder)
     }
@@ -173,7 +173,7 @@ private fun HistoryToolbar(
     onInvertSelection: () -> Unit,
     onClearAllClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
 
     Surface(color = colors.surface, shadowElevation = 4.dp, modifier = Modifier.statusBarsPadding()) {
@@ -187,7 +187,7 @@ private fun HistoryToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.history_search_hint),
@@ -251,7 +251,7 @@ private fun HistoryToolbar(
 
 @Composable
 private fun HistoryActionsMenu(expanded: Boolean, onDismiss: () -> Unit, onClearAllClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -273,7 +273,7 @@ private fun HistoryRow(
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val isUrl = item.query.startsWith("http")
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
 
@@ -287,7 +287,7 @@ private fun HistoryRow(
             .padding(start = 14.dp, end = 14.dp, top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val favicon = if (isUrl) rememberClintFavicon(item.query) else null
+        val favicon = if (isUrl) rememberAetherNetFavicon(item.query) else null
         Box(Modifier.size(40.dp).clip(CircleShape).background(colors.surfaceVariant), contentAlignment = Alignment.Center) {
             if (favicon != null) {
                 Image(bitmap = favicon.asImageBitmap(), contentDescription = null, modifier = Modifier.size(22.dp))

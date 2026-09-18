@@ -46,7 +46,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -68,14 +68,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.rememberClintFavicon
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
+import com.jhaiian.clint.ui.rememberAetherNetFavicon
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
 import com.jhaiian.clint.ui.listscreen.ListFastScroller
 import com.jhaiian.clint.ui.listscreen.SelectionOptionsMenu
 import com.jhaiian.clint.ui.listscreen.ListSortKey
 import com.jhaiian.clint.ui.listscreen.SortMenu
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun UserScriptsScreen(
@@ -108,7 +108,7 @@ fun UserScriptsScreen(
     onForceUpdateActive: () -> Unit,
     onForceUpdateAll: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val allItems = remember(state.scripts) { buildListItems(state.scripts) }
     val displayed = remember(allItems, state.searchQuery, state.sortKey, state.sortOrder) {
         filterAndSortUserScripts(allItems, state.searchQuery, state.sortKey, state.sortOrder)
@@ -232,7 +232,7 @@ fun UserScriptsScreen(
 
 @Composable
 private fun MasterSwitchRow(masterEnabled: Boolean, onToggle: (Boolean) -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     SettingsRow(
         icon = androidx.compose.material.icons.Icons.Filled.Code,
         title = stringResource(R.string.user_scripts_master_switch_title),
@@ -240,7 +240,7 @@ private fun MasterSwitchRow(masterEnabled: Boolean, onToggle: (Boolean) -> Unit)
         colors = colors,
         onClick = { onToggle(!masterEnabled) },
         trailing = {
-            ClintSwitch(checked = masterEnabled)
+            AetherNetSwitch(checked = masterEnabled)
         }
     )
 }
@@ -264,7 +264,7 @@ private fun UserScriptsToolbar(
     onForceUpdateActive: () -> Unit,
     onForceUpdateAll: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
     var selectionItemOptionsMenuOpen by remember { mutableStateOf(false) }
 
@@ -279,7 +279,7 @@ private fun UserScriptsToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.user_scripts_search_hint),
@@ -383,7 +383,7 @@ private fun UserScriptRow(
     onShareLink: () -> Unit
 ) {
     var optionsMenuOpen by remember { mutableStateOf(false) }
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
     val rowAlpha = when {
         !masterEnabled -> 0.38f
@@ -408,7 +408,7 @@ private fun UserScriptRow(
             .padding(start = 14.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val favicon = rememberClintFavicon(item.script.sourceUrl ?: "")
+        val favicon = rememberAetherNetFavicon(item.script.sourceUrl ?: "")
         Box(Modifier.size(40.dp).clip(CircleShape).background(colors.surfaceVariant), contentAlignment = Alignment.Center) {
             if (favicon != null) {
                 Image(bitmap = favicon.asImageBitmap(), contentDescription = null, modifier = Modifier.size(22.dp))
@@ -429,7 +429,7 @@ private fun UserScriptRow(
                 ) { onToggleEnabled(!item.script.enabled) },
                 contentAlignment = Alignment.Center
             ) {
-                ClintSwitch(checked = item.script.enabled)
+                AetherNetSwitch(checked = item.script.enabled)
             }
         }
         Box {
@@ -464,7 +464,7 @@ private fun BoxScope.UserScriptsFabMenu(
     onCreateClick: () -> Unit,
     onUploadClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val rotation by animateFloatAsState(if (isOpen) 45f else 0f, label = "fabMenuRotation")
 
     if (isOpen) {
@@ -514,7 +514,7 @@ private fun BoxScope.UserScriptsFabMenu(
 
 @Composable
 private fun FabMenuPill(text: String, icon: androidx.compose.ui.graphics.vector.ImageVector, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier
             .clip(RoundedCornerShape(20.dp))

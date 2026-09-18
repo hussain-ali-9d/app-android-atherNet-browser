@@ -23,19 +23,19 @@ import androidx.core.content.FileProvider
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.jhaiian.clint.base.ClintActivity
-import com.jhaiian.clint.ui.ClintSnackbarHost
+import com.jhaiian.clint.base.AetherNetActivity
+import com.jhaiian.clint.ui.AetherNetSnackbarHost
 import com.jhaiian.clint.ui.OverlayHostActivity
 import com.jhaiian.clint.ui.SnackbarHostActivity
 import com.jhaiian.clint.ui.rememberMaxContentWidth
-import com.jhaiian.clint.ui.showClintSnackbar
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.showAetherNetSnackbar
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActivity {
+class DownloadsActivity : AetherNetActivity(), OverlayHostActivity, SnackbarHostActivity {
 
     override var overlayContent by mutableStateOf<(@Composable () -> Unit)?>(null)
 
@@ -111,7 +111,7 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
             customLocationUri = submission.customLocationUri,
             scheduledStartAtMillis = submission.scheduledStartAtMillis,
             onDismiss = {
-                showClintSnackbar(
+                showAetherNetSnackbar(
                     message = getString(R.string.toast_downloading, submission.filename),
                     actionLabel = getString(R.string.download_started_view_action),
                     onAction = { DownloadsActivity.open(this) }
@@ -136,9 +136,9 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
         val hideSystemNavigation = prefs.getBoolean("hide_system_navigation", false)
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 val maxContentWidth = rememberMaxContentWidth(this)
-                val allItems by ClintDownloadManager.downloadsFlow.collectAsState()
+                val allItems by AetherNetDownloadManager.downloadsFlow.collectAsState()
 
                 var tick by remember { mutableStateOf(0L) }
                 LaunchedEffect(Unit) {
@@ -161,9 +161,9 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
                             startActivity(Intent(this@DownloadsActivity, com.jhaiian.clint.settings.SettingsActivity::class.java)
                                 .putExtra(com.jhaiian.clint.settings.SettingsActivity.EXTRA_OPEN_FRAGMENT, "download_settings"))
                         },
-                        onPause = { id -> ClintDownloadManager.pause(this@DownloadsActivity, id) },
-                        onResume = { id -> ClintDownloadManager.resume(this@DownloadsActivity, id) },
-                        onRetry = { id -> ClintDownloadManager.retryFailed(this@DownloadsActivity, id) },
+                        onPause = { id -> AetherNetDownloadManager.pause(this@DownloadsActivity, id) },
+                        onResume = { id -> AetherNetDownloadManager.resume(this@DownloadsActivity, id) },
+                        onRetry = { id -> AetherNetDownloadManager.retryFailed(this@DownloadsActivity, id) },
                         itemActions = DownloadItemActions(
                             onOpen = { item -> handleOpenItem(item) },
                             onShare = { item -> shareFile(item) },
@@ -193,7 +193,7 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
                         DownloadConflictDialog(req, hideStatusBar, hideSystemNavigation) { uiState.conflictDialogRequest = null }
                     }
                     overlayContent?.invoke()
-                    ClintSnackbarHost(hostState = snackbarHostState)
+                    AetherNetSnackbarHost(hostState = snackbarHostState)
                 }
             }
         }
@@ -227,7 +227,7 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
         lifecycleScope.launch {
             withContext(Dispatchers.Default) {
                 toRemove.forEachIndexed { index, item ->
-                    ClintDownloadManager.remove(this@DownloadsActivity, item.id, deleteFromStorage)
+                    AetherNetDownloadManager.remove(this@DownloadsActivity, item.id, deleteFromStorage)
                     val done = index + 1
                     withContext(Dispatchers.Main) { uiState.deleteProgress = DeleteProgress(done, count) }
                 }
@@ -249,7 +249,7 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
     private fun handleOpenIntent(intent: Intent?) {
         val id = intent?.getIntExtra(EXTRA_OPEN_ID, -1) ?: return
         if (id == -1) return
-        val item = ClintDownloadManager.downloadsFlow.value.find { it.id == id } ?: return
+        val item = AetherNetDownloadManager.downloadsFlow.value.find { it.id == id } ?: return
         handleOpenItem(item)
     }
 
@@ -313,8 +313,8 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
             positiveLabel = getString(R.string.redownload_confirm_action),
             onPositive = {
                 items.forEach { item ->
-                    ClintDownloadManager.remove(this, item.id, true)
-                    ClintDownloadManager.enqueue(
+                    AetherNetDownloadManager.remove(this, item.id, true)
+                    AetherNetDownloadManager.enqueue(
                         this, item.url, item.filename, item.userAgent,
                         item.referer, item.cookies,
                         retryEnabled = item.retryEnabled,
@@ -431,9 +431,9 @@ class DownloadsActivity : ClintActivity(), OverlayHostActivity, SnackbarHostActi
             message = getString(R.string.redownload_confirm_message),
             positiveLabel = getString(R.string.redownload_confirm_action),
             onPositive = {
-                ClintDownloadManager.remove(this, item.id, true)
+                AetherNetDownloadManager.remove(this, item.id, true)
                 lastRefreshMs = 0L
-                ClintDownloadManager.enqueue(
+                AetherNetDownloadManager.enqueue(
                     this, item.url, item.filename, item.userAgent,
                     item.referer, item.cookies,
                     retryEnabled = item.retryEnabled,

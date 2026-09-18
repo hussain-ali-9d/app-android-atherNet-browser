@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AetherNet Browser</string>
-    <string name="clint_downloader_label">AetherNet Downloader</string>
+    <string name="downloader_label">AetherNet Downloader</string>
     <string name="back">Bumalik</string>
     <string name="forward">Pasulong</string>
     <string name="refresh">I-refresh</string>
@@ -104,11 +104,11 @@
     <string name="about_section_keep_android_open">KEEP ANDROID OPEN</string>
     <string name="about_keep_android_open_text">Nagpapatupad ang Google ng sapilitang pag-verify ng pagkakakilanlan ng developer na banta sa sideloading at malayang app ecosystem sa Android, kasama na ang mga app tulad nito. Alamin pa at ipahayag ang iyong boses.</string>
     <string name="about_keep_android_open_url">keepandroidopen.org \u2197</string>
-    <string name="support_clint_title">Suportahan ang Clint</string>
-    <string name="support_clint_summary">Tulungang manatiling libre ang Clint magpakailanman. Isaalang-alang ang pagbibigay ng donasyon sa developer ng Clint.</string>
-    <string name="support_clint_view_supporters_title">Tingnan ang Kasalukuyang mga Supporter</string>
-    <string name="support_clint_view_supporters_summary">Tingnan ang lahat ng tumulong suportahan ang development ng Clint</string>
-    <string name="support_clint_markdown">## Mga Donasyon\n\nAyaw kong magtrabaho para sa isang korporasyon. Gusto kong ipagpatuloy ang mahal kong ginagawa: ang paggawa ng mga app tulad ng Clint at libreng ibinabahagi ito sa lahat.\n\nKung gusto ko, pwede kong gawing freemium ang Clint at ilagay sa likod ng paywall ang ilang feature. Sa halip, pinipili kong hindi gawin iyon dahil hindi iyon ang uri ng developer na gusto kong maging.\n\nKung gusto mo ang Clint at gusto mong suportahan ang development nito, isaalang-alang ang paggawa ng donasyon. Bawat kontribusyon, malaki man o maliit, tumutulong sa akin na ipagpatuloy ang pag-develop at pagpapabuti ng Clint habang nag-aaral pa ako sa kolehiyo.\n\nAnumang halaga ay nakakatulong, at kung gusto mo, maaari ka ring makakuha ng shoutout bilang isang supporter.\n\nSalamat sa pagtulong mong panatilihing libre at independent ang Clint.\n\n[![Patreon](https://img.shields.io/badge/Support%20me-Patreon-orange?style=for-the-badge&amp;logo=patreon)](https://patreon.com/Jhaiian)\n[![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-red?style=for-the-badge&amp;logo=ko-fi)](https://ko-fi.com/jhaiian)\n[![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=for-the-badge&amp;logo=paypal)](https://paypal.me/jhaiian)\n[![InstaPay QR](https://img.shields.io/badge/InstaPay%20QR-Philippines%20only-7C3AED?style=for-the-badge)](https://github.com/jhaiian/docs/Insta%20Pay.jpg)</string>
+    <string name="support_upstream_title">Suportahan ang Clint</string>
+    <string name="support_upstream_summary">Tulungang manatiling libre ang Clint magpakailanman. Isaalang-alang ang pagbibigay ng donasyon sa developer ng Clint.</string>
+    <string name="support_upstream_view_supporters_title">Tingnan ang Kasalukuyang mga Supporter</string>
+    <string name="support_upstream_view_supporters_summary">Tingnan ang lahat ng tumulong suportahan ang development ng Clint</string>
+    <string name="support_upstream_markdown">## Mga Donasyon\n\nAyaw kong magtrabaho para sa isang korporasyon. Gusto kong ipagpatuloy ang mahal kong ginagawa: ang paggawa ng mga app tulad ng Clint at libreng ibinabahagi ito sa lahat.\n\nKung gusto ko, pwede kong gawing freemium ang Clint at ilagay sa likod ng paywall ang ilang feature. Sa halip, pinipili kong hindi gawin iyon dahil hindi iyon ang uri ng developer na gusto kong maging.\n\nKung gusto mo ang Clint at gusto mong suportahan ang development nito, isaalang-alang ang paggawa ng donasyon. Bawat kontribusyon, malaki man o maliit, tumutulong sa akin na ipagpatuloy ang pag-develop at pagpapabuti ng Clint habang nag-aaral pa ako sa kolehiyo.\n\nAnumang halaga ay nakakatulong, at kung gusto mo, maaari ka ring makakuha ng shoutout bilang isang supporter.\n\nSalamat sa pagtulong mong panatilihing libre at independent ang Clint.\n\n[![Patreon](https://img.shields.io/badge/Support%20me-Patreon-orange?style=for-the-badge&amp;logo=patreon)](https://patreon.com/Jhaiian)\n[![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-red?style=for-the-badge&amp;logo=ko-fi)](https://ko-fi.com/jhaiian)\n[![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=for-the-badge&amp;logo=paypal)](https://paypal.me/jhaiian)\n[![InstaPay QR](https://img.shields.io/badge/InstaPay%20QR-Philippines%20only-7C3AED?style=for-the-badge)](https://github.com/jhaiian/docs/Insta%20Pay.jpg)</string>
     <string name="default_browser_title">Default na Browser</string>
     <string name="default_browser_none">Wala</string>
     <string name="look_and_feel">Hitsura</string>
@@ -123,6 +123,8 @@
     <string name="theme_light_desc">Malinis na puting background</string>
     <string name="theme_dark">Madilim</string>
     <string name="theme_dark_desc">Madilim na background </string>
+    <string name="theme_system">System default</string>
+    <string name="theme_system_desc">Sundin ang tema ng device</string>
     <string name="hide_status_bar">Itago ang status bar</string>
     <string name="hide_status_bar_summary">Itago ang status bar ng system para sa mas immersive na karanasan sa pag-browse</string>
     <string name="hide_system_navigation">Itago ang navigation bar</string>
@@ -153,7 +155,7 @@
     <string name="download_manager_title">Download Manager</string>
     <string name="download_manager_summary">Piliin kung aling app ang mangangasiwa sa mga bagong download</string>
     <string name="download_manager_dialog_title">Piliin ang download manager</string>
-    <string name="download_manager_option_clint">AetherNet (Default)</string>
+    <string name="download_manager_option_builtin">AetherNet (Default)</string>
     <string name="download_manager_option_1dm">1DM</string>
     <string name="download_manager_option_1dm_plus">1DM+</string>
     <string name="download_manager_option_1dm_lite">1DM Lite</string>
@@ -747,7 +749,7 @@
     <string name="setup_restore_title">I-restore mula sa Backup</string>
     <string name="setup_restore_subtitle">May backup ka ba ng AetherNet? I-restore ito ngayon para maibalik ang iyong mga setting at data, o laktawan para mag-set up bilang bago.</string>
     <string name="setup_restore_card_title">I-restore ang Backup</string>
-    <string name="setup_restore_card_desc">Pumili ng .clintbackup file mula sa iyong device</string>
+    <string name="setup_restore_card_desc">Pumili ng .aethernetbackup file mula sa iyong device</string>
     <string name="setup_restore_button">I-restore ang Backup</string>
     <string name="setup_restore_skip">Mag-set Up bilang Bago</string>
 

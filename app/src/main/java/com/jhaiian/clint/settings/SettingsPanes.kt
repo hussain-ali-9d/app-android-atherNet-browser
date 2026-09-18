@@ -35,7 +35,7 @@ import com.jhaiian.clint.crash.CrashReportItem
 import com.jhaiian.clint.crash.CrashReportScreen
 import com.jhaiian.clint.crash.CrashUiState
 import com.jhaiian.clint.crash.MAX_CRASH_CLIP_CHARS
-import com.jhaiian.clint.downloads.ClintDownloadManager
+import com.jhaiian.clint.downloads.AetherNetDownloadManager
 import com.jhaiian.clint.downloads.DEFAULT_SPEED_LIMIT_UNIT
 import com.jhaiian.clint.downloads.DownloadScheduleMonitor
 import com.jhaiian.clint.history.HistoryActivity
@@ -885,7 +885,7 @@ fun DownloadSettingsPane(activity: SettingsActivity) {
             val newValue = !uiState.unmeteredOnly
             prefs.edit().putBoolean(DownloadSettingsKeys.PREF_UNMETERED_ONLY, newValue).apply()
             uiState.unmeteredOnly = newValue
-            ClintDownloadManager.onUnmeteredOnlyChanged(activity, newValue)
+            AetherNetDownloadManager.onUnmeteredOnlyChanged(activity, newValue)
         },
         onScheduleEnabledClick = {
             val newValue = !uiState.scheduleEnabled

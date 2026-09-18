@@ -47,7 +47,7 @@ internal object DownloadNetworkMonitor {
         if (monitoringStarted) return
         monitoringStarted = true
         val appContext = context.applicationContext
-        ClintDownloadManager.applicationScope.launch {
+        AetherNetDownloadManager.applicationScope.launch {
             networkEvents(appContext).collect { event ->
                 when (event) {
                     is NetworkEvent.Available -> handleAvailable(appContext)
@@ -61,28 +61,28 @@ internal object DownloadNetworkMonitor {
     private fun handleAvailable(context: Context) {
         val toResume = networkWaitingIds.toList()
         networkWaitingIds.clear()
-        val current = ClintDownloadManager.downloadsFlow.value
+        val current = AetherNetDownloadManager.downloadsFlow.value
         toResume.forEach { id ->
             val item = current.find { it.id == id } ?: return@forEach
             if (item.status == DownloadStatus.PAUSED && item.waitingForNetwork) {
-                ClintDownloadManager.resume(context, id)
+                AetherNetDownloadManager.resume(context, id)
             }
         }
-        ClintDownloadManager.tryDequeueNext(context)
+        AetherNetDownloadManager.tryDequeueNext(context)
     }
 
     private fun handleCapabilitiesChanged(context: Context, unmetered: Boolean) {
         if (unmetered) {
             val toResume = unmeteredPausedIds.toList()
             unmeteredPausedIds.clear()
-            val current = ClintDownloadManager.downloadsFlow.value
+            val current = AetherNetDownloadManager.downloadsFlow.value
             toResume.forEach { id ->
                 val item = current.find { it.id == id } ?: return@forEach
                 if (item.status == DownloadStatus.PAUSED) {
-                    ClintDownloadManager.resume(context, id)
+                    AetherNetDownloadManager.resume(context, id)
                 }
             }
-            ClintDownloadManager.tryDequeueNext(context)
+            AetherNetDownloadManager.tryDequeueNext(context)
         } else {
             pauseActiveForMetered(context)
         }
@@ -110,7 +110,7 @@ internal object DownloadNetworkMonitor {
     }
 
     fun pauseActiveForMetered(context: Context) {
-        val active = ClintDownloadManager.downloadsFlow.value.filter {
+        val active = AetherNetDownloadManager.downloadsFlow.value.filter {
             it.unmeteredOnly && (
                 it.status == DownloadStatus.DOWNLOADING ||
                 it.status == DownloadStatus.CONNECTING ||
@@ -118,9 +118,9 @@ internal object DownloadNetworkMonitor {
             )
         }
         active.forEach { item ->
-            ClintDownloadManager.updateItem(item.id) { it.copy(waitingForUnmetered = true) }
+            AetherNetDownloadManager.updateItem(item.id) { it.copy(waitingForUnmetered = true) }
             unmeteredPausedIds.add(item.id)
-            ClintDownloadManager.pause(context, item.id)
+            AetherNetDownloadManager.pause(context, item.id)
         }
     }
 
@@ -129,14 +129,14 @@ internal object DownloadNetworkMonitor {
         if (!enabled) {
             val toResume = unmeteredPausedIds.toList()
             unmeteredPausedIds.clear()
-            val current = ClintDownloadManager.downloadsFlow.value
+            val current = AetherNetDownloadManager.downloadsFlow.value
             toResume.forEach { id ->
                 val item = current.find { it.id == id } ?: return@forEach
                 if (item.status == DownloadStatus.PAUSED) {
-                    ClintDownloadManager.resume(ctx, id)
+                    AetherNetDownloadManager.resume(ctx, id)
                 }
             }
-            ClintDownloadManager.tryDequeueNext(ctx)
+            AetherNetDownloadManager.tryDequeueNext(ctx)
         } else {
             if (!isNetworkUnmetered(ctx)) {
                 pauseActiveForMetered(ctx)

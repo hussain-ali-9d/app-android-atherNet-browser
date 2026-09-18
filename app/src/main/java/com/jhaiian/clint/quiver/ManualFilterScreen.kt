@@ -34,9 +34,9 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import com.jhaiian.clint.ui.ClintOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
 import androidx.compose.material3.Surface
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -57,14 +57,14 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
 import com.jhaiian.clint.ui.listscreen.ListFastScroller
 import com.jhaiian.clint.ui.listscreen.ListSortKey
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
 import com.jhaiian.clint.ui.listscreen.SelectionOptionsMenu
 import com.jhaiian.clint.ui.listscreen.SortMenu
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 sealed class ManualFilterRuleDialogMode {
     object Add : ManualFilterRuleDialogMode()
@@ -130,7 +130,7 @@ fun ManualFilterScreen(
     onDeleteClick: (ManualFilterRule) -> Unit,
     onDeleteSelectedClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val displayed = remember(state.rules, state.searchQuery, state.sortKey, state.sortOrder) {
         filterAndSortManualFilterRules(state.rules, state.searchQuery, state.sortKey, state.sortOrder)
     }
@@ -165,7 +165,7 @@ fun ManualFilterScreen(
                     Text(stringResource(R.string.quiver_guard_manual_filter_master_switch_title), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(R.string.quiver_guard_manual_filter_master_switch_summary), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
                 }
-                ClintSwitch(checked = state.isEnabled)
+                AetherNetSwitch(checked = state.isEnabled)
             }
 
             Box(Modifier.weight(1f).fillMaxWidth()) {
@@ -246,7 +246,7 @@ private fun ManualFilterToolbar(
     onSelectAll: () -> Unit,
     onInvertSelection: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
 
     Surface(color = colors.surface, shadowElevation = 4.dp, modifier = Modifier.statusBarsPadding()) {
@@ -260,7 +260,7 @@ private fun ManualFilterToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.quiver_guard_manual_filter_search_hint),
@@ -322,7 +322,7 @@ private fun ManualFilterRuleRow(
     onEditClick: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
     Row(
         Modifier
@@ -389,11 +389,11 @@ fun ManualFilterRuleDialog(
     onConfirm: (String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var text by remember(mode) { mutableStateOf((mode as? ManualFilterRuleDialogMode.Edit)?.rule?.ruleText ?: "") }
     val isEdit = mode is ManualFilterRuleDialogMode.Edit
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(if (isEdit) R.string.quiver_guard_manual_filter_edit_dialog_title else R.string.quiver_guard_manual_filter_add_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -408,7 +408,7 @@ fun ManualFilterRuleDialog(
             }
         }
     ) {
-        ClintOutlinedTextField(
+        AetherNetOutlinedTextField(
             value = text,
             onValueChange = { text = it },
             label = { Text(stringResource(if (isEdit) R.string.quiver_guard_manual_filter_rule_hint else R.string.quiver_guard_manual_filter_rule_hint)) },

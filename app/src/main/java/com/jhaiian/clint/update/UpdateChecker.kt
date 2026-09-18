@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
 import com.jhaiian.clint.ui.OverlayHostActivity
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import com.jhaiian.clint.util.formatFileSize
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -58,7 +58,7 @@ object UpdateChecker {
         }
 
         host.overlayContent = {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 UpdateFlowHost(
                     state = state,
                     onDismiss = dismiss,

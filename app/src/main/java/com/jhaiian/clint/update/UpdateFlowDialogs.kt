@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import io.noties.markwon.Markwon
 
 @Composable
@@ -68,8 +68,8 @@ fun UpdateFlowHost(
 
 @Composable
 private fun SimpleMessageDialog(title: String, message: String, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -98,10 +98,10 @@ private fun UpdateAvailableDialog(
     onLater: () -> Unit,
     onAction: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val channelLabel = if (step.isBeta) " (Beta)" else ""
     val onSurfaceArgb = colors.onSurface.toArgb()
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.update_dialog_title, step.version, channelLabel),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onLater,
@@ -149,8 +149,8 @@ private fun UpdateAvailableDialog(
 
 @Composable
 private fun DownloadProgressDialog(progress: DownloadProgressState, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onCancel: () -> Unit) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.update_download_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onCancel,

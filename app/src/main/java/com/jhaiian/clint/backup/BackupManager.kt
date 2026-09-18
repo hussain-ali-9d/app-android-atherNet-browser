@@ -33,7 +33,7 @@ object BackupManager {
         if (BackupCategory.COOKIES in categories) {
             withContext(Dispatchers.Main) { CookieManager.getInstance().flush() }
         }
-        val tempZip = File.createTempFile("clint_backup_", ".zip", appContext.cacheDir)
+        val tempZip = File.createTempFile("aethernet_backup_", ".zip", appContext.cacheDir)
         try {
             data class PlannedFile(val entryId: String, val category: BackupCategory, val file: File, val zipPath: String)
 

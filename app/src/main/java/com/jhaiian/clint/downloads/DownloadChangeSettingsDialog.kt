@@ -34,16 +34,16 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.settings.common.dialogSectionBackground
 import com.jhaiian.clint.settings.common.SettingsSection
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetSwitch
 import com.jhaiian.clint.ui.listscreen.PopupShape
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun DownloadChangeSettingsDialog(item: DownloadItem, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
     val context = LocalContext.current
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     var retryEnabled by remember(item.id) { mutableStateOf(item.retryEnabled) }
     var unmeteredOnly by remember(item.id) { mutableStateOf(item.unmeteredOnly) }
@@ -54,7 +54,7 @@ fun DownloadChangeSettingsDialog(item: DownloadItem, hideStatusBar: Boolean, hid
     var unitLabel by remember(item.id) { mutableStateOf(if (initUnit == SPEED_LIMIT_UNIT_MB) mbLabel else kbLabel) }
     var unitMenuOpen by remember { mutableStateOf(false) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.download_change_settings_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -67,7 +67,7 @@ fun DownloadChangeSettingsDialog(item: DownloadItem, hideStatusBar: Boolean, hid
                     val amount = speedLimitText.toIntOrNull()?.coerceAtLeast(0) ?: 0
                     val unit = if (unitLabel == mbLabel) SPEED_LIMIT_UNIT_MB else SPEED_LIMIT_UNIT_KB
                     val bytesPerSec = resolveSpeedLimitBytesPerSec(context, amount, unit)
-                    ClintDownloadManager.updateDownloadSettings(
+                    AetherNetDownloadManager.updateDownloadSettings(
                         context, item.id,
                         retryEnabled = retryEnabled,
                         unmeteredOnly = unmeteredOnly,
@@ -97,7 +97,7 @@ fun DownloadChangeSettingsDialog(item: DownloadItem, hideStatusBar: Boolean, hid
                             Text(stringResource(R.string.download_retry_enabled_title), color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                             Text(stringResource(R.string.download_retry_enabled_summary), color = colors.secondaryText, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp))
                         }
-                        ClintSwitch(checked = retryEnabled)
+                        AetherNetSwitch(checked = retryEnabled)
                     }
 
                     Row(
@@ -108,7 +108,7 @@ fun DownloadChangeSettingsDialog(item: DownloadItem, hideStatusBar: Boolean, hid
                             Text(stringResource(R.string.download_unmetered_only_title), color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                             Text(stringResource(R.string.download_dialog_unmetered_summary), color = colors.secondaryText, fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp))
                         }
-                        ClintSwitch(checked = unmeteredOnly)
+                        AetherNetSwitch(checked = unmeteredOnly)
                     }
 
                     Text(
@@ -120,7 +120,7 @@ fun DownloadChangeSettingsDialog(item: DownloadItem, hideStatusBar: Boolean, hid
                         fontSize = 12.sp, modifier = Modifier.padding(top = 2.dp, bottom = 8.dp)
                     )
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        ClintOutlinedTextField(
+                        AetherNetOutlinedTextField(
                             value = speedLimitText,
                             onValueChange = { speedLimitText = it.filter { c -> c.isDigit() } },
                             modifier = Modifier.weight(1f),

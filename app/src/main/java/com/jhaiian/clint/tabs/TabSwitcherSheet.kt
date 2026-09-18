@@ -57,12 +57,12 @@ import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
 import com.jhaiian.clint.ui.FaviconCache
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabSwitcherSheet(activity: MainActivity, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val tabs = remember { mutableStateListOf<TabPreview>().apply { addAll(activity.tabManager.previews()) } }
 
     val activeTabId = activity.tabManager.activeTab?.id
@@ -106,7 +106,7 @@ fun TabSwitcherSheet(activity: MainActivity, onDismiss: () -> Unit) {
         containerColor = colors.popupBackground,
         dragHandle = { BottomSheetDefaults.DragHandle(color = colors.divider) }
     ) {
-        com.jhaiian.clint.ui.ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         LazyColumn(
             Modifier.fillMaxWidth().heightIn(max = maxSheetHeight).nestedScroll(flingBoundaryConnection),
             state = listState
@@ -184,7 +184,7 @@ fun TabSwitcherSheet(activity: MainActivity, onDismiss: () -> Unit) {
 
 @Composable
 internal fun NewTabButton(text: String, iconRes: androidx.compose.ui.graphics.vector.ImageVector, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Button(
         onClick = onClick,
         modifier = modifier.height(44.dp),
@@ -199,7 +199,7 @@ internal fun NewTabButton(text: String, iconRes: androidx.compose.ui.graphics.ve
 
 @Composable
 private fun TabSectionHeader(isIncognito: Boolean) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier.fillMaxWidth().padding(start = 4.dp, end = 4.dp, top = 12.dp, bottom = 6.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -222,7 +222,7 @@ private fun TabSectionHeader(isIncognito: Boolean) {
 
 @Composable
 private fun TabRow(tab: TabPreview, isActive: Boolean, onClick: () -> Unit, onClose: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val favicon = rememberTabFavicon(tab)
 
     Card(

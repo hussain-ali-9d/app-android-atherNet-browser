@@ -10,19 +10,19 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Box
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.quiver.UpdateProgressDialog
 import com.jhaiian.clint.quiver.UpdateResultDialog
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
 import com.jhaiian.clint.ui.rememberMaxContentWidth
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import androidx.lifecycle.lifecycleScope
 import com.jhaiian.clint.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 
-class UserScriptsActivity : ClintActivity() {
+class UserScriptsActivity : AetherNetActivity() {
 
     internal lateinit var db: UserScriptDatabase
     internal lateinit var uiState: UserScriptsUiState
@@ -64,7 +64,7 @@ class UserScriptsActivity : ClintActivity() {
         reload()
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 val maxContentWidth = rememberMaxContentWidth(this)
                 val uploadLauncher = rememberLauncherForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
                     uri?.let { importScript(it) }

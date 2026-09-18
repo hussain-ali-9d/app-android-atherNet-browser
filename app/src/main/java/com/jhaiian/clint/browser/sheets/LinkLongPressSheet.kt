@@ -51,14 +51,14 @@ import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
 import com.jhaiian.clint.ui.FaviconCache
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class LinkLongPressRequest(val url: String, val linkText: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun LinkLongPressSheet(request: LinkLongPressRequest, activity: MainActivity, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var favicon by remember(request.url) { mutableStateOf<Bitmap?>(null) }
@@ -97,7 +97,7 @@ internal fun LinkLongPressSheet(request: LinkLongPressRequest, activity: MainAct
         containerColor = colors.popupBackground,
         dragHandle = { BottomSheetDefaults.DragHandle(color = colors.divider) }
     ) {
-        com.jhaiian.clint.ui.ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         LazyColumn(Modifier.fillMaxWidth().heightIn(max = maxSheetHeight).nestedScroll(flingBoundaryConnection), state = listState) {
         item {
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
@@ -148,7 +148,7 @@ internal fun LinkLongPressSheet(request: LinkLongPressRequest, activity: MainAct
 }
 
 @Composable
-private fun LinkFaviconChip(favicon: Bitmap?, colors: com.jhaiian.clint.ui.theme.ClintColors) {
+private fun LinkFaviconChip(favicon: Bitmap?, colors: com.jhaiian.clint.ui.theme.AetherNetColors) {
     val chipShape = RoundedCornerShape(11.dp)
     Box(
         Modifier.size(40.dp).clip(chipShape).background(colors.surfaceVariant).border(1.dp, colors.popupStroke, chipShape),

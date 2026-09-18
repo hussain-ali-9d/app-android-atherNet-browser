@@ -57,7 +57,7 @@ import androidx.preference.PreferenceManager
 import com.caverock.androidsvg.SVG
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.OkHttpClient
@@ -77,7 +77,7 @@ data class ImageLongPressRequest(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun ImageLongPressSheet(request: ImageLongPressRequest, activity: MainActivity, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val hideStatusBar = remember { PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("hide_status_bar", false) }
     val hideSystemNavigation = remember { PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("hide_system_navigation", false) }
@@ -128,7 +128,7 @@ internal fun ImageLongPressSheet(request: ImageLongPressRequest, activity: MainA
         containerColor = colors.popupBackground,
         dragHandle = { BottomSheetDefaults.DragHandle(color = colors.divider) }
     ) {
-        com.jhaiian.clint.ui.ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         LazyColumn(Modifier.fillMaxWidth().heightIn(max = maxSheetHeight).nestedScroll(flingBoundaryConnection), state = listState) {
         item {
         Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
@@ -183,7 +183,7 @@ internal fun ImageLongPressSheet(request: ImageLongPressRequest, activity: MainA
 @Composable
 private fun ImageThumbnail(imageUrl: String, referer: String) {
     val context = LocalContext.current
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var drawable by remember(imageUrl) { mutableStateOf<Drawable?>(null) }
 
     LaunchedEffect(imageUrl) {

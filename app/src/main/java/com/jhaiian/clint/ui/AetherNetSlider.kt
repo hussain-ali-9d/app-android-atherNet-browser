@@ -4,10 +4,10 @@ import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
-fun ClintSlider(
+fun AetherNetSlider(
     value: Float,
     onValueChange: (Float) -> Unit,
     modifier: Modifier = Modifier,
@@ -16,7 +16,7 @@ fun ClintSlider(
     steps: Int = 0,
     onValueChangeFinished: (() -> Unit)? = null
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Slider(
         value = value,
         onValueChange = onValueChange,

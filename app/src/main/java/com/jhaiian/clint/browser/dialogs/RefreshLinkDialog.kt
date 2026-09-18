@@ -23,8 +23,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class RefreshLinkDialogRequest(
     val existingFilename: String,
@@ -34,11 +34,11 @@ data class RefreshLinkDialogRequest(
 
 @Composable
 internal fun RefreshLinkDialog(request: RefreshLinkDialogRequest, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     var updateExisting by remember(request) { mutableStateOf(true) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.refresh_link_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -82,7 +82,7 @@ internal fun RefreshLinkDialog(request: RefreshLinkDialogRequest, hideStatusBar:
 
 @Composable
 private fun RefreshLinkRadioRow(selected: Boolean, text: String, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier.fillMaxWidth().height(48.dp).clickable(onClick = onClick).padding(start = 12.dp),
         verticalAlignment = Alignment.CenterVertically

@@ -34,7 +34,7 @@ class DownloadForegroundService : LifecycleService() {
 
     override fun onCreate() {
         super.onCreate()
-        ClintDownloadManager.createNotificationChannel(this)
+        AetherNetDownloadManager.createNotificationChannel(this)
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -49,7 +49,7 @@ class DownloadForegroundService : LifecycleService() {
         val nm = getSystemService(NotificationManager::class.java)
 
         lifecycleScope.launch {
-            ClintDownloadManager.downloadsFlow
+            AetherNetDownloadManager.downloadsFlow
                 .map { list -> list.count { it.status in DownloadStatus.ACTIVELY_WORKING } }
                 .distinctUntilChanged()
                 .collectLatest { activeCount ->

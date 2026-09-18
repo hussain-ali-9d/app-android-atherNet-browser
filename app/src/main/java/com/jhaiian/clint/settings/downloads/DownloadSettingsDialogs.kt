@@ -16,7 +16,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import com.jhaiian.clint.ui.ClintOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -43,8 +43,8 @@ import com.jhaiian.clint.settings.common.SettingsPickerOptionContentPadding
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.downloads.SPEED_LIMIT_UNIT_KB
 import com.jhaiian.clint.downloads.SPEED_LIMIT_UNIT_MB
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 private val OptionContentPadding = SettingsPickerOptionContentPadding
 private val OptionBottomSpacing = SettingsPickerOptionBottomSpacing
@@ -56,8 +56,8 @@ fun MeasurementSystemDialog(
     onSelect: (decimal: Boolean) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
-    ClintDialog(title = stringResource(R.string.measurement_system_dialog_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss) {
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(title = stringResource(R.string.measurement_system_dialog_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss) {
         data class Option(val decimal: Boolean, val titleRes: Int, val descRes: Int)
         listOf(
             Option(false, R.string.measurement_system_binary, R.string.measurement_system_binary_desc),
@@ -85,17 +85,17 @@ fun DownloadManagerDialog(
     onSelect: (appId: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = androidx.compose.ui.platform.LocalContext.current
     data class Option(val appId: String, val titleRes: Int)
     val options = listOf(
-        Option(com.jhaiian.clint.downloads.DownloadManagerAppIds.CLINT, R.string.download_manager_option_clint),
+        Option(com.jhaiian.clint.downloads.DownloadManagerAppIds.BUILT_IN, R.string.download_manager_option_builtin),
         Option(com.jhaiian.clint.downloads.DownloadManagerAppIds.ONEDM, R.string.download_manager_option_1dm),
         Option(com.jhaiian.clint.downloads.DownloadManagerAppIds.ONEDM_PLUS, R.string.download_manager_option_1dm_plus),
         Option(com.jhaiian.clint.downloads.DownloadManagerAppIds.ONEDM_LITE, R.string.download_manager_option_1dm_lite),
         Option(com.jhaiian.clint.downloads.DownloadManagerAppIds.ADM, R.string.download_manager_option_adm)
     )
-    ClintDialog(title = stringResource(R.string.download_manager_dialog_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss) {
+    AetherNetDialog(title = stringResource(R.string.download_manager_dialog_title), hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = onDismiss) {
         options.forEach { option ->
             val installed = remember(option.appId) { com.jhaiian.clint.downloads.isDownloadManagerAppInstalled(context, option.appId) }
             val selected = current == option.appId
@@ -138,10 +138,10 @@ private fun NumberEntryDialog(
     onConfirm: (Int) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var text by remember { mutableStateOf(initialValue.toString()) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -160,7 +160,7 @@ private fun NumberEntryDialog(
             Text(message, color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(bottom = 8.dp))
             SettingsSection(colors.dialogSectionBackground) {
                 Column(Modifier.padding(16.dp)) {
-                    ClintOutlinedTextField(
+                    AetherNetOutlinedTextField(
                         value = text,
                         onValueChange = { new -> if (new.all { it.isDigit() }) text = new },
                         label = { Text(hint) },
@@ -210,12 +210,12 @@ fun SpeedLimitDialog(
     onConfirm: (amount: Int, unit: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var amountText by remember { mutableStateOf(if (currentAmount > 0) currentAmount.toString() else "") }
     var unit by remember { mutableStateOf(currentUnit) }
     var unitMenuExpanded by remember { mutableStateOf(false) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.download_speed_limit_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -237,7 +237,7 @@ fun SpeedLimitDialog(
             )
             SettingsSection(colors.dialogSectionBackground) {
                 Row(Modifier.fillMaxWidth().padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
-                    ClintOutlinedTextField(
+                    AetherNetOutlinedTextField(
                         value = amountText,
                         onValueChange = { new -> if (new.all { it.isDigit() }) amountText = new },
                         label = { Text(stringResource(R.string.download_speed_limit_dialog_hint)) },

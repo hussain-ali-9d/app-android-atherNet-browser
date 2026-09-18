@@ -38,22 +38,22 @@ import androidx.compose.ui.window.DialogWindowProvider
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.base.AetherNetActivity
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
-val ClintDialogContentMaxHeight = 440.dp
+val AetherNetDialogContentMaxHeight = 440.dp
 
-private val ClintDialogChromeHeight = 140.dp
+private val AetherNetDialogChromeHeight = 140.dp
 
 @Composable
-internal fun ClintDialogStatusBarEffect(hideStatusBar: Boolean, hideSystemNavigation: Boolean) {
+internal fun AetherNetDialogStatusBarEffect(hideStatusBar: Boolean, hideSystemNavigation: Boolean) {
     val view = LocalView.current
     val context = LocalContext.current
 
     DisposableEffect(Unit) {
-        val activity = context as? ClintActivity
+        val activity = context as? AetherNetActivity
         activity?.trackDialogShown()
         onDispose { activity?.trackDialogDismissed() }
     }
@@ -93,8 +93,8 @@ fun Modifier.scrollToSelection(scrollState: ScrollState, selected: Boolean): Mod
 }
 
 @Composable
-fun ClintDialogCancelFooter(onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+fun AetherNetDialogCancelFooter(onDismiss: () -> Unit) {
+    val colors = LocalAetherNetColors.current
     Row(Modifier.fillMaxWidth().padding(end = 12.dp, bottom = 8.dp), horizontalArrangement = Arrangement.End) {
         TextButton(onClick = onDismiss) {
             Text(stringResource(R.string.action_cancel), color = colors.primary, fontWeight = FontWeight.Medium)
@@ -103,16 +103,16 @@ fun ClintDialogCancelFooter(onDismiss: () -> Unit) {
 }
 
 @Composable
-fun ClintDialog(
+fun AetherNetDialog(
     title: String,
     hideStatusBar: Boolean, hideSystemNavigation: Boolean,
     onDismiss: () -> Unit,
     cancelable: Boolean = true,
-    footer: @Composable () -> Unit = { ClintDialogCancelFooter(onDismiss) },
+    footer: @Composable () -> Unit = { AetherNetDialogCancelFooter(onDismiss) },
     scrollState: ScrollState = rememberScrollState(),
     content: @Composable ColumnScope.() -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
@@ -121,10 +121,10 @@ fun ClintDialog(
             dismissOnClickOutside = cancelable
         )
     ) {
-        ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         BoxWithConstraints {
-            val maxContentHeight = (maxHeight - ClintDialogChromeHeight)
-                .coerceIn(0.dp, ClintDialogContentMaxHeight)
+            val maxContentHeight = (maxHeight - AetherNetDialogChromeHeight)
+                .coerceIn(0.dp, AetherNetDialogContentMaxHeight)
             Surface(shape = RoundedCornerShape(24.dp), color = colors.popupBackground) {
                 Column {
                     Text(

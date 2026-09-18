@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.settings.common.dialogSectionBackground
 import com.jhaiian.clint.settings.common.SettingsSection
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,7 +54,7 @@ fun DownloadPropertiesDialog(
     onOpen: (DownloadItem) -> Unit
 ) {
     val context = LocalContext.current
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val scope = rememberCoroutineScope()
 
     val dash = stringResource(R.string.download_props_dash)
@@ -98,7 +98,7 @@ fun DownloadPropertiesDialog(
         }
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.download_props_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -184,7 +184,7 @@ fun DownloadPropertiesDialog(
 
 @Composable
 private fun PropSection(title: String) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Text(
         title, color = colors.primary, fontSize = 12.sp, fontWeight = FontWeight.Medium,
         modifier = Modifier.padding(top = 14.dp, bottom = 4.dp)
@@ -193,7 +193,7 @@ private fun PropSection(title: String) {
 
 @Composable
 private fun PropRow(label: String, value: String, onClick: (() -> Unit)?) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Column(
         Modifier.fillMaxWidth()
             .let { if (onClick != null) it.clickable(onClick = onClick) else it }
@@ -206,7 +206,7 @@ private fun PropRow(label: String, value: String, onClick: (() -> Unit)?) {
 
 @Composable
 private fun PropHashRow(label: String, value: String?, computing: Boolean, canCompute: Boolean, onCompute: () -> Unit, onCopy: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val noFile = stringResource(R.string.download_props_checksum_na_no_file)
     val computingStr = stringResource(R.string.download_props_computing)
     val displayValue = when {

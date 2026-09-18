@@ -20,7 +20,7 @@ internal object DownloadNotificationHelper {
     fun createNotificationChannel(context: Context) {
         val nm = context.getSystemService(NotificationManager::class.java)
         val progressChannel = NotificationChannel(
-            ClintDownloadManager.CHANNEL_ID,
+            AetherNetDownloadManager.CHANNEL_ID,
             context.getString(R.string.download_notification_channel_name),
             NotificationManager.IMPORTANCE_LOW
         ).apply {
@@ -29,7 +29,7 @@ internal object DownloadNotificationHelper {
         }
         nm.createNotificationChannel(progressChannel)
         val eventChannel = NotificationChannel(
-            ClintDownloadManager.EVENT_CHANNEL_ID,
+            AetherNetDownloadManager.EVENT_CHANNEL_ID,
             context.getString(R.string.download_event_notification_channel_name),
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
@@ -50,7 +50,7 @@ internal object DownloadNotificationHelper {
             context.resources.getQuantityString(R.plurals.download_notification_group_summary, activeCount, activeCount)
         else
             context.getString(R.string.download_foreground_notification_text)
-        return NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        return NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setContentTitle(context.getString(R.string.download_foreground_notification_title))
             .setContentText(text)
             .setSmallIcon(R.drawable.ic_notification_24)
@@ -65,7 +65,7 @@ internal object DownloadNotificationHelper {
 
     fun showQueuedNotification(context: Context, item: DownloadItem) {
         val nm = context.getSystemService(NotificationManager::class.java)
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(context.getString(R.string.download_status_queued))
@@ -146,7 +146,7 @@ internal object DownloadNotificationHelper {
         )
 
         val contentText = if (metaText != null) "$statusText  \u2022  $metaText" else statusText
-        val builder = NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        val builder = NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(contentText)
@@ -173,7 +173,7 @@ internal object DownloadNotificationHelper {
             "${formatFileSize(item.totalBytes)}  \u2022  $allocStr"
         else
             allocStr
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(contentText)
@@ -189,7 +189,7 @@ internal object DownloadNotificationHelper {
     fun showCopyingTempNotification(context: Context, item: DownloadItem) {
         val nm = context.getSystemService(NotificationManager::class.java)
         val progress = item.copyProgress
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(context.getString(R.string.download_copying_temp_notification, progress))
@@ -204,7 +204,7 @@ internal object DownloadNotificationHelper {
 
     fun showDeletingTempNotification(context: Context, item: DownloadItem) {
         val nm = context.getSystemService(NotificationManager::class.java)
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(context.getString(R.string.download_deleting_temp_notification))
@@ -235,7 +235,7 @@ internal object DownloadNotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(contentText)
@@ -259,7 +259,7 @@ internal object DownloadNotificationHelper {
         val metaLabel = if (elapsedSec >= 1L) "$waitingLabel  \u2022  ${formatElapsed(elapsedSec)}" else waitingLabel
         val contentText = if (progressText != null) "$progressText  \u2022  $metaLabel" else metaLabel
 
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setGroup(DOWNLOAD_GROUP_KEY)
             .setContentTitle(item.filename)
@@ -283,7 +283,7 @@ internal object DownloadNotificationHelper {
         val metaLabel = if (elapsedSec >= 1L) "$waitingLabel  \u2022  ${formatElapsed(elapsedSec)}" else waitingLabel
         val contentText = if (progressText != null) "$progressText  \u2022  $metaLabel" else metaLabel
 
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setGroup(DOWNLOAD_GROUP_KEY)
             .setContentTitle(item.filename)
@@ -307,7 +307,7 @@ internal object DownloadNotificationHelper {
         val metaLabel = if (elapsedSec >= 1L) "$waitingLabel  \u2022  ${formatElapsed(elapsedSec)}" else waitingLabel
         val contentText = if (progressText != null) "$progressText  \u2022  $metaLabel" else metaLabel
 
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setGroup(DOWNLOAD_GROUP_KEY)
             .setContentTitle(item.filename)
@@ -332,7 +332,7 @@ internal object DownloadNotificationHelper {
         )
         val contentText = if (progressText != null) "$progressText  \u2022  $waitingLabel" else waitingLabel
 
-        NotificationCompat.Builder(context, ClintDownloadManager.CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setGroup(DOWNLOAD_GROUP_KEY)
             .setContentTitle(item.filename)
@@ -375,7 +375,7 @@ internal object DownloadNotificationHelper {
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
-        NotificationCompat.Builder(context, ClintDownloadManager.EVENT_CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.EVENT_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(context.getString(R.string.download_notification_complete))
@@ -399,7 +399,7 @@ internal object DownloadNotificationHelper {
             context, item.id + 30000, downloadsIntent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        NotificationCompat.Builder(context, ClintDownloadManager.EVENT_CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.EVENT_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(context.getString(R.string.download_notification_failed))
@@ -426,7 +426,7 @@ internal object DownloadNotificationHelper {
             context.getString(R.string.download_notification_retrying_in, item.retryDelaySec)
         else
             context.getString(R.string.download_notification_retrying)
-        NotificationCompat.Builder(context, ClintDownloadManager.EVENT_CHANNEL_ID)
+        NotificationCompat.Builder(context, AetherNetDownloadManager.EVENT_CHANNEL_ID)
             .setSmallIcon(R.drawable.ic_notification_24)
             .setContentTitle(item.filename)
             .setContentText(retryText)

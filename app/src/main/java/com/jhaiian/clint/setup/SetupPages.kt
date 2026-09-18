@@ -26,7 +26,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.Icon
-import com.jhaiian.clint.ui.ClintRadioButton
+import com.jhaiian.clint.ui.AetherNetRadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.ui.ThemeSwatchUtils
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun SetupWelcomePage(
@@ -55,7 +55,7 @@ fun SetupWelcomePage(
     onTermsClick: () -> Unit,
     onContinue: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Column(
         Modifier
             .fillMaxSize()
@@ -64,7 +64,7 @@ fun SetupWelcomePage(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
-            painter = painterResource(R.drawable.ic_clint_logo),
+            painter = painterResource(R.drawable.ic_aethernet_logo),
             contentDescription = stringResource(R.string.app_name),
             modifier = Modifier.padding(top = 32.dp).size(100.dp)
         )
@@ -196,7 +196,7 @@ fun SetupThemePage(
     onIntensitySelected: (String) -> Unit,
     onNext: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
 
     Column(
@@ -356,7 +356,7 @@ fun SetupEnginePage(
     onCustomEngineSaved: (name: String, url: String) -> Unit,
     onNext: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var customEditorOpen by remember { mutableStateOf(false) }
     val hasCustomEngine = customName.isNotBlank() && customUrl.isNotBlank()
 
@@ -377,7 +377,7 @@ fun SetupEnginePage(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(28.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Image(painterResource(R.drawable.ic_clint_logo), stringResource(R.string.app_name), modifier = Modifier.padding(top = 24.dp).size(140.dp))
+        Image(painterResource(R.drawable.ic_aethernet_logo), stringResource(R.string.app_name), modifier = Modifier.padding(top = 24.dp).size(140.dp))
         Text(stringResource(R.string.app_name), color = colors.onSurface, fontSize = 32.sp, fontWeight = FontWeight.Medium, modifier = Modifier.padding(top = 20.dp))
         Text(stringResource(R.string.setup_subtitle), color = colors.secondaryText, fontSize = 14.sp, textAlign = androidx.compose.ui.text.style.TextAlign.Center, lineHeight = 19.6.sp, modifier = Modifier.padding(top = 8.dp))
         Text(stringResource(R.string.choose_search_engine), color = colors.primary, fontSize = 12.sp, letterSpacing = 0.1.sp, fontWeight = FontWeight.Medium, modifier = Modifier.fillMaxWidth().padding(top = 36.dp, bottom = 12.dp))
@@ -391,7 +391,7 @@ fun SetupEnginePage(
         ).forEach { option ->
             val sel = engine == option.key
             SelectableCard(selected = sel, onClick = { onEngineSelected(option.key) }, cardBackground = colors.cardBackground, primary = colors.primary) {
-                ClintRadioButton(selected = sel)
+                AetherNetRadioButton(selected = sel)
                 Column(Modifier.weight(1f).padding(start = 12.dp)) {
                     Text(stringResource(option.titleRes), color = colors.onSurface, fontSize = 16.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(option.descRes), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))
@@ -405,7 +405,7 @@ fun SetupEnginePage(
             onClick = { if (hasCustomEngine) onEngineSelected("custom") else customEditorOpen = true },
             cardBackground = colors.cardBackground, primary = colors.primary
         ) {
-            ClintRadioButton(selected = customSel)
+            AetherNetRadioButton(selected = customSel)
             Column(Modifier.weight(1f).padding(start = 12.dp)) {
                 Text(
                     if (hasCustomEngine) customName else stringResource(R.string.engine_custom),
@@ -437,7 +437,7 @@ fun SetupDefaultBrowserPage(
     onSetDefault: () -> Unit,
     onSkip: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Column(
         Modifier.fillMaxSize().verticalScroll(rememberScrollState()).padding(28.dp),
         horizontalAlignment = Alignment.CenterHorizontally

@@ -20,8 +20,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class OpenInAppMatch(val label: String, val icon: Drawable?, val packageName: String)
 
@@ -34,10 +34,10 @@ data class OpenInAppRequest(
 
 @Composable
 internal fun OpenInAppDialog(request: OpenInAppRequest, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val single = request.matches.singleOrNull()
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(if (single != null) R.string.open_in_app_dialog_title else R.string.open_in_app_chooser_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         cancelable = false,

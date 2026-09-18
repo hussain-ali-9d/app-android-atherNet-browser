@@ -6,7 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
-import com.jhaiian.clint.ui.ClintRadioButton
+import com.jhaiian.clint.ui.AetherNetRadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.setup.SectionLabel
 import com.jhaiian.clint.setup.SelectableCard
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionDatabase
@@ -31,10 +31,10 @@ import com.jhaiian.clint.settings.site.SiteEntry
 import com.jhaiian.clint.settings.site.SiteListDeleteConfirmDialog
 import com.jhaiian.clint.settings.site.SiteListScreen
 import com.jhaiian.clint.settings.site.SiteListUiState
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
-class DesktopModeActivity : ClintActivity() {
+class DesktopModeActivity : AetherNetActivity() {
 
     companion object {
         const val PREF_DESKTOP_MODE_SAVE_STATE = "desktop_mode_save_state"
@@ -59,8 +59,8 @@ class DesktopModeActivity : ClintActivity() {
         reload()
 
         setContent {
-            ClintComposeTheme(theme = theme) {
-                val colors = LocalClintColors.current
+            AetherNetComposeTheme(theme = theme) {
+                val colors = LocalAetherNetColors.current
                 val maxContentWidth = rememberMaxContentWidth(this)
                 var saveState by remember {
                     mutableStateOf(prefs.getString(PREF_DESKTOP_MODE_SAVE_STATE, VALUE_SAVE_STATE) ?: VALUE_SAVE_STATE)
@@ -93,7 +93,7 @@ class DesktopModeActivity : ClintActivity() {
                                     modifier = Modifier.padding(horizontal = 12.dp),
                                     contentPadding = 14.dp, bottomSpacing = 8.dp
                                 ) {
-                                    ClintRadioButton(selected = selected)
+                                    AetherNetRadioButton(selected = selected)
                                     Column(Modifier.weight(1f).padding(start = 12.dp, end = 8.dp)) {
                                         Text(stringResource(titleRes), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                                         Text(stringResource(descRes), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))

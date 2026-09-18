@@ -79,8 +79,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.rememberClintFavicon
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.rememberAetherNetFavicon
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 internal fun AddressBarRow(
@@ -95,7 +95,7 @@ internal fun AddressBarRow(
     onSwipeTabChange: (Int) -> Boolean,
     modifier: Modifier = Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val density = LocalDensity.current
     var dragOffset by remember { mutableFloatStateOf(0f) }
     var swipeDirection by remember { mutableIntStateOf(0) }
@@ -238,7 +238,7 @@ internal fun SearchOverlay(
     onSuggestionDelete: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val density = LocalDensity.current
     val keyboardController = LocalSoftwareKeyboardController.current
     val focusRequester = remember { FocusRequester() }
@@ -384,10 +384,10 @@ private fun SuggestionRow(
     onFill: () -> Unit,
     onDelete: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val isUrl = item.query.startsWith("http")
     val showSubtitle = item.type != SuggestionType.SUGGESTION && isUrl && item.displayText != item.query
-    val favicon = if (isUrl) rememberClintFavicon(item.query) else null
+    val favicon = if (isUrl) rememberAetherNetFavicon(item.query) else null
     val suggestionUrlDesc = stringResource(R.string.suggestion_url_desc)
 
     Row(

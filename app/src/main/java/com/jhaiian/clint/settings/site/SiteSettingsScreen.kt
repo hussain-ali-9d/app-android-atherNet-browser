@@ -19,7 +19,7 @@ import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.settings.desktopmode.DesktopModeActivity
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionActivity
 import com.jhaiian.clint.setup.SectionLabel
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun SiteSettingsScreen(
@@ -31,7 +31,7 @@ fun SiteSettingsScreen(
     onDesktopModeClick: () -> Unit,
     onQuiverGuardClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold {
         SectionLabel(stringResource(R.string.site_section_permissions), colors.primary, Modifier.padding(start = 4.dp, bottom = 8.dp))

@@ -32,7 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import android.net.Uri
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun WebsiteBlockedOverlay(
@@ -41,7 +41,7 @@ fun WebsiteBlockedOverlay(
     navBarPaddingPx: Int,
     onReturnToPrevious: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val density = LocalDensity.current
     val host = remember(request.blockedUrl) {
         runCatching { Uri.parse(request.blockedUrl).host }.getOrNull() ?: request.blockedUrl

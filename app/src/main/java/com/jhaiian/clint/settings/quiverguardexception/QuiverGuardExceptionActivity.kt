@@ -8,7 +8,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionDatabase
 import com.jhaiian.clint.settings.sitepermissions.SitePermissionManager
 import com.jhaiian.clint.ui.rememberMaxContentWidth
@@ -17,10 +17,10 @@ import com.jhaiian.clint.settings.site.SiteEntry
 import com.jhaiian.clint.settings.site.SiteListDeleteConfirmDialog
 import com.jhaiian.clint.settings.site.SiteListScreen
 import com.jhaiian.clint.settings.site.SiteListUiState
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
-class QuiverGuardExceptionActivity : ClintActivity() {
+class QuiverGuardExceptionActivity : AetherNetActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,8 +39,8 @@ class QuiverGuardExceptionActivity : ClintActivity() {
         reload()
 
         setContent {
-            ClintComposeTheme(theme = theme) {
-                val colors = LocalClintColors.current
+            AetherNetComposeTheme(theme = theme) {
+                val colors = LocalAetherNetColors.current
                 val maxContentWidth = rememberMaxContentWidth(this)
 
                 Box {

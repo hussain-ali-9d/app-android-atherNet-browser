@@ -28,9 +28,9 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.ClintSlider
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetSlider
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -62,8 +62,8 @@ import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.setup.SectionLabel
-import com.jhaiian.clint.ui.theme.ClintColors
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun DownloadSettingsScreen(
@@ -88,7 +88,7 @@ fun DownloadSettingsScreen(
     onGrantAllFilesAccessClick: () -> Unit,
     onPushNotificationsClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
 
     val tapToChooseText = stringResource(R.string.download_location_tap_to_choose)
@@ -185,7 +185,7 @@ fun DownloadSettingsScreen(
                 summary = stringResource(R.string.download_unmetered_only_summary),
                 colors = colors,
                 onClick = onUnmeteredOnlyClick,
-                trailing = { ClintSwitch(checked = state.unmeteredOnly) }
+                trailing = { AetherNetSwitch(checked = state.unmeteredOnly) }
             )
         }
 
@@ -197,7 +197,7 @@ fun DownloadSettingsScreen(
                 summary = stringResource(R.string.download_schedule_enabled_summary, scheduleStartText, scheduleEndText),
                 colors = colors,
                 onClick = onScheduleEnabledClick,
-                trailing = { ClintSwitch(checked = state.scheduleEnabled) }
+                trailing = { AetherNetSwitch(checked = state.scheduleEnabled) }
             )
             RowDivider(colors.divider)
             SettingsRow(
@@ -289,7 +289,7 @@ fun DownloadSettingsScreen(
                 summary = stringResource(R.string.download_retry_enabled_summary),
                 colors = colors,
                 onClick = onRetryEnabledClick,
-                trailing = { ClintSwitch(checked = state.retryEnabled) }
+                trailing = { AetherNetSwitch(checked = state.retryEnabled) }
             )
             RowDivider(colors.divider)
             SettingsRow(
@@ -299,7 +299,7 @@ fun DownloadSettingsScreen(
                 colors = colors,
                 enabled = state.retryEnabled,
                 onClick = { if (state.retryEnabled) onRetryUnrecoverableClick() },
-                trailing = { ClintSwitch(checked = state.retryUnrecoverable) }
+                trailing = { AetherNetSwitch(checked = state.retryUnrecoverable) }
             )
             RowDivider(colors.divider)
             SettingsRow(
@@ -333,7 +333,7 @@ fun DownloadSettingsScreen(
                 summary = stringResource(R.string.download_push_notifications_summary),
                 colors = colors,
                 onClick = onPushNotificationsClick,
-                trailing = { ClintSwitch(checked = state.pushNotifications) }
+                trailing = { AetherNetSwitch(checked = state.pushNotifications) }
             )
         }
 
@@ -363,7 +363,7 @@ fun DownloadSettingsScreen(
 }
 
 @Composable
-private fun DownloadLocationDropdown(mode: String, colors: ClintColors, onModeSelected: (String) -> Unit) {
+private fun DownloadLocationDropdown(mode: String, colors: AetherNetColors, onModeSelected: (String) -> Unit) {
     var expanded by remember { mutableStateOf(false) }
     var anchorWidthPx by remember { mutableStateOf(0) }
     val density = LocalDensity.current
@@ -378,7 +378,7 @@ private fun DownloadLocationDropdown(mode: String, colors: ClintColors, onModeSe
             .fillMaxWidth()
             .onGloballyPositioned { coordinates -> anchorWidthPx = coordinates.size.width }
     ) {
-        ClintOutlinedTextField(
+        AetherNetOutlinedTextField(
             value = selectedLabel,
             onValueChange = {},
             readOnly = true,
@@ -415,7 +415,7 @@ private fun SliderSettingsCard(
     value: Int,
     valueRange: IntRange,
     summary: String,
-    colors: ClintColors,
+    colors: AetherNetColors,
     onValueChange: (Int) -> Unit
 ) {
     Column(Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 8.dp)) {
@@ -426,7 +426,7 @@ private fun SliderSettingsCard(
                 Text(description, color = colors.secondaryText, fontSize = 13.sp, lineHeight = 18.sp, modifier = Modifier.padding(top = 2.dp))
             }
         }
-        ClintSlider(
+        AetherNetSlider(
             value = value.toFloat(),
             onValueChange = { onValueChange(it.toInt()) },
             valueRange = valueRange.first.toFloat()..valueRange.last.toFloat(),
@@ -442,7 +442,7 @@ private fun downloadManagerOptionLabelRes(appId: String): Int = when (appId) {
     com.jhaiian.clint.downloads.DownloadManagerAppIds.ONEDM_PLUS -> R.string.download_manager_option_1dm_plus
     com.jhaiian.clint.downloads.DownloadManagerAppIds.ONEDM_LITE -> R.string.download_manager_option_1dm_lite
     com.jhaiian.clint.downloads.DownloadManagerAppIds.ADM -> R.string.download_manager_option_adm
-    else -> R.string.download_manager_option_clint
+    else -> R.string.download_manager_option_builtin
 }
 
 private fun formatMinutesOfDay(context: android.content.Context, minutes: Int): String {

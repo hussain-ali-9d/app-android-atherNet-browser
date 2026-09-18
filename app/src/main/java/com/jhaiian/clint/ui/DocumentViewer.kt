@@ -6,7 +6,7 @@ import android.content.ContextWrapper
 import android.os.Handler
 import android.os.Looper
 import androidx.preference.PreferenceManager
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import java.util.concurrent.Executors
@@ -46,7 +46,7 @@ object DocumentViewer {
         val state = DocumentViewerUiState()
 
         host.overlayContent = {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 DocumentViewerDialog(
                     title = title,
                     state = state,

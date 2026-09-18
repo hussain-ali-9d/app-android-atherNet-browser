@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.preference.PreferenceManager
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.blocker.additional.AdditionalWebsitesActivity
 import com.jhaiian.clint.blocker.additional.AdditionalWebsitesDatabase
 import com.jhaiian.clint.blocker.engine.CompiledWebsiteBlockerManifest
@@ -15,7 +15,7 @@ import com.jhaiian.clint.blocker.engine.WebsiteBlockerNative
 import com.jhaiian.clint.blocker.engine.WebsiteBlockerPaths
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
 import com.jhaiian.clint.ui.rememberMaxContentWidth
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 import java.io.File
 
-class WebsiteBlockerActivity : ClintActivity() {
+class WebsiteBlockerActivity : AetherNetActivity() {
 
     companion object {
         const val PREF_ENABLED = "website_blocker_enabled"
@@ -140,7 +140,7 @@ class WebsiteBlockerActivity : ClintActivity() {
         reload()
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 val maxContentWidth = rememberMaxContentWidth(this)
                 Box {
                     WebsiteBlockerScreen(

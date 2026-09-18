@@ -15,11 +15,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 internal fun ActionSheetRow(iconRes: androidx.compose.ui.graphics.vector.ImageVector, text: String, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier.fillMaxWidth().height(52.dp).clickable(onClick = onClick).padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -31,5 +31,5 @@ internal fun ActionSheetRow(iconRes: androidx.compose.ui.graphics.vector.ImageVe
 
 @Composable
 internal fun ActionSheetDivider() {
-    HorizontalDivider(color = LocalClintColors.current.divider, thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp))
+    HorizontalDivider(color = LocalAetherNetColors.current.divider, thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp))
 }

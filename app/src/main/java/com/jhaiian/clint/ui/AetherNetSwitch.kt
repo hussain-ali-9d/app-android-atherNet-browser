@@ -10,11 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
-fun ClintSwitch(checked: Boolean, modifier: Modifier = Modifier) {
-    val colors = LocalClintColors.current
+fun AetherNetSwitch(checked: Boolean, modifier: Modifier = Modifier) {
+    val colors = LocalAetherNetColors.current
     Switch(
         checked = checked,
         onCheckedChange = null,

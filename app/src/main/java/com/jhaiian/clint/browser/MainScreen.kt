@@ -53,12 +53,12 @@ import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.statusBars
 import androidx.compose.ui.viewinterop.AndroidView
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 internal fun MainScreen(activity: MainActivity, state: MainUiState) {
     val density = LocalDensity.current
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var tabSwitcherOpen by remember { mutableStateOf(false) }
     var tabMenuStyle by remember { mutableStateOf("sheet") }
     val hideStatusBar = state.hideStatusBar
@@ -255,7 +255,7 @@ private fun TopToolbar(
     onTabCountClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val density = LocalDensity.current
     Column(
         modifier = modifier
@@ -305,7 +305,7 @@ private fun BottomToolbar(
     onTabCountClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val density = LocalDensity.current
     Column(
         modifier = modifier
@@ -350,7 +350,7 @@ private fun BottomNavBar(
     navBarPaddingPx: Int,
     modifier: Modifier = Modifier
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val density = LocalDensity.current
     Row(
         modifier = modifier
@@ -391,7 +391,7 @@ private fun androidx.compose.foundation.layout.RowScope.NavIconButton(
     enabled: Boolean,
     onClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     IconButton(
         onClick = onClick,
         modifier = Modifier.weight(1f).fillMaxSize()

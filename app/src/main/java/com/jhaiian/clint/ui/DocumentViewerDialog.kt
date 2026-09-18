@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import io.noties.markwon.Markwon
 
 @Composable
 private fun DocumentViewerContent(state: DocumentViewerUiState) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     when {
         state.isLoading -> Box(
             Modifier.fillMaxWidth().padding(vertical = 32.dp),
@@ -68,8 +68,8 @@ fun DocumentViewerDialog(
     hideStatusBar: Boolean, hideSystemNavigation: Boolean,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">AetherNet Browser</string>
-    <string name="clint_downloader_label">AetherNet Downloader</string>
+    <string name="downloader_label">AetherNet Downloader</string>
     <string name="back">Back</string>
     <string name="forward">Forward</string>
     <string name="refresh">Refresh</string>
@@ -137,11 +137,11 @@
     <string name="about_section_keep_android_open">KEEP ANDROID OPEN</string>
     <string name="about_keep_android_open_text">Google is rolling out a mandatory developer identity verification requirement that threatens sideloading and independent app ecosystems on Android, including apps like this one. Learn more and add your voice.</string>
     <string name="about_keep_android_open_url">keepandroidopen.org \u2197</string>
-    <string name="support_clint_title">Support Clint</string>
-    <string name="support_clint_summary">Help keep Clint free forever. Consider making a donation to the Clint developer.</string>
-    <string name="support_clint_view_supporters_title">View Current Supporters</string>
-    <string name="support_clint_view_supporters_summary">See everyone who has helped support Clint\u2019s development</string>
-    <string name="support_clint_markdown">## Donations\n\nI don\u2019t want to work for a corporation. I want to keep doing what I love: building apps like Clint and making them freely available to everyone.\n\nIf I wanted to, I could make Clint freemium and put some features behind a paywall. Instead, I choose not to because that\u2019s simply not the kind of developer I want to be.\n\nIf you enjoy Clint and want to support its development, consider making a donation. Every contribution, big or small, helps me continue developing and improving Clint while I\u2019m still in college.\n\nAny amount helps, and if you\u2019d like, you can also get a shoutout as a supporter.\n\nThanks for helping me keep Clint free and independent.\n\n[![Patreon](https://img.shields.io/badge/Support%20me-Patreon-orange?style=for-the-badge&amp;logo=patreon)](https://patreon.com/Jhaiian)\n[![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-red?style=for-the-badge&amp;logo=ko-fi)](https://ko-fi.com/jhaiian)\n[![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=for-the-badge&amp;logo=paypal)](https://paypal.me/jhaiian)\n[![InstaPay QR](https://img.shields.io/badge/InstaPay%20QR-Philippines%20only-7C3AED?style=for-the-badge)](https://github.com/jhaiian/docs/Insta%20Pay.jpg)</string>
+    <string name="support_upstream_title">Support Clint</string>
+    <string name="support_upstream_summary">Help keep Clint free forever. Consider making a donation to the Clint developer.</string>
+    <string name="support_upstream_view_supporters_title">View Current Supporters</string>
+    <string name="support_upstream_view_supporters_summary">See everyone who has helped support Clint\u2019s development</string>
+    <string name="support_upstream_markdown">## Donations\n\nI don\u2019t want to work for a corporation. I want to keep doing what I love: building apps like Clint and making them freely available to everyone.\n\nIf I wanted to, I could make Clint freemium and put some features behind a paywall. Instead, I choose not to because that\u2019s simply not the kind of developer I want to be.\n\nIf you enjoy Clint and want to support its development, consider making a donation. Every contribution, big or small, helps me continue developing and improving Clint while I\u2019m still in college.\n\nAny amount helps, and if you\u2019d like, you can also get a shoutout as a supporter.\n\nThanks for helping me keep Clint free and independent.\n\n[![Patreon](https://img.shields.io/badge/Support%20me-Patreon-orange?style=for-the-badge&amp;logo=patreon)](https://patreon.com/Jhaiian)\n[![Ko-fi](https://img.shields.io/badge/Buy%20me%20a%20coffee-Ko--fi-red?style=for-the-badge&amp;logo=ko-fi)](https://ko-fi.com/jhaiian)\n[![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=for-the-badge&amp;logo=paypal)](https://paypal.me/jhaiian)\n[![InstaPay QR](https://img.shields.io/badge/InstaPay%20QR-Philippines%20only-7C3AED?style=for-the-badge)](https://github.com/jhaiian/docs/Insta%20Pay.jpg)</string>
     <string name="default_browser_title">Default Browser</string>
     <string name="default_browser_none">None</string>
     <string name="look_and_feel">Look &amp; Feel</string>
@@ -156,6 +156,8 @@
     <string name="theme_light_desc">Clean white background</string>
     <string name="theme_dark">Dark</string>
     <string name="theme_dark_desc">Dark background </string>
+    <string name="theme_system">System default</string>
+    <string name="theme_system_desc">Follow the device theme</string>
     <string name="hide_status_bar">Hide status bar</string>
     <string name="hide_status_bar_summary">Hide the system status bar for a more immersive browsing experience</string>
     <string name="hide_system_navigation">Hide navigation bar</string>
@@ -186,7 +188,7 @@
     <string name="download_manager_title">Download Manager</string>
     <string name="download_manager_summary">Choose which app handles new downloads</string>
     <string name="download_manager_dialog_title">Choose download manager</string>
-    <string name="download_manager_option_clint">AetherNet (Default)</string>
+    <string name="download_manager_option_builtin">AetherNet (Default)</string>
     <string name="download_manager_option_1dm">1DM</string>
     <string name="download_manager_option_1dm_plus">1DM+</string>
     <string name="download_manager_option_1dm_lite">1DM Lite</string>
@@ -780,7 +782,7 @@
     <string name="setup_restore_title">Restore from Backup</string>
     <string name="setup_restore_subtitle">Have a AetherNet backup? Restore it now to bring back your settings and data, or skip to set up as new.</string>
     <string name="setup_restore_card_title">Restore Backup</string>
-    <string name="setup_restore_card_desc">Choose a .clintbackup file from your device</string>
+    <string name="setup_restore_card_desc">Choose a .aethernetbackup file from your device</string>
     <string name="setup_restore_button">Restore Backup</string>
     <string name="setup_restore_skip">Set Up as New</string>
 

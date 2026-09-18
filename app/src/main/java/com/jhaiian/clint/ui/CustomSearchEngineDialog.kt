@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.CustomSearchEngineQueryPlaceholder
 import com.jhaiian.clint.browser.isValidCustomSearchEngineUrl
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun CustomSearchEngineDialog(
@@ -30,7 +30,7 @@ fun CustomSearchEngineDialog(
     onConfirm: (name: String, url: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var name by remember { mutableStateOf(initialName) }
     var url by remember { mutableStateOf(initialUrl) }
     var nameError by remember { mutableStateOf<String?>(null) }
@@ -38,7 +38,7 @@ fun CustomSearchEngineDialog(
     val requiredMessage = stringResource(R.string.custom_search_engine_name_required)
     val invalidUrlMessage = stringResource(R.string.custom_search_engine_url_error, CustomSearchEngineQueryPlaceholder)
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.custom_search_engine_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -64,7 +64,7 @@ fun CustomSearchEngineDialog(
         }
     ) {
         Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = name,
                 onValueChange = { name = it; nameError = null },
                 label = { Text(stringResource(R.string.custom_search_engine_name_hint)) },
@@ -75,7 +75,7 @@ fun CustomSearchEngineDialog(
                 },
                 modifier = Modifier.fillMaxWidth()
             )
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = url,
                 onValueChange = { url = it; urlError = null },
                 label = { Text(stringResource(R.string.custom_search_engine_url_hint)) },

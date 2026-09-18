@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.LinearProgressIndicator
-import com.jhaiian.clint.ui.ClintOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -22,8 +22,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 
 @Composable
@@ -35,7 +35,7 @@ fun AddUserScriptFromLinkDialog(
     onConfirm: (url: String) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var url by remember { mutableStateOf("") }
     var urlError by remember { mutableStateOf<String?>(null) }
     val invalidUrlMessage = stringResource(R.string.filter_list_add_error_invalid_url)
@@ -51,7 +51,7 @@ fun AddUserScriptFromLinkDialog(
         }
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.user_scripts_add_link_dialog_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -82,7 +82,7 @@ fun AddUserScriptFromLinkDialog(
         }
     ) {
         Column(Modifier.padding(horizontal = 16.dp, vertical = 8.dp)) {
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = url,
                 onValueChange = {
                     url = it

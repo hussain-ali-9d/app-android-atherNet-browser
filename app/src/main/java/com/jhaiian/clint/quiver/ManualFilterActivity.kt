@@ -10,13 +10,13 @@ import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
 import com.jhaiian.clint.ui.rememberMaxContentWidth
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 
-class ManualFilterActivity : ClintActivity() {
+class ManualFilterActivity : AetherNetActivity() {
 
     private lateinit var db: ManualFilterDatabase
     private lateinit var uiState: ManualFilterUiState
@@ -49,7 +49,7 @@ class ManualFilterActivity : ClintActivity() {
         reload()
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 val maxContentWidth = rememberMaxContentWidth(this)
                 Box {
                     ManualFilterScreen(

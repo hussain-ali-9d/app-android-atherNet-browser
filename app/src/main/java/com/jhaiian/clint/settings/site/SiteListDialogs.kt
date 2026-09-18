@@ -6,8 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.ClintRadioButton
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetRadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -22,8 +22,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun AddSiteDialog(
@@ -33,11 +33,11 @@ fun AddSiteDialog(
     onConfirm: (origin: String, allowed: Boolean) -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var origin by remember { mutableStateOf("") }
     var allowed by remember { mutableStateOf(true) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -52,7 +52,7 @@ fun AddSiteDialog(
             }
         }
     ) {
-        ClintOutlinedTextField(
+        AetherNetOutlinedTextField(
             value = origin,
             onValueChange = { origin = it },
             label = { Text(stringResource(R.string.site_permission_website_hint)) },
@@ -65,7 +65,7 @@ fun AddSiteDialog(
                     Modifier.fillMaxWidth().clickable { allowed = true }.padding(vertical = 10.dp, horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ClintRadioButton(selected = allowed)
+                    AetherNetRadioButton(selected = allowed)
                     Text(
                         stringResource(R.string.site_permission_state_allowed),
                         color = colors.onSurface, fontSize = 14.sp, modifier = Modifier.padding(start = 8.dp)
@@ -75,7 +75,7 @@ fun AddSiteDialog(
                     Modifier.fillMaxWidth().clickable { allowed = false }.padding(vertical = 10.dp, horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    ClintRadioButton(selected = !allowed)
+                    AetherNetRadioButton(selected = !allowed)
                     Text(
                         stringResource(R.string.site_permission_state_denied),
                         color = colors.onSurface, fontSize = 14.sp, modifier = Modifier.padding(start = 8.dp)
@@ -94,8 +94,8 @@ fun SiteListDeleteConfirmDialog(
     onConfirm: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,

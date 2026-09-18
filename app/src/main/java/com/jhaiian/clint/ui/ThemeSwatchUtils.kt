@@ -4,7 +4,7 @@ import android.content.Context
 import android.graphics.drawable.GradientDrawable
 import android.graphics.drawable.LayerDrawable
 import androidx.compose.ui.graphics.toArgb
-import com.jhaiian.clint.ui.theme.resolveClintTheme
+import com.jhaiian.clint.ui.theme.resolveAetherNetTheme
 
 internal object ThemeSwatchUtils {
 
@@ -41,17 +41,17 @@ internal object ThemeSwatchUtils {
     }
 
     fun resolveSwatchColors(context: Context, theme: String, accent: String): SwatchColors {
-        val resolved = resolveClintTheme(context, theme, accent, "strong_tint")
+        val resolved = resolveAetherNetTheme(context, theme, accent, "strong_tint")
         return SwatchColors(resolved.background.toArgb(), resolved.surface.toArgb(), resolved.primary.toArgb())
     }
 
     fun resolveSoftTintSwatchBgSurface(context: Context, theme: String, accent: String): Pair<Int, Int> {
-        val resolved = resolveClintTheme(context, theme, accent, "soft_tint")
+        val resolved = resolveAetherNetTheme(context, theme, accent, "soft_tint")
         return resolved.background.toArgb() to resolved.surface.toArgb()
     }
 
     fun resolveNoTintSwatchBgSurface(context: Context, theme: String, accent: String): Pair<Int, Int> {
-        val resolved = resolveClintTheme(context, theme, accent, "no_tint")
+        val resolved = resolveAetherNetTheme(context, theme, accent, "no_tint")
         return resolved.background.toArgb() to resolved.surface.toArgb()
     }
 

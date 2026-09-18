@@ -8,7 +8,7 @@ import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.automirrored.filled.Sort
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
 import com.jhaiian.clint.ui.listscreen.ListFastScroller
 import com.jhaiian.clint.ui.listscreen.ListSortKey
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
@@ -63,8 +63,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.rememberClintFavicon
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.rememberAetherNetFavicon
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun SiteListScreen(
@@ -79,7 +79,7 @@ fun SiteListScreen(
     onDeleteClick: () -> Unit,
     header: (@Composable ColumnScope.() -> Unit)? = null
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val displayed = remember(state.allItems, state.searchQuery, state.sortKey, state.sortOrder) {
         filterAndSortSites(state.allItems, state.searchQuery, state.sortKey, state.sortOrder)
     }
@@ -190,7 +190,7 @@ private fun SiteListToolbar(
     onSelectAll: () -> Unit,
     onInvertSelection: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     Surface(color = colors.surface, shadowElevation = 4.dp, modifier = Modifier.statusBarsPadding()) {
         Row(
@@ -205,7 +205,7 @@ private fun SiteListToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = searchHint,
@@ -272,8 +272,8 @@ private fun SiteListRow(
     onClick: () -> Unit,
     onLongClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
-    val favicon = rememberClintFavicon("https://${entry.origin}")
+    val colors = LocalAetherNetColors.current
+    val favicon = rememberAetherNetFavicon("https://${entry.origin}")
     val (label, labelColor) = stateLabel(entry.state)
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
 

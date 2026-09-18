@@ -1,4 +1,4 @@
-package com.jhaiian.clint.settings.supportclint
+package com.jhaiian.clint.settings.supportupstream
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -10,12 +10,12 @@ import androidx.compose.runtime.setValue
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.ui.DocumentViewer
 import com.jhaiian.clint.ui.OverlayHostActivity
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
 
-class SupportClintActivity : ClintActivity(), OverlayHostActivity {
+class SupportUpstreamActivity : AetherNetActivity(), OverlayHostActivity {
 
     override var overlayContent by mutableStateOf<(@Composable () -> Unit)?>(null)
 
@@ -27,13 +27,13 @@ class SupportClintActivity : ClintActivity(), OverlayHostActivity {
         val theme = prefs.getString("app_theme", "dark") ?: "dark"
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 Box {
-                    SupportClintScreen(
+                    SupportUpstreamScreen(
                         onBack = { finish() },
                         onViewSupportersClick = {
                             DocumentViewer.show(
-                                this@SupportClintActivity,
+                                this@SupportUpstreamActivity,
                                 getString(R.string.document_viewer_supporters_title),
                                 DocumentViewer.SUPPORTERS_URL
                             )

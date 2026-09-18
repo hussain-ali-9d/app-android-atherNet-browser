@@ -1,3 +1,3 @@
 (function() {
-    return (window.__clintLastTouchedLinkText || '');
+    return (window.__aetherNetLastTouchedLinkText || '');
 })()

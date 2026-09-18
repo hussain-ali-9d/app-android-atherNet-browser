@@ -35,7 +35,7 @@ internal fun MainActivity.applyAddressBarPosition() {
 
 internal fun MainActivity.setupAddressBar() {
     suggestionFetcher = SuggestionFetcher()
-    val bgThread = android.os.HandlerThread("ClintSuggestions").also { it.start() }
+    val bgThread = android.os.HandlerThread("AetherNetSuggestions").also { it.start() }
     suggestionsBgThread = bgThread
     suggestionsBgHandler = android.os.Handler(bgThread.looper)
 }
@@ -66,7 +66,7 @@ private fun combineSuggestions(
 
 internal fun MainActivity.openSearchOverlay(isBottom: Boolean) {
     uiState.searchOverlayIsBottom = isBottom
-    val current = tabManager.activeTab?.webView?.url?.takeIf { it != HOME_PAGE_URL } ?: ""
+    val current = tabManager.activeTab?.webView?.url?.takeIf { !isHomePageUrl(it) } ?: ""
     uiState.searchOverlayOpen = true
     onSearchQueryChanged(current)
 }
@@ -206,7 +206,7 @@ internal fun MainActivity.dismissBookmarkFolderDialog() {
 }
 
 internal fun MainActivity.loadUrl(input: String) {
-    if (input.trim() == HOME_PAGE_URL) {
+    if (isHomePageUrl(input.trim())) {
         navGoHome()
         return
     }
@@ -233,7 +233,7 @@ internal fun MainActivity.formatUrl(input: String): String {
 
 internal fun MainActivity.updateAddressBar(url: String) {
     if (uiState.searchOverlayOpen) return
-    val shownUrl = if (url == HOME_PAGE_URL) "" else url
+    val shownUrl = if (isHomePageUrl(url)) "" else url
     val secure = shownUrl.startsWith("https://")
     uiState.addressBarTextTop = shownUrl
     uiState.addressBarSecureTop = secure
@@ -374,7 +374,7 @@ internal fun MainActivity.resetProgressBar() {
 
 internal fun MainActivity.updateBookmarkIcon() {
     val url = tabManager.activeTab?.webView?.url ?: ""
-    uiState.hasActiveUrl = url.isNotEmpty() && url != HOME_PAGE_URL
+    uiState.hasActiveUrl = url.isNotEmpty() && !isHomePageUrl(url)
     uiState.isBookmarked = url.isNotEmpty() && BookmarkManager.isBookmarked(this, url)
 }
 
@@ -401,25 +401,45 @@ internal fun MainActivity.updateSwipeRefreshColors(isIncognito: Boolean) {
     swipeRefreshView.setColorSchemeColors(colors.primary)
 }
 
-internal data class UiColors(val surface: Int, val onSurface: Int, val surfaceVariant: Int, val primary: Int)
+internal data class UiColors(
+    val surface: Int,
+    val onSurface: Int,
+    val surfaceVariant: Int,
+    val primary: Int,
+    val onPrimary: Int
+)
 
-/** App colors for the current tab; incognito always uses the dark variant of the user's accent. */
-internal fun MainActivity.uiColors(isIncognito: Boolean): UiColors {
-    if (!isIncognito) {
-        return UiColors(
-            surface = getThemeColor(com.google.android.material.R.attr.colorSurface),
-            onSurface = getThemeColor(com.google.android.material.R.attr.colorOnSurface),
-            surfaceVariant = getThemeColor(com.google.android.material.R.attr.colorSurfaceVariant),
-            primary = getThemeColor(androidx.appcompat.R.attr.colorPrimary)
-        )
+/** The theme actually in force: the preference, with "system" resolved against the current config. */
+internal fun MainActivity.resolvedAppTheme(): String =
+    when (val pref = prefs.getString("app_theme", "dark") ?: "dark") {
+        "light", "dark" -> pref
+        else -> {
+            val night = resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK
+            if (night == android.content.res.Configuration.UI_MODE_NIGHT_YES) "dark" else "light"
+        }
     }
-    val dark = com.jhaiian.clint.ui.theme.resolveClintTheme(
+
+/**
+ * App colors for a tab; incognito always uses the dark variant of the user's accent.
+ *
+ * Resolved through [com.jhaiian.clint.ui.theme.resolveAetherNetTheme] rather than the activity's theme
+ * attributes, so these are the same colors Compose draws and they follow a system light/dark switch
+ * that this activity handles itself (`configChanges` includes `uiMode`, so there is no recreate).
+ */
+internal fun MainActivity.uiColors(isIncognito: Boolean): UiColors {
+    val resolved = com.jhaiian.clint.ui.theme.resolveAetherNetTheme(
         this,
-        "dark",
+        if (isIncognito) "dark" else resolvedAppTheme(),
         prefs.getString("accent_color", "material_you") ?: "material_you",
         prefs.getString("surface_intensity", "soft_tint") ?: "soft_tint"
     )
-    return UiColors(dark.surface.toArgb(), dark.onSurface.toArgb(), dark.surfaceVariant.toArgb(), dark.primary.toArgb())
+    return UiColors(
+        surface = resolved.surface.toArgb(),
+        onSurface = resolved.onSurface.toArgb(),
+        surfaceVariant = resolved.surfaceVariant.toArgb(),
+        primary = resolved.primary.toArgb(),
+        onPrimary = resolved.onPrimary.toArgb()
+    )
 }
 
 internal fun MainActivity.hideKeyboard() {

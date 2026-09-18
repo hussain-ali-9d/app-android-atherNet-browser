@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.WebAsset
 
 import androidx.compose.foundation.layout.padding
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -25,7 +25,7 @@ import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.setup.SectionLabel
 import com.jhaiian.clint.ui.ThemeSwatchUtils
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.LocaleHelper
 import java.util.Locale
 
@@ -45,7 +45,7 @@ fun LookAndFeelScreen(
     onCustomizeMenuRowClicked: () -> Unit,
     onExitConfirmationConfirmed: (String) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val intensityEnabled = ThemeSwatchUtils.isSurfaceIntensityEnabled(state.theme, state.accent)
 
     SettingsScreenScaffold(
@@ -179,7 +179,7 @@ fun LookAndFeelScreen(
                 colors = colors,
                 onClick = onHideStatusBarRowClicked,
                 trailing = {
-                    ClintSwitch(checked = state.hideStatusBar)
+                    AetherNetSwitch(checked = state.hideStatusBar)
                 }
             )
             RowDivider(colors.divider)
@@ -190,7 +190,7 @@ fun LookAndFeelScreen(
                 colors = colors,
                 onClick = onHideSystemNavigationRowClicked,
                 trailing = {
-                    ClintSwitch(checked = state.hideSystemNavigation)
+                    AetherNetSwitch(checked = state.hideSystemNavigation)
                 }
             )
         }

@@ -28,14 +28,14 @@ import androidx.compose.ui.unit.sp
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
 import com.jhaiian.clint.browser.MainActivity
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class PreviewLinkLongPressRequest(val url: String, val linkText: String)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun PreviewLinkLongPressSheet(request: PreviewLinkLongPressRequest, activity: MainActivity, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val hideStatusBar = remember { PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("hide_status_bar", false) }
     val hideSystemNavigation = remember { PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("hide_system_navigation", false) }
@@ -48,7 +48,7 @@ internal fun PreviewLinkLongPressSheet(request: PreviewLinkLongPressRequest, act
     val hasLinkText = request.linkText.isNotEmpty() && request.linkText != request.url
 
     ModalBottomSheet(onDismissRequest = onDismiss, sheetState = sheetState, containerColor = colors.popupBackground) {
-        com.jhaiian.clint.ui.ClintDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
+        com.jhaiian.clint.ui.AetherNetDialogStatusBarEffect(hideStatusBar, hideSystemNavigation)
         Column(Modifier.fillMaxWidth().padding(bottom = 8.dp)) {
             Row(
                 Modifier.fillMaxWidth().padding(start = 16.dp, end = 16.dp, top = 16.dp, bottom = 4.dp),

@@ -23,7 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 data class WebPermissionDialogRequest(
     val title: String,
@@ -35,11 +35,11 @@ data class WebPermissionDialogRequest(
 
 @Composable
 internal fun WebPermissionDialog(request: WebPermissionDialogRequest, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     var remember by remember(request) { mutableStateOf(true) }
 
-    ClintDialog(
+    AetherNetDialog(
         title = request.title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
 
@@ -61,7 +61,7 @@ internal fun WebPermissionDialog(request: WebPermissionDialogRequest, hideStatus
 
 @Composable
 private fun ColumnScope.WebPermissionDialogContent(request: WebPermissionDialogRequest, remember: Boolean, onRememberChange: (Boolean) -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Text(
         request.message,
         color = colors.onSurface,

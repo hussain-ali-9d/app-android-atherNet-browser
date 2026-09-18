@@ -49,12 +49,12 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.ClintCheckbox
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
+import com.jhaiian.clint.ui.AetherNetCheckbox
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
 import com.jhaiian.clint.ui.listscreen.SelectionOptionsMenu
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun DownloadsScreen(
@@ -79,7 +79,7 @@ fun DownloadsScreen(
     onMultiCopyPath: (List<DownloadItem>) -> Unit,
     onSubmitManualDownload: (ManualDownloadSubmission, onDismiss: () -> Unit, onRename: () -> Unit) -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     val tabItems = remember(allItems, state.sortKey, state.sortOrder, state.searchQuery) {
         filterAndSortDownloads(allItems, "", state.sortKey, state.sortOrder)
@@ -261,7 +261,7 @@ private fun DownloadsToolbar(
     onMultiCopyFilename: () -> Unit,
     onMultiCopyPath: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
 
     Surface(color = colors.surface, modifier = Modifier.statusBarsPadding()) {
@@ -275,7 +275,7 @@ private fun DownloadsToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.downloads_search_hint),
@@ -374,9 +374,9 @@ private fun DownloadsToolbar(
 
 @Composable
 private fun DownloadsDeleteConfirmDialog(count: Int, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit, onConfirm: (Boolean) -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var deleteFromStorage by remember { mutableStateOf(false) }
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.downloads_delete_confirm_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -397,7 +397,7 @@ private fun DownloadsDeleteConfirmDialog(count: Int, hideStatusBar: Boolean, hid
                 Modifier.fillMaxWidth().padding(top = 12.dp).clickable { deleteFromStorage = !deleteFromStorage },
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                ClintCheckbox(checked = deleteFromStorage, onCheckedChange = { deleteFromStorage = it })
+                AetherNetCheckbox(checked = deleteFromStorage, onCheckedChange = { deleteFromStorage = it })
                 Text(stringResource(R.string.downloads_delete_also_from_storage), color = colors.onSurface, fontSize = 13.sp, modifier = Modifier.padding(start = 4.dp))
             }
         }
@@ -406,8 +406,8 @@ private fun DownloadsDeleteConfirmDialog(count: Int, hideStatusBar: Boolean, hid
 
 @Composable
 private fun DownloadsDeleteProgressDialog(progress: DeleteProgress, hideStatusBar: Boolean, hideSystemNavigation: Boolean) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.downloads_deleting_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = {},

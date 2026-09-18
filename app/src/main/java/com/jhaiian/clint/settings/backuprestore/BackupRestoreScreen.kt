@@ -61,14 +61,14 @@ import com.jhaiian.clint.settings.common.RowDivider
 import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
-import com.jhaiian.clint.ui.ClintCheckbox
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.ClintDialogCancelFooter
-import com.jhaiian.clint.ui.ClintOutlinedTextField
-import com.jhaiian.clint.ui.ClintRadioButton
+import com.jhaiian.clint.ui.AetherNetCheckbox
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.AetherNetDialogCancelFooter
+import com.jhaiian.clint.ui.AetherNetOutlinedTextField
+import com.jhaiian.clint.ui.AetherNetRadioButton
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -121,7 +121,7 @@ private fun categoryNames(context: Context, categories: Collection<BackupCategor
 
 @Composable
 private fun PasswordVisibilityToggle(visible: Boolean, onToggle: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     IconButton(onClick = onToggle) {
         Icon(
             imageVector = if (visible) Icons.Filled.VisibilityOff else Icons.Filled.Visibility,
@@ -133,7 +133,7 @@ private fun PasswordVisibilityToggle(visible: Boolean, onToggle: () -> Unit) {
 
 @Composable
 fun BackupRestorePane(activity: SettingsActivity) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val scope = rememberCoroutineScope()
     val hideStatusBar = remember { PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("hide_status_bar", false) }
     val hideSystemNavigation = remember { PreferenceManager.getDefaultSharedPreferences(activity).getBoolean("hide_system_navigation", false) }
@@ -359,7 +359,7 @@ fun BackupRestorePane(activity: SettingsActivity) {
             if (error != null) return
         }
         val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.US).format(Date())
-        createDocumentLauncher.launch("clint_backup_$timestamp.clintbackup")
+        createDocumentLauncher.launch("aethernet_backup_$timestamp.aethernetbackup")
     }
 
     SettingsScreenScaffold(
@@ -474,8 +474,8 @@ fun BackupRestorePane(activity: SettingsActivity) {
 
 @Composable
 fun ProgressDialog(hideStatusBar: Boolean, hideSystemNavigation: Boolean, message: String, completed: Int = 0, total: Int = 0) {
-    val colors = LocalClintColors.current
-    ClintDialog(title = message, hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = {}, cancelable = false, footer = {}) {
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(title = message, hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation, onDismiss = {}, cancelable = false, footer = {}) {
         if (total > 0) {
             Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 16.dp)) {
                 LinearProgressIndicator(
@@ -503,7 +503,7 @@ fun ProgressDialog(hideStatusBar: Boolean, hideSystemNavigation: Boolean, messag
 
 @Composable
 fun CategoryCheckboxRow(category: BackupCategory, checked: Boolean, onToggle: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier.fillMaxWidth().clickable(onClick = onToggle).padding(vertical = 10.dp, horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -513,17 +513,17 @@ fun CategoryCheckboxRow(category: BackupCategory, checked: Boolean, onToggle: ()
             Text(stringResource(categoryTitleRes(category)), color = colors.onSurface, fontSize = 14.sp, fontWeight = FontWeight.Medium)
             Text(stringResource(categoryDescRes(category)), color = colors.secondaryText, fontSize = 12.sp)
         }
-        ClintCheckbox(checked = checked, onCheckedChange = { onToggle() })
+        AetherNetCheckbox(checked = checked, onCheckedChange = { onToggle() })
     }
 }
 
 @Composable
 private fun BackupCategoryDialog(uiState: BackupRestoreUiState, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit, onCreate: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val categories = remember { BackupCategory.available() }
     val allSelected = uiState.selectedBackupCategories.size == categories.size
 
-    ClintDialog(
+    AetherNetDialog(
         title = stringResource(R.string.backup_select_categories_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -578,15 +578,15 @@ private fun BackupCategoryDialog(uiState: BackupRestoreUiState, hideStatusBar: B
                 modifier = Modifier.padding(top = 12.dp, bottom = 4.dp)
             )
             Row(Modifier.fillMaxWidth().clickable { uiState.encryptBackup.value = false }.padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                ClintRadioButton(selected = !uiState.encryptBackup.value)
+                AetherNetRadioButton(selected = !uiState.encryptBackup.value)
                 Text(stringResource(R.string.backup_protect_no_password), color = colors.onSurface, fontSize = 14.sp, modifier = Modifier.padding(start = 12.dp))
             }
             Row(Modifier.fillMaxWidth().clickable { uiState.encryptBackup.value = true }.padding(vertical = 8.dp), verticalAlignment = Alignment.CenterVertically) {
-                ClintRadioButton(selected = uiState.encryptBackup.value)
+                AetherNetRadioButton(selected = uiState.encryptBackup.value)
                 Text(stringResource(R.string.backup_protect_with_password), color = colors.onSurface, fontSize = 14.sp, modifier = Modifier.padding(start = 12.dp))
             }
             if (uiState.encryptBackup.value) {
-                ClintOutlinedTextField(
+                AetherNetOutlinedTextField(
                     value = uiState.backupPassword.value,
                     onValueChange = { uiState.backupPassword.value = it; uiState.passwordError.value = null },
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
@@ -601,7 +601,7 @@ private fun BackupCategoryDialog(uiState: BackupRestoreUiState, hideStatusBar: B
                         }
                     }
                 )
-                ClintOutlinedTextField(
+                AetherNetOutlinedTextField(
                     value = uiState.backupPasswordConfirm.value,
                     onValueChange = { uiState.backupPasswordConfirm.value = it; uiState.passwordError.value = null },
                     modifier = Modifier.fillMaxWidth().padding(top = 8.dp),
@@ -632,8 +632,8 @@ private fun BackupCategoryDialog(uiState: BackupRestoreUiState, hideStatusBar: B
 
 @Composable
 fun RestorePasswordDialog(uiState: BackupRestoreUiState, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit, onContinue: () -> Unit) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.restore_password_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -650,7 +650,7 @@ fun RestorePasswordDialog(uiState: BackupRestoreUiState, hideStatusBar: Boolean,
     ) {
         Column(Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 4.dp)) {
             Text(stringResource(R.string.restore_password_message), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(bottom = 8.dp))
-            ClintOutlinedTextField(
+            AetherNetOutlinedTextField(
                 value = uiState.restorePassword.value,
                 onValueChange = { uiState.restorePassword.value = it; uiState.restorePasswordError.value = null },
                 modifier = Modifier.fillMaxWidth(),
@@ -674,8 +674,8 @@ fun RestorePasswordDialog(uiState: BackupRestoreUiState, hideStatusBar: Boolean,
 
 @Composable
 fun RestoreCategoryDialog(uiState: BackupRestoreUiState, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit, onRestore: () -> Unit) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.restore_select_categories_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,

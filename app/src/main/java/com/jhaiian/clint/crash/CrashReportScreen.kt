@@ -39,14 +39,14 @@ import com.jhaiian.clint.R
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.setup.SectionLabel
 import com.jhaiian.clint.setup.SetupPrimaryButton
-import com.jhaiian.clint.ui.ClintDialog
-import com.jhaiian.clint.ui.theme.ClintColors
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.AetherNetDialog
+import com.jhaiian.clint.ui.theme.AetherNetColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 private fun CrashReportCard(
     item: CrashReportItem,
-    colors: ClintColors,
+    colors: AetherNetColors,
     onOpen: () -> Unit,
     onCopy: () -> Unit,
     onDelete: () -> Unit
@@ -73,7 +73,7 @@ private fun CrashReportCard(
 }
 
 @Composable
-private fun CrashStepRow(number: Int, text: String, colors: ClintColors) {
+private fun CrashStepRow(number: Int, text: String, colors: AetherNetColors) {
     Row(Modifier.fillMaxWidth().padding(bottom = 6.dp)) {
         Text("$number.", color = colors.primary, fontSize = 13.sp, fontWeight = FontWeight.Medium, modifier = Modifier.width(20.dp))
         Text(text, color = colors.secondaryText, fontSize = 13.sp, lineHeight = 18.sp, modifier = Modifier.weight(1f))
@@ -82,8 +82,8 @@ private fun CrashStepRow(number: Int, text: String, colors: ClintColors) {
 
 @Composable
 private fun ClearAllConfirmDialog(hideStatusBar: Boolean, hideSystemNavigation: Boolean, onConfirm: () -> Unit, onDismiss: () -> Unit) {
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.crash_clear_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -116,7 +116,7 @@ private fun CrashDetailDialog(
     onDelete: () -> Unit,
     onDismiss: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val onSurfaceArgb = colors.onSurface.toArgb()
     val displayContent = if (item.content.length > MAX_CRASH_CLIP_CHARS) {
         item.content.take(MAX_CRASH_CLIP_CHARS) + "\n" + stringResource(R.string.crash_log_truncated)
@@ -124,7 +124,7 @@ private fun CrashDetailDialog(
         item.content
     }
 
-    ClintDialog(
+    AetherNetDialog(
         title = item.title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -178,7 +178,7 @@ fun CrashReportScreen(
     onCopyTemplate: () -> Unit,
     onOpenGithub: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold(
         overlay = {

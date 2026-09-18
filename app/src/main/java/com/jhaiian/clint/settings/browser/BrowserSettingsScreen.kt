@@ -9,7 +9,7 @@ import androidx.compose.material.icons.filled.Shield
 import androidx.compose.material.icons.filled.VisibilityOff
 
 import androidx.compose.foundation.layout.padding
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -19,7 +19,7 @@ import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.settings.common.SettingsScreenScaffold
 import com.jhaiian.clint.settings.common.SettingsSection
 import com.jhaiian.clint.setup.SectionLabel
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun BrowserSettingsScreen(
@@ -35,7 +35,7 @@ fun BrowserSettingsScreen(
     onIncognitoSearchHistoryRowClicked: () -> Unit,
     onUserScriptsRowClicked: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
 
     SettingsScreenScaffold(
         overlay = {
@@ -90,7 +90,7 @@ fun BrowserSettingsScreen(
                 colors = colors,
                 onClick = onJavascriptRowClicked,
                 trailing = {
-                    ClintSwitch(checked = state.javascriptEnabled)
+                    AetherNetSwitch(checked = state.javascriptEnabled)
                 }
             )
             SettingsRow(
@@ -111,7 +111,7 @@ fun BrowserSettingsScreen(
                 colors = colors,
                 onClick = onFramelessShortcutRowClicked,
                 trailing = {
-                    ClintSwitch(checked = state.framelessShortcut)
+                    AetherNetSwitch(checked = state.framelessShortcut)
                 }
             )
         }
@@ -143,7 +143,7 @@ fun BrowserSettingsScreen(
                 colors = colors,
                 onClick = onIncognitoSearchHistoryRowClicked,
                 trailing = {
-                    ClintSwitch(checked = state.incognitoSearchHistory)
+                    AetherNetSwitch(checked = state.incognitoSearchHistory)
                 }
             )
         }

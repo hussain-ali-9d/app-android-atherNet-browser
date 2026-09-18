@@ -40,7 +40,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 import com.jhaiian.clint.util.formatRelativeTimestamp
 
@@ -57,7 +57,7 @@ fun DownloadRow(
     onRetry: (Int) -> Unit,
     itemActions: DownloadItemActions
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     var optionsMenuOpen by remember { mutableStateOf(false) }
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.55f) else colors.cardBackground
 

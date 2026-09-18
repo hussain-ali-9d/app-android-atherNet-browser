@@ -11,7 +11,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.preference.PreferenceManager
 
 @Composable
-fun rememberClintFavicon(pageUrl: String, storedFaviconUrl: String = ""): Bitmap? {
+fun rememberAetherNetFavicon(pageUrl: String, storedFaviconUrl: String = ""): Bitmap? {
     val context = LocalContext.current
     var bitmap by remember(pageUrl, storedFaviconUrl) { mutableStateOf<Bitmap?>(null) }
     LaunchedEffect(pageUrl, storedFaviconUrl) {

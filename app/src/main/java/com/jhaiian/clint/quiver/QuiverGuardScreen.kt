@@ -49,7 +49,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -75,14 +75,14 @@ import androidx.compose.ui.unit.sp
 import android.text.format.DateFormat
 import com.jhaiian.clint.settings.common.SettingsRow
 import com.jhaiian.clint.ui.AdaptiveWidthContainer
-import com.jhaiian.clint.ui.rememberClintFavicon
-import com.jhaiian.clint.ui.listscreen.ClintSearchField
+import com.jhaiian.clint.ui.rememberAetherNetFavicon
+import com.jhaiian.clint.ui.listscreen.AetherNetSearchField
 import com.jhaiian.clint.ui.listscreen.ListFastScroller
 import com.jhaiian.clint.ui.listscreen.SelectionOptionsMenu
 import com.jhaiian.clint.ui.listscreen.ListSortKey
 import com.jhaiian.clint.ui.listscreen.SortMenu
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 import java.text.NumberFormat
 import java.util.Date
@@ -119,7 +119,7 @@ fun QuiverGuardScreen(
     onForceUpdateAll: () -> Unit,
     onRecompile: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val displayed = remember(state.filterLists, state.searchQuery, state.sortKey, state.sortOrder) {
         filterAndSortFilterLists(state.filterLists, state.searchQuery, state.sortKey, state.sortOrder)
     }
@@ -249,7 +249,7 @@ fun QuiverGuardScreen(
 
 @Composable
 private fun MasterSwitchRow(masterEnabled: Boolean, onToggle: (Boolean) -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     SettingsRow(
         icon = androidx.compose.material.icons.Icons.Filled.Security,
         title = stringResource(R.string.quiver_guard_master_switch_title),
@@ -257,7 +257,7 @@ private fun MasterSwitchRow(masterEnabled: Boolean, onToggle: (Boolean) -> Unit)
         colors = colors,
         onClick = { onToggle(!masterEnabled) },
         trailing = {
-            ClintSwitch(checked = masterEnabled)
+            AetherNetSwitch(checked = masterEnabled)
         }
     )
 }
@@ -282,7 +282,7 @@ private fun QuiverGuardToolbar(
     onForceUpdateAll: () -> Unit,
     onRecompile: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val showToolbarIcons = !state.isInSelectionMode && !state.isSearchMode
     var selectionItemOptionsMenuOpen by remember { mutableStateOf(false) }
 
@@ -296,7 +296,7 @@ private fun QuiverGuardToolbar(
             }
 
             if (state.isSearchMode) {
-                ClintSearchField(
+                AetherNetSearchField(
                     query = state.searchQuery,
                     onQueryChange = { state.searchQuery = it },
                     hint = stringResource(R.string.filter_list_search_hint),
@@ -389,7 +389,7 @@ private fun ManualFilterRow(
     interactionLocked: Boolean,
     onClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val statusText = when {
         summary.ruleCount == 0 -> stringResource(R.string.quiver_guard_manual_filter_status_empty)
         summary.isEnabled -> stringResource(R.string.quiver_guard_manual_filter_status_enabled, NumberFormat.getNumberInstance().format(summary.ruleCount))
@@ -435,7 +435,7 @@ private fun FilterListRow(
     onShareLink: () -> Unit
 ) {
     var optionsMenuOpen by remember { mutableStateOf(false) }
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
     val cardColor = if (isSelected) lerp(colors.cardBackground, colors.primary, 0.22f) else colors.cardBackground
     val rowAlpha = when {
@@ -465,7 +465,7 @@ private fun FilterListRow(
             .padding(start = 14.dp, end = 4.dp, top = 10.dp, bottom = 10.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val favicon = rememberClintFavicon(filterList.downloadUrl)
+        val favicon = rememberAetherNetFavicon(filterList.downloadUrl)
         Box(Modifier.size(40.dp).clip(CircleShape).background(colors.surfaceVariant), contentAlignment = Alignment.Center) {
             if (favicon != null) {
                 Image(bitmap = favicon.asImageBitmap(), contentDescription = null, modifier = Modifier.size(22.dp))
@@ -478,7 +478,7 @@ private fun FilterListRow(
             Text(statusText, color = colors.secondaryText, fontSize = 12.sp, maxLines = 1, overflow = TextOverflow.Ellipsis, modifier = Modifier.padding(top = 2.dp))
         }
         if (!isInSelectionMode) {
-            ClintSwitch(checked = filterList.isEnabled)
+            AetherNetSwitch(checked = filterList.isEnabled)
         }
         Box {
             IconButton(onClick = { optionsMenuOpen = true }, enabled = masterEnabled && !interactionLocked) {
@@ -513,7 +513,7 @@ private fun BoxScope.QuiverGuardFabMenu(
     onFileClick: () -> Unit,
     onLinkClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val rotation by animateFloatAsState(if (isOpen) 45f else 0f, label = "fabMenuRotation")
 
     if (isOpen) {
@@ -561,7 +561,7 @@ private fun BoxScope.QuiverGuardFabMenu(
 
 @Composable
 private fun FabMenuPill(text: String, icon: androidx.compose.ui.graphics.vector.ImageVector, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier
             .clip(RoundedCornerShape(20.dp))

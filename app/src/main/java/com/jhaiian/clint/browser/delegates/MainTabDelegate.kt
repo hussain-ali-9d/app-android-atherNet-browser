@@ -6,8 +6,8 @@ import com.jhaiian.clint.tabs.BrowserTab
 import com.jhaiian.clint.tabs.SavedTab
 import com.jhaiian.clint.tabs.TabSessionManager
 import com.jhaiian.clint.tabs.TabThumbnailCache
-import com.jhaiian.clint.browser.webview.ClintWebChromeClient
-import com.jhaiian.clint.browser.webview.ClintWebViewClient
+import com.jhaiian.clint.browser.webview.AetherNetWebChromeClient
+import com.jhaiian.clint.browser.webview.AetherNetWebViewClient
 import com.jhaiian.clint.quiver.engine.BlockedRequestCounter
 import com.jhaiian.clint.quiver.engine.QuiverGuardWebIntegration
 import com.jhaiian.clint.quiver.engine.ScriptHandlerStore
@@ -86,7 +86,7 @@ internal fun MainActivity.openNewTabSilent(url: String, id: String = java.util.U
     tabManager.add(tab)
     if (isDesktopMode) addDesktopScript(tab)
     addUserScripts(tab)
-    webView.webViewClient = ClintWebViewClient(
+    webView.webViewClient = AetherNetWebViewClient(
         prefs = prefs,
         isActive = { tabManager.activeTab?.id == tab.id },
         onPageStartedCallback = { url -> if (tabManager.activeTab?.id == tab.id) onPageStarted(url) },
@@ -96,7 +96,7 @@ internal fun MainActivity.openNewTabSilent(url: String, id: String = java.util.U
         getDesktopHeaders = { buildDesktopHeaders() },
         getTabId = { tab.id }
     )
-    webView.webChromeClient = ClintWebChromeClient(
+    webView.webChromeClient = AetherNetWebChromeClient(
         isActive = { tabManager.activeTab?.id == tab.id },
         onTitleChanged = { title ->
             tab.title = title
@@ -122,7 +122,7 @@ internal fun MainActivity.openNewTabInBackground(url: String, openerTabId: Strin
     tabManager.addInBackground(tab)
     if (isDesktopMode) addDesktopScript(tab)
     addUserScripts(tab)
-    webView.webViewClient = ClintWebViewClient(
+    webView.webViewClient = AetherNetWebViewClient(
         prefs = prefs,
         isActive = { tabManager.activeTab?.id == tab.id },
         onPageStartedCallback = { url -> if (tabManager.activeTab?.id == tab.id) onPageStarted(url) },
@@ -132,7 +132,7 @@ internal fun MainActivity.openNewTabInBackground(url: String, openerTabId: Strin
         getDesktopHeaders = { buildDesktopHeaders() },
         getTabId = { tab.id }
     )
-    webView.webChromeClient = ClintWebChromeClient(
+    webView.webChromeClient = AetherNetWebChromeClient(
         isActive = { tabManager.activeTab?.id == tab.id },
         onTitleChanged = { title ->
             tab.title = title
@@ -160,7 +160,7 @@ internal fun MainActivity.openNewTab(isIncognito: Boolean, url: String = getSear
     val index = tabManager.add(tab)
     if (isDesktopMode) addDesktopScript(tab)
     addUserScripts(tab)
-    webView.webViewClient = ClintWebViewClient(
+    webView.webViewClient = AetherNetWebViewClient(
         prefs = prefs,
         isActive = { tabManager.activeTab?.id == tab.id },
         onPageStartedCallback = { url -> if (tabManager.activeTab?.id == tab.id) onPageStarted(url) },
@@ -170,7 +170,7 @@ internal fun MainActivity.openNewTab(isIncognito: Boolean, url: String = getSear
         getDesktopHeaders = { buildDesktopHeaders() },
         getTabId = { tab.id }
     )
-    webView.webChromeClient = ClintWebChromeClient(
+    webView.webChromeClient = AetherNetWebChromeClient(
         isActive = { tabManager.activeTab?.id == tab.id },
         onTitleChanged = { title ->
             tab.title = title
@@ -232,7 +232,7 @@ internal fun MainActivity.openRefreshLinkTab(url: String) {
     val index = tabManager.add(tab)
     if (isDesktopMode) addDesktopScript(tab)
     addUserScripts(tab)
-    webView.webViewClient = ClintWebViewClient(
+    webView.webViewClient = AetherNetWebViewClient(
         prefs = prefs,
         isActive = { tabManager.activeTab?.id == tab.id },
         onPageStartedCallback = { u -> if (tabManager.activeTab?.id == tab.id) onPageStarted(u) },
@@ -242,7 +242,7 @@ internal fun MainActivity.openRefreshLinkTab(url: String) {
         getDesktopHeaders = { buildDesktopHeaders() },
         getTabId = { tab.id }
     )
-    webView.webChromeClient = ClintWebChromeClient(
+    webView.webChromeClient = AetherNetWebChromeClient(
         isActive = { tabManager.activeTab?.id == tab.id },
         onTitleChanged = { title ->
             tab.title = title

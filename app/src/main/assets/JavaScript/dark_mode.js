@@ -1,5 +1,5 @@
 (function() {
-    var id = '__clint_dark_mode';
+    var id = '__aethernet_dark_mode';
     var existing = document.getElementById(id);
     if (existing) { existing.remove(); return; }
     var s = document.createElement('style');

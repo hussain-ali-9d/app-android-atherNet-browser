@@ -7,7 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
-import com.jhaiian.clint.ui.ClintRadioButton
+import com.jhaiian.clint.ui.AetherNetRadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.sp
 import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.setup.DefaultChip
 import com.jhaiian.clint.setup.SectionLabel
 import com.jhaiian.clint.setup.SelectableCard
@@ -31,10 +31,10 @@ import com.jhaiian.clint.settings.site.SiteEntry
 import com.jhaiian.clint.settings.site.SiteListDeleteConfirmDialog
 import com.jhaiian.clint.settings.site.SiteListScreen
 import com.jhaiian.clint.settings.site.SiteListUiState
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
-class SitePermissionActivity : ClintActivity() {
+class SitePermissionActivity : AetherNetActivity() {
 
     companion object {
         const val EXTRA_TYPE = "type"
@@ -69,8 +69,8 @@ class SitePermissionActivity : ClintActivity() {
         reload()
 
         setContent {
-            ClintComposeTheme(theme = theme) {
-                val colors = LocalClintColors.current
+            AetherNetComposeTheme(theme = theme) {
+                val colors = LocalAetherNetColors.current
                 val maxContentWidth = rememberMaxContentWidth(this)
                 var defaultBehavior by remember {
                     mutableStateOf(prefs.getString(defaultBehaviorKey, PREF_VALUE_ASK) ?: PREF_VALUE_ASK)
@@ -113,7 +113,7 @@ class SitePermissionActivity : ClintActivity() {
                                     modifier = Modifier.padding(horizontal = 12.dp),
                                     contentPadding = 14.dp, bottomSpacing = 8.dp
                                 ) {
-                                    ClintRadioButton(selected = selected)
+                                    AetherNetRadioButton(selected = selected)
                                     Column(Modifier.weight(1f).padding(start = 12.dp, end = 8.dp)) {
                                         Text(stringResource(titleRes), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                                         Text(stringResource(descRes), color = colors.secondaryText, fontSize = 13.sp, modifier = Modifier.padding(top = 2.dp))

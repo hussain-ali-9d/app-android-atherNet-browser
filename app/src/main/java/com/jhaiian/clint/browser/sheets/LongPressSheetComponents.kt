@@ -20,7 +20,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 internal val LongPressCardCorner = 16.dp
 
@@ -28,7 +28,7 @@ internal val LongPressContentMaxWidth = 480.dp
 
 @Composable
 internal fun LongPressActionRow(icon: ImageVector, text: String, onClick: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Row(
         Modifier.fillMaxWidth().height(56.dp).clickable(onClick = onClick).padding(horizontal = 16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -45,5 +45,5 @@ internal fun LongPressActionRow(icon: ImageVector, text: String, onClick: () -> 
 
 @Composable
 internal fun LongPressSheetDivider() {
-    HorizontalDivider(color = LocalClintColors.current.divider, thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
+    HorizontalDivider(color = LocalAetherNetColors.current.divider, thickness = 1.dp, modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp))
 }

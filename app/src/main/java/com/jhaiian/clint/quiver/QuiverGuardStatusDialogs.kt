@@ -15,17 +15,17 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
-import com.jhaiian.clint.ui.ClintDialog
+import com.jhaiian.clint.ui.AetherNetDialog
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogConfig
 import com.jhaiian.clint.ui.listscreen.ConfirmDialogHost
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 import com.jhaiian.clint.util.formatFileSize
 
 @Composable
 fun DownloadProgressDialog(progress: DownloadProgressUi?, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onCancel: () -> Unit) {
     if (progress == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.quiver_guard_download_dialog_title, progress.filterListName),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = {},
@@ -66,8 +66,8 @@ private fun downloadProgressStatusText(progress: DownloadProgressUi): String = w
 @Composable
 fun UpdateProgressDialog(progress: UpdateProgressUi?, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onCancel: () -> Unit) {
     if (progress == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = progress.title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = {},
@@ -102,8 +102,8 @@ fun UpdateProgressDialog(progress: UpdateProgressUi?, hideStatusBar: Boolean, hi
 @Composable
 fun CompileProgressDialog(progress: CompileProgressUi?, hideStatusBar: Boolean, hideSystemNavigation: Boolean) {
     if (progress == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = stringResource(R.string.quiver_guard_compile_progress_title),
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = {},
@@ -122,8 +122,8 @@ fun CompileProgressDialog(progress: CompileProgressUi?, hideStatusBar: Boolean, 
 @Composable
 fun UpdateResultDialog(result: UpdateResultUi?, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
     if (result == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = result.title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,
@@ -151,8 +151,8 @@ fun UpdateResultDialog(result: UpdateResultUi?, hideStatusBar: Boolean, hideSyst
 @Composable
 fun CompileResultDialog(result: CompileResultUi?, hideStatusBar: Boolean, hideSystemNavigation: Boolean, onDismiss: () -> Unit) {
     if (result == null) return
-    val colors = LocalClintColors.current
-    ClintDialog(
+    val colors = LocalAetherNetColors.current
+    AetherNetDialog(
         title = result.title,
         hideStatusBar = hideStatusBar, hideSystemNavigation = hideSystemNavigation,
         onDismiss = onDismiss,

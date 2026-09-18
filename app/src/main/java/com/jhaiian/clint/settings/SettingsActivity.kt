@@ -45,14 +45,14 @@ import androidx.core.view.WindowCompat
 import androidx.preference.PreferenceManager
 import com.jhaiian.clint.BuildConfig
 import com.jhaiian.clint.R
-import com.jhaiian.clint.base.ClintActivity
+import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.settings.backuprestore.BackupRestorePane
 import com.jhaiian.clint.settings.main.MainSettingsScreen
-import com.jhaiian.clint.settings.supportclint.SupportClintActivity
+import com.jhaiian.clint.settings.supportupstream.SupportUpstreamActivity
 import com.jhaiian.clint.ui.DocumentViewer
 import com.jhaiian.clint.ui.OverlayHostActivity
-import com.jhaiian.clint.ui.theme.ClintComposeTheme
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 private const val DEST_LOOK_AND_FEEL = "look_and_feel"
 private const val DEST_BROWSER = "browser"
@@ -66,7 +66,7 @@ private const val DEST_MISC = "misc"
 private const val DEST_DEBUG = "debug"
 private const val DEST_ABOUT = "about"
 
-class SettingsActivity : ClintActivity(), OverlayHostActivity {
+class SettingsActivity : AetherNetActivity(), OverlayHostActivity {
 
     override var overlayContent by mutableStateOf<(@Composable () -> Unit)?>(null)
 
@@ -96,7 +96,7 @@ class SettingsActivity : ClintActivity(), OverlayHostActivity {
         }
 
         setContent {
-            ClintComposeTheme(theme = theme) {
+            AetherNetComposeTheme(theme = theme) {
                 SettingsNavHost(activity = this, initialDestination = initialDestination)
                 overlayContent?.invoke()
             }
@@ -225,7 +225,7 @@ private fun SettingsListPane(activity: SettingsActivity, onNavigate: (String) ->
                 onMiscClick = { onNavigate(DEST_MISC) },
                 onDebugClick = { onNavigate(DEST_DEBUG) },
                 onAboutClick = { onNavigate(DEST_ABOUT) },
-                onSupportClintClick = { activity.startActivity(Intent(activity, SupportClintActivity::class.java)) }
+                onSupportUpstreamClick = { activity.startActivity(Intent(activity, SupportUpstreamActivity::class.java)) }
             )
         }
     }
@@ -274,7 +274,7 @@ private fun destinationTitleRes(destination: String): Int = when (destination) {
 
 @Composable
 private fun SettingsToolbar(title: String, onBack: () -> Unit) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Surface(color = colors.surface, shadowElevation = 4.dp, modifier = Modifier.statusBarsPadding()) {
         Row(Modifier.fillMaxWidth().height(56.dp).padding(horizontal = 4.dp), verticalAlignment = Alignment.CenterVertically) {
             IconButton(onClick = onBack) {
@@ -293,7 +293,7 @@ private fun SettingsToolbar(title: String, onBack: () -> Unit) {
 
 @Composable
 private fun SettingsEmptyDetailPane() {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     Surface(color = colors.background, modifier = Modifier.fillMaxSize()) {
         Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             Column(horizontalAlignment = Alignment.CenterHorizontally) {

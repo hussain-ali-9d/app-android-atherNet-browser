@@ -10,9 +10,9 @@ class DownloadCustomScheduleReceiver : BroadcastReceiver() {
         val id = intent.getIntExtra(EXTRA_ID, -1)
         if (id == -1) return
         val pendingResult = goAsync()
-        val job = ClintDownloadManager.init(context)
+        val job = AetherNetDownloadManager.init(context)
         job.invokeOnCompletion {
-            ClintDownloadManager.resume(context, id)
+            AetherNetDownloadManager.resume(context, id)
             pendingResult.finish()
         }
     }

@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
-class ClintSwipeRefreshLayout @JvmOverloads constructor(
+class AetherNetSwipeRefreshLayout @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null
 ) : SwipeRefreshLayout(context, attrs) {

@@ -12,7 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import com.jhaiian.clint.ui.ClintSwitch
+import com.jhaiian.clint.ui.AetherNetSwitch
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.jhaiian.clint.R
 import com.jhaiian.clint.ui.ThemeSwatchUtils
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun SetupLayoutPage(
@@ -42,7 +42,7 @@ fun SetupLayoutPage(
     onHideSystemNavigationToggled: (Boolean) -> Unit,
     onNext: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     val context = LocalContext.current
 
     val swatch = remember(theme, accent) {
@@ -140,7 +140,7 @@ fun SetupLayoutPage(
                     Text(stringResource(R.string.hide_status_bar), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(R.string.hide_status_bar_summary), color = colors.secondaryText, fontSize = 12.sp, lineHeight = 15.6.sp, modifier = Modifier.padding(top = 2.dp))
                 }
-                ClintSwitch(checked = hideStatusBar)
+                AetherNetSwitch(checked = hideStatusBar)
             }
         }
         Card(
@@ -156,7 +156,7 @@ fun SetupLayoutPage(
                     Text(stringResource(R.string.hide_system_navigation), color = colors.onSurface, fontSize = 15.sp, fontWeight = FontWeight.Medium)
                     Text(stringResource(R.string.hide_system_navigation_summary), color = colors.secondaryText, fontSize = 12.sp, lineHeight = 15.6.sp, modifier = Modifier.padding(top = 2.dp))
                 }
-                ClintSwitch(checked = hideSystemNavigation)
+                AetherNetSwitch(checked = hideSystemNavigation)
             }
         }
 

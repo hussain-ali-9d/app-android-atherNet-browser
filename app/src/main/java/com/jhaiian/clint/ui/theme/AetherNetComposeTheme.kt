@@ -12,7 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.preference.PreferenceManager
 
-data class ClintColors(
+data class AetherNetColors(
     val background: Color,
     val onSurface: Color,
     val secondaryText: Color,
@@ -37,11 +37,11 @@ data class ClintColors(
     val isLight: Boolean
 )
 
-val LocalClintColors = compositionLocalOf<ClintColors> {
-    error("ClintComposeTheme not applied")
+val LocalAetherNetColors = compositionLocalOf<AetherNetColors> {
+    error("AetherNetComposeTheme not applied")
 }
 
-private fun ClintColors(resolved: ClintResolvedTheme) = ClintColors(
+private fun AetherNetColors(resolved: AetherNetResolvedTheme) = AetherNetColors(
     background = resolved.background,
     onSurface = resolved.onSurface,
     secondaryText = resolved.secondaryText,
@@ -67,7 +67,7 @@ private fun ClintColors(resolved: ClintResolvedTheme) = ClintColors(
 )
 
 @Composable
-fun ClintComposeTheme(theme: String, content: @Composable () -> Unit) {
+fun AetherNetComposeTheme(theme: String, content: @Composable () -> Unit) {
     val context = LocalContext.current
     val systemDark = isSystemInDarkTheme()
     val resolvedTheme = when (theme) {
@@ -80,27 +80,27 @@ fun ClintComposeTheme(theme: String, content: @Composable () -> Unit) {
     val intensity = prefs.getString("surface_intensity", "soft_tint") ?: "soft_tint"
 
     val resolved = remember(resolvedTheme, accent, intensity) {
-        resolveClintTheme(context, resolvedTheme, accent, intensity)
+        resolveAetherNetTheme(context, resolvedTheme, accent, intensity)
     }
-    val clintColors = remember(resolved) { ClintColors(resolved) }
+    val aethernetColors = remember(resolved) { AetherNetColors(resolved) }
 
     val isLight = resolved.isLight
     val base = if (isLight) lightColorScheme() else darkColorScheme()
     val colorScheme = base.copy(
-        primary = clintColors.primary,
-        onPrimary = clintColors.onPrimary,
-        background = clintColors.background,
-        onBackground = clintColors.onSurface,
-        surface = clintColors.cardBackground,
-        onSurface = clintColors.onSurface,
-        surfaceVariant = clintColors.surfaceVariant,
-        onSurfaceVariant = clintColors.secondaryText,
-        error = clintColors.colorError,
-        errorContainer = clintColors.colorErrorContainer,
-        onErrorContainer = clintColors.colorOnErrorContainer
+        primary = aethernetColors.primary,
+        onPrimary = aethernetColors.onPrimary,
+        background = aethernetColors.background,
+        onBackground = aethernetColors.onSurface,
+        surface = aethernetColors.cardBackground,
+        onSurface = aethernetColors.onSurface,
+        surfaceVariant = aethernetColors.surfaceVariant,
+        onSurfaceVariant = aethernetColors.secondaryText,
+        error = aethernetColors.colorError,
+        errorContainer = aethernetColors.colorErrorContainer,
+        onErrorContainer = aethernetColors.colorOnErrorContainer
     )
 
-    CompositionLocalProvider(LocalClintColors provides clintColors) {
+    CompositionLocalProvider(LocalAetherNetColors provides aethernetColors) {
         MaterialTheme(colorScheme = colorScheme, content = content)
     }
 }

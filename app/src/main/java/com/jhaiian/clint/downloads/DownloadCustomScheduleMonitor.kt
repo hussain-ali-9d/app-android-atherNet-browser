@@ -44,11 +44,11 @@ internal object DownloadCustomScheduleMonitor {
     }
 
     fun rearmAll(context: Context) {
-        ClintDownloadManager.downloadsFlow.value
+        AetherNetDownloadManager.downloadsFlow.value
             .filter { it.status == DownloadStatus.PAUSED && it.waitingForCustomSchedule && it.scheduledStartAtMillis > 0L }
             .forEach { item ->
                 if (item.scheduledStartAtMillis <= System.currentTimeMillis()) {
-                    ClintDownloadManager.resume(context, item.id)
+                    AetherNetDownloadManager.resume(context, item.id)
                 } else {
                     schedule(context, item.id, item.scheduledStartAtMillis)
                 }

@@ -13,7 +13,7 @@ import androidx.webkit.UserAgentMetadata
 import androidx.webkit.WebSettingsCompat
 import androidx.webkit.WebViewCompat
 import androidx.webkit.WebViewFeature
-import com.jhaiian.clint.downloads.ClintDownloadManager
+import com.jhaiian.clint.downloads.AetherNetDownloadManager
 import com.jhaiian.clint.quiver.engine.QuiverGuardWebIntegration
 import com.jhaiian.clint.tabs.BrowserTab
 import com.jhaiian.clint.userscripts.UserScriptEngine
@@ -51,8 +51,8 @@ internal fun MainActivity.createWebView(isIncognito: Boolean): WebView {
     webView.addJavascriptInterface(NestedScrollBridge(), "NestedScrollBridge")
     webView.addJavascriptInterface(CanvasTouchBridge(), "CanvasTouchBridge")
     webView.addJavascriptInterface(BottomNavBridge(), "BottomNavBridge")
-    webView.addJavascriptInterface(NotificationBridge(webView), "ClintNotificationBridge")
-    webView.addJavascriptInterface(UserScriptBridge(webView), "ClintUserScriptBridge")
+    webView.addJavascriptInterface(NotificationBridge(webView), "AetherNetNotificationBridge")
+    webView.addJavascriptInterface(UserScriptBridge(webView), "AetherNetUserScriptBridge")
     webView.addJavascriptInterface(BlobDownloadBridge(), "BlobDownloadBridge")
     webView.addJavascriptInterface(SelectPickerBridge(webView), "SelectPickerBridge")
 
@@ -143,8 +143,7 @@ internal fun MainActivity.buildUserAgent(): String {
 
 @Suppress("DEPRECATION")
 internal fun MainActivity.applyWebDarkMode(webView: WebView, forceDark: Boolean = false) {
-    val theme = prefs.getString("app_theme", "dark") ?: "dark"
-    val enabled = forceDark || theme == "dark"
+    val enabled = forceDark || resolvedAppTheme() == "dark"
     val settings = webView.settings
     when {
         WebViewFeature.isFeatureSupported(WebViewFeature.ALGORITHMIC_DARKENING) ->

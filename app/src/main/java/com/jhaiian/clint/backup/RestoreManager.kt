@@ -93,7 +93,7 @@ object RestoreManager {
             }
 
             val manifest = readManifest(plainZip) ?: run { plainZip.delete(); staged.rawFile.delete(); return@withContext UnlockResult.InvalidFile }
-            if (manifest.format != BACKUP_FORMAT_MAGIC) {
+            if (manifest.format != BACKUP_FORMAT_MAGIC && manifest.format != LEGACY_BACKUP_FORMAT_MAGIC) {
                 plainZip.delete()
                 staged.rawFile.delete()
                 return@withContext UnlockResult.InvalidFile

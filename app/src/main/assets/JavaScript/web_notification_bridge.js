@@ -1,26 +1,26 @@
 (function() {
-    if (window.__clintNotifInstalled) return;
-    window.__clintNotifInstalled = true;
+    if (window.__aetherNetNotifInstalled) return;
+    window.__aetherNetNotifInstalled = true;
     var _seq = 0;
     var _pending = {};
-    function ClintNotification(title, options) {
-        if (!(this instanceof ClintNotification)) return;
+    function AetherNetNotification(title, options) {
+        if (!(this instanceof AetherNetNotification)) return;
         options = options || {};
-        ClintNotificationBridge.postNotification(
+        AetherNetNotificationBridge.postNotification(
             String(title || ''),
             String(options.body || ''),
             String(options.tag || ''),
             String(window.location.hostname || '')
         );
     }
-    ClintNotification.prototype.close = function() {};
-    Object.defineProperty(ClintNotification, 'permission', {
+    AetherNetNotification.prototype.close = function() {};
+    Object.defineProperty(AetherNetNotification, 'permission', {
         get: function() {
-            return ClintNotificationBridge.getPermissionState(String(window.location.hostname || ''));
+            return AetherNetNotificationBridge.getPermissionState(String(window.location.hostname || ''));
         },
         configurable: true
     });
-    ClintNotification.requestPermission = function(callback) {
+    AetherNetNotification.requestPermission = function(callback) {
         var id = String(++_seq);
         return new Promise(function(resolve) {
             _pending[id] = function(result) {
@@ -28,12 +28,12 @@
                 if (typeof callback === 'function') callback(result);
                 resolve(result);
             };
-            ClintNotificationBridge.requestPermission(id, String(window.location.hostname || ''));
+            AetherNetNotificationBridge.requestPermission(id, String(window.location.hostname || ''));
         });
     };
-    window._ClintResolvePermission = function(id, result) {
+    window._AetherNetResolvePermission = function(id, result) {
         var cb = _pending[String(id)];
         if (cb) cb(result);
     };
-    window.Notification = ClintNotification;
+    window.Notification = AetherNetNotification;
 })();

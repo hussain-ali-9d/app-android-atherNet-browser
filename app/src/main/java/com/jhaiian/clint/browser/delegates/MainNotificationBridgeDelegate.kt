@@ -38,11 +38,11 @@ internal fun MainActivity.showWebNotificationPermissionFromBridge(
     if (!isIncognito) {
         val stored = SitePermissionManager.getState(this, rawOrigin, SitePermissionDatabase.TYPE_NOTIFICATION)
         if (stored == SitePermissionDatabase.STATE_ALLOW) {
-            webView.evaluateJavascript("window._ClintResolvePermission('$safeId','granted')", null)
+            webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','granted')", null)
             return
         }
         if (stored == SitePermissionDatabase.STATE_DENY) {
-            webView.evaluateJavascript("window._ClintResolvePermission('$safeId','denied')", null)
+            webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','denied')", null)
             return
         }
 
@@ -50,11 +50,11 @@ internal fun MainActivity.showWebNotificationPermissionFromBridge(
             .getString("site_perm_default_${SitePermissionDatabase.TYPE_NOTIFICATION}", SitePermissionActivity.PREF_VALUE_ASK) ?: SitePermissionActivity.PREF_VALUE_ASK
         when (globalDefault) {
             SitePermissionActivity.PREF_VALUE_ALLOW -> {
-                webView.evaluateJavascript("window._ClintResolvePermission('$safeId','granted')", null)
+                webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','granted')", null)
                 return
             }
             SitePermissionActivity.PREF_VALUE_DENY -> {
-                webView.evaluateJavascript("window._ClintResolvePermission('$safeId','denied')", null)
+                webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','denied')", null)
                 return
             }
             else -> {}
@@ -68,11 +68,11 @@ internal fun MainActivity.showWebNotificationPermissionFromBridge(
         isIncognito = isIncognito,
         onAllow = { remember ->
             if (remember && !isIncognito) SitePermissionManager.setState(this, rawOrigin, SitePermissionDatabase.TYPE_NOTIFICATION, SitePermissionDatabase.STATE_ALLOW)
-            webView.evaluateJavascript("window._ClintResolvePermission('$safeId','granted')", null)
+            webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','granted')", null)
         },
         onDeny = { remember ->
             if (remember && !isIncognito) SitePermissionManager.setState(this, rawOrigin, SitePermissionDatabase.TYPE_NOTIFICATION, SitePermissionDatabase.STATE_DENY)
-            webView.evaluateJavascript("window._ClintResolvePermission('$safeId','denied')", null)
+            webView.evaluateJavascript("window._AetherNetResolvePermission('$safeId','denied')", null)
         }
     )
 }

@@ -23,7 +23,7 @@ import androidx.compose.ui.unit.dp
 import com.jhaiian.clint.ui.listscreen.ListMenuItem
 import com.jhaiian.clint.ui.listscreen.ListSortOrder
 import com.jhaiian.clint.ui.listscreen.PopupShape
-import com.jhaiian.clint.ui.theme.LocalClintColors
+import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 @Composable
 fun BookmarksSortMenu(
@@ -37,7 +37,7 @@ fun BookmarksSortMenu(
     onSortAscending: () -> Unit,
     onSortDescending: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -71,7 +71,7 @@ fun BookmarksMoreMenu(
     onImportClick: () -> Unit,
     onExportClick: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -97,7 +97,7 @@ fun BookmarksSelectionOptionsMenu(
     onInvertSelection: () -> Unit,
     onDeselectAll: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
@@ -127,7 +127,7 @@ fun BookmarksSelectionItemOptionsMenu(
     showRename: Boolean,
     onRename: () -> Unit
 ) {
-    val colors = LocalClintColors.current
+    val colors = LocalAetherNetColors.current
     DropdownMenu(
         expanded = expanded,
         onDismissRequest = onDismiss,
