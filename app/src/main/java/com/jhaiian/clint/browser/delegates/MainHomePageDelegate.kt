@@ -141,6 +141,20 @@ private fun MainActivity.buildHomePageHtml(origins: List<String>, isIncognito: B
           <a class="vpn-action" id="vpn-action" href="$HOME_PAGE_VPN_TOGGLE_URL">${TextUtils.htmlEncode(vpn.getString("action"))}</a>
         </div>
         <script>
+          (function () {
+            var root = document.documentElement;
+            var timer;
+            function park() { root.classList.add('calm'); }
+            function play() {
+              root.classList.remove('calm');
+              clearTimeout(timer);
+              timer = setTimeout(park, 9000);
+            }
+            document.addEventListener('visibilitychange', function () {
+              if (document.hidden) { clearTimeout(timer); park(); } else { play(); }
+            });
+            play();
+          })();
           window.aethernetTheme = function (t) {
             var root = document.documentElement;
             for (var key in t) {
@@ -196,6 +210,10 @@ private fun MainActivity.buildHomePageHtml(origins: List<String>, isIncognito: B
           @keyframes an-flutter { from { transform: rotate(-5deg); } to { transform: rotate(6deg); } }
           .blink { transform-origin: 100px 99px; animation: an-blink 4.2s infinite; }
           @keyframes an-blink { 0%, 90%, 100% { transform: scaleY(1); } 93% { transform: scaleY(0.1); } 96% { transform: scaleY(1); } }
+          /* A continuously animating page keeps WebView asking for frames, which floods logcat with
+             setRequestedFrameRate and burns battery on a screen nobody is watching. The mark plays
+             its intro, then parks. */
+          html.calm .mer, html.calm .bob, html.calm .flutter, html.calm .blink { animation-play-state: paused; }
           @media (prefers-reduced-motion: reduce) { .mer, .bob, .flutter, .blink { animation: none; } }
           .vpn { display: flex; align-items: center; gap: 8px; margin: 0 0 36px; padding: 8px 8px 8px 12px; border-radius: 20px; background: var(--tile); }
           .vpn-main { flex: 1; min-width: 0; display: flex; align-items: center; gap: 12px; color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
