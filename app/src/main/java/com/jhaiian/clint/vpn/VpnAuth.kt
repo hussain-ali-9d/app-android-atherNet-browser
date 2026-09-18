@@ -179,6 +179,12 @@ internal class VpnAuthenticator(
         deviceId: String,
         appVersion: String
     ): Pair<List<String>, String>? {
+        // TODO(vpn-attestation): temporary. Flip VPN_SKIP_KEY_ATTESTATION back to false in
+        // app/build.gradle.kts once the backend accepts this package's attestation.
+        if (BuildConfig.VPN_SKIP_KEY_ATTESTATION) {
+            Log.w(TAG, "Key attestation skipped: VPN_SKIP_KEY_ATTESTATION is set (debug build only)")
+            return null
+        }
         if (nonce.challengeMode.equals("hmac_nonce", ignoreCase = true)) {
             Log.w(TAG, "hmac_nonce attestation requested; no pepper available, sending none")
             return null

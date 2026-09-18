@@ -28,13 +28,10 @@ import com.jhaiian.clint.ui.theme.AetherNetColors
 import com.jhaiian.clint.ui.theme.LocalAetherNetColors
 
 private const val AUTHOR_URL = "https://linktr.ee/jhaiian"
-private const val GITHUB_URL = "https://github.com/jhaiian/ClintBrowser"
+private const val GITHUB_URL = "https://github.com/hussain-ali-9d/app-android-atherNet-browser"
 private const val KEEP_ANDROID_OPEN_URL = "https://keepandroidopen.org"
-private const val DISCORD_URL = "https://discord.gg/4kUe4yPQ32"
-private const val REDDIT_URL = "https://www.reddit.com/r/ClintBrowser"
 private const val LICENSE_URL = "https://www.gnu.org/licenses/gpl-3.0.html"
 private const val CONTACT_EMAIL_URL = "mailto:jhaiianbetter@duck.com"
-private const val CONTRIBUTORS_URL = "https://github.com/jhaiian/ClintBrowser/blob/main/Contributors.md"
 private const val APACHE_2_LICENSE_URL = "https://www.apache.org/licenses/LICENSE-2.0.txt"
 private const val MARKWON_URL = "https://github.com/noties/Markwon"
 private const val ANDROIDX_URL = "https://developer.android.com/jetpack/androidx"
@@ -242,32 +239,8 @@ fun AboutScreen(
             AboutLinkRow(stringResource(R.string.document_viewer_terms_title), stringResource(R.string.about_legal_view), colors, onTermsClick)
         }
 
-        AboutCard(stringResource(R.string.about_section_community), colors) {
-            Text(
-                stringResource(R.string.about_community_discord_text),
-                color = colors.onSurface,
-                fontSize = 13.sp,
-                lineHeight = 19.sp,
-                modifier = Modifier.padding(bottom = 10.dp)
-            )
-            AboutLinkRow(stringResource(R.string.about_community_discord_label), stringResource(R.string.about_community_discord_url), colors, { onLinkClick(DISCORD_URL) })
-            AboutThinDivider(colors.surfaceVariant)
-            AboutLinkRow(stringResource(R.string.about_community_reddit_label), stringResource(R.string.about_community_reddit_url), colors, { onLinkClick(REDDIT_URL) })
-        }
-
         AboutCard(stringResource(R.string.about_section_contact), colors) {
             AboutLinkRow(stringResource(R.string.about_contact_email_label), stringResource(R.string.about_contact_email), colors, { onLinkClick(CONTACT_EMAIL_URL) })
-        }
-
-        AboutCard(stringResource(R.string.about_section_contributors), colors) {
-            Text(
-                stringResource(R.string.about_contributors_text),
-                color = colors.onSurface,
-                fontSize = 13.sp,
-                lineHeight = 19.sp,
-                modifier = Modifier.padding(bottom = 10.dp)
-            )
-            AboutStandaloneLink(stringResource(R.string.about_contributors_link), colors) { onLinkClick(CONTRIBUTORS_URL) }
         }
 
         AboutCard(stringResource(R.string.about_section_libraries), colors) {

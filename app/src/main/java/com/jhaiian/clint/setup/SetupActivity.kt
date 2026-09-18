@@ -37,8 +37,8 @@ class SetupActivity : AetherNetActivity(), OverlayHostActivity {
     }
 
     companion object {
-        const val PRIVACY_POLICY_URL = "https://github.com/jhaiian/ClintBrowser/blob/main/PRIVACY_POLICY.md"
-        const val TERMS_URL = "https://github.com/jhaiian/ClintBrowser/blob/main/TERMS_OF_SERVICE.md"
+        const val PRIVACY_POLICY_URL = "https://github.com/hussain-ali-9d/app-android-atherNet-browser/blob/main/PRIVACY_POLICY.md"
+        const val TERMS_URL = "https://github.com/hussain-ali-9d/app-android-atherNet-browser/blob/main/TERMS_OF_SERVICE.md"
         private const val PAGE_WELCOME = 0
         private const val PAGE_ENGINE = 4
 

@@ -28,9 +28,9 @@ import java.util.zip.ZipFile
 object UpdateChecker {
 
     private const val STABLE_URL =
-        "https://raw.githubusercontent.com/jhaiian/ClintBrowser/main/Update/Stable.json"
+        "https://raw.githubusercontent.com/hussain-ali-9d/app-android-atherNet-browser/main/Update/Stable.json"
     private const val BETA_URL =
-        "https://raw.githubusercontent.com/jhaiian/ClintBrowser/main/Update/Beta.json"
+        "https://raw.githubusercontent.com/hussain-ali-9d/app-android-atherNet-browser/main/Update/Beta.json"
 
     private const val PREFS_NAME = "update_prefs"
     private const val KEY_SKIPPED_VERSION_CODE = "skipped_version_code"
@@ -70,7 +70,7 @@ object UpdateChecker {
                     onDownload = { url, versionCode -> startDownload(activity, url, versionCode, state, dismiss) },
                     onViewGithub = {
                         activity.startActivity(
-                            Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/jhaiian/ClintBrowser/releases"))
+                            Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/hussain-ali-9d/app-android-atherNet-browser/releases"))
                         )
                         dismiss()
                     },

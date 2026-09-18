@@ -48,7 +48,6 @@ import com.jhaiian.clint.R
 import com.jhaiian.clint.base.AetherNetActivity
 import com.jhaiian.clint.settings.backuprestore.BackupRestorePane
 import com.jhaiian.clint.settings.main.MainSettingsScreen
-import com.jhaiian.clint.settings.supportupstream.SupportUpstreamActivity
 import com.jhaiian.clint.ui.DocumentViewer
 import com.jhaiian.clint.ui.OverlayHostActivity
 import com.jhaiian.clint.ui.theme.AetherNetComposeTheme
@@ -225,7 +224,6 @@ private fun SettingsListPane(activity: SettingsActivity, onNavigate: (String) ->
                 onMiscClick = { onNavigate(DEST_MISC) },
                 onDebugClick = { onNavigate(DEST_DEBUG) },
                 onAboutClick = { onNavigate(DEST_ABOUT) },
-                onSupportUpstreamClick = { activity.startActivity(Intent(activity, SupportUpstreamActivity::class.java)) }
             )
         }
     }

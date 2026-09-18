@@ -37,7 +37,6 @@ fun MainSettingsScreen(
     onMiscClick: () -> Unit,
     onDebugClick: () -> Unit,
     onAboutClick: () -> Unit,
-    onSupportUpstreamClick: () -> Unit
 ) {
     val colors = LocalAetherNetColors.current
 
@@ -131,14 +130,6 @@ fun MainSettingsScreen(
                 summary = stringResource(R.string.debug_summary),
                 colors = colors,
                 onClick = onDebugClick
-            )
-            RowDivider(colors.divider)
-            SettingsRow(
-                icon = androidx.compose.material.icons.Icons.Filled.VolunteerActivism,
-                title = stringResource(R.string.support_upstream_title),
-                summary = stringResource(R.string.support_upstream_summary),
-                colors = colors,
-                onClick = onSupportUpstreamClick
             )
             RowDivider(colors.divider)
             SettingsRow(

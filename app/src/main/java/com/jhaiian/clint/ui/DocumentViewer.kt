@@ -18,15 +18,15 @@ object DocumentViewer {
     private val mainHandler = Handler(Looper.getMainLooper())
 
     const val PRIVACY_POLICY_URL =
-        "https://raw.githubusercontent.com/jhaiian/ClintBrowser/main/PRIVACY_POLICY.md"
+        "https://raw.githubusercontent.com/hussain-ali-9d/app-android-atherNet-browser/main/PRIVACY_POLICY.md"
     const val TERMS_URL =
-        "https://raw.githubusercontent.com/jhaiian/ClintBrowser/main/TERMS_OF_SERVICE.md"
+        "https://raw.githubusercontent.com/hussain-ali-9d/app-android-atherNet-browser/main/TERMS_OF_SERVICE.md"
     const val CHANGELOG_URL =
-        "https://raw.githubusercontent.com/jhaiian/ClintBrowser/main/CHANGELOG.md"
+        "https://raw.githubusercontent.com/hussain-ali-9d/app-android-atherNet-browser/main/CHANGELOG.md"
     const val ATTRIBUTION_URL =
-        "https://raw.githubusercontent.com/jhaiian/ClintBrowser/main/Attribution.md"
+        "https://raw.githubusercontent.com/hussain-ali-9d/app-android-atherNet-browser/main/Attribution.md"
     const val SUPPORTERS_URL =
-        "https://raw.githubusercontent.com/jhaiian/ClintBrowser/main/Supporters.md"
+        "https://raw.githubusercontent.com/hussain-ali-9d/app-android-atherNet-browser/main/Supporters.md"
 
     private fun Context.findActivity(): Activity? {
         var ctx = this

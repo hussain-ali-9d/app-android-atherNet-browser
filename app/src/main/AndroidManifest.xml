@@ -204,11 +204,6 @@
             android:configChanges="uiMode|screenSize|smallestScreenSize|screenLayout|orientation"
             android:parentActivityName=".settings.SettingsActivity" />
 
-        <activity
-            android:name=".settings.supportupstream.SupportUpstreamActivity"
-            android:exported="false"
-            android:configChanges="uiMode|screenSize|smallestScreenSize|screenLayout|orientation"
-            android:parentActivityName=".settings.SettingsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

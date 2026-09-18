@@ -23,8 +23,8 @@ android {
         applicationId = "com.aethernet.browser"
         minSdk = 26
         targetSdk = 37
-        versionCode = 29
-        versionName = "1.1.5"
+        versionCode = 1
+        versionName = "0.0.1"
 
         // Cruise VPN backend (shared with OneApp VPN). Play Integrity tokens are minted for this
         // Google Cloud project; the backend decodes them with the same project's credentials.
@@ -66,12 +66,17 @@ android {
                 signingConfig = signingConfigs["release"]
             }
             buildConfigField("String", "VPN_API_BASE_URL", "\"https://api.quadrupleapps.com\"")
+            buildConfigField("boolean", "VPN_SKIP_KEY_ATTESTATION", "false")
         }
         debug {
             // No suffix: the VPN backend's Play Integrity check expects this exact package.
             isDebuggable = true
             // Production host, as in OneApp's debug build; staging is https://api-stag.quadrupleapps.com
             buildConfigField("String", "VPN_API_BASE_URL", "\"https://cv-api-prod-de-01.quadrupleapps.com\"")
+            // TODO(vpn-attestation): set back to false once DevOps has onboarded
+            // com.aethernet.browser (package + signing-cert digest) on the VPN backend. Debug only:
+            // sends no key attestation, for while that gate is waived. Release always attests.
+            buildConfigField("boolean", "VPN_SKIP_KEY_ATTESTATION", "true")
         }
     }
 
