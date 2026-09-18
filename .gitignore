@@ -1,0 +1,25 @@
+*.iml
+.gradle/
+.idea/
+.DS_Store
+build/
+captures/
+.externalNativeBuild/
+.cxx/
+local.properties
+
+# Machine-specific Gradle daemon pin
+gradle/gradle-daemon-jvm.properties
+
+# Signing material and service credentials never belong in the repo
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+
+# Native build output (the committed libraries live in app/src/main/jniLibs)
+native/**/build-*/
+native/**/target/
+
+# Brand design exports (source material, not part of the app)
+new logo and animation stuff/

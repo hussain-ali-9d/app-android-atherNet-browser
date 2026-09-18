@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="splash_background">#F7F7F8</color>
+
+    <style name="Theme.AetherNet" parent="Theme.Material3.DayNight.NoActionBar" />
+    <style name="Theme.AetherNet.IncognitoWeb" parent="Theme.Material3.Dark.NoActionBar" />
+</resources>

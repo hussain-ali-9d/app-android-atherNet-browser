@@ -1,0 +1,160 @@
+package com.jhaiian.clint.settings.browser
+import androidx.compose.material.icons.automirrored.filled.ManageSearch
+import androidx.compose.material.icons.filled.Code
+import androidx.compose.material.icons.filled.DesktopWindows
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Shield
+import androidx.compose.material.icons.filled.VisibilityOff
+
+import androidx.compose.foundation.layout.padding
+import com.jhaiian.clint.ui.ClintSwitch
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
+import com.jhaiian.clint.R
+import com.jhaiian.clint.settings.common.SettingsRow
+import com.jhaiian.clint.settings.common.SettingsScreenScaffold
+import com.jhaiian.clint.settings.common.SettingsSection
+import com.jhaiian.clint.setup.SectionLabel
+import com.jhaiian.clint.ui.theme.LocalClintColors
+
+@Composable
+fun BrowserSettingsScreen(
+    state: BrowserSettingsUiState,
+    onSearchEngineConfirmed: (String) -> Unit,
+    onCustomSearchEngineSaved: (name: String, url: String) -> Unit,
+    onSearchSuggestionsApiConfirmed: (String) -> Unit,
+    onCustomSearchSuggestionsApiSaved: (name: String, url: String) -> Unit,
+    onJavascriptRowClicked: () -> Unit,
+    onFramelessShortcutRowClicked: () -> Unit,
+    onWebsiteBlockerRowClicked: () -> Unit,
+    onQuiverGuardRowClicked: () -> Unit,
+    onIncognitoSearchHistoryRowClicked: () -> Unit,
+    onUserScriptsRowClicked: () -> Unit
+) {
+    val colors = LocalClintColors.current
+
+    SettingsScreenScaffold(
+        overlay = {
+            if (state.searchEngineDialogOpen) {
+                SearchEngineDialog(
+                    current = state.searchEngine,
+                    customName = state.customSearchEngineName,
+                    customUrl = state.customSearchEngineUrl,
+                    hideStatusBar = state.hideStatusBar, hideSystemNavigation = state.hideSystemNavigation,
+                    onConfirm = onSearchEngineConfirmed,
+                    onCustomSearchEngineSaved = onCustomSearchEngineSaved,
+                    onDismiss = { state.searchEngineDialogOpen = false }
+                )
+            }
+            if (state.searchSuggestionsApiDialogOpen) {
+                SearchSuggestionsApiDialog(
+                    current = state.searchSuggestionsApi,
+                    customName = state.customSearchSuggestionsApiName,
+                    customUrl = state.customSearchSuggestionsApiUrl,
+                    hideStatusBar = state.hideStatusBar, hideSystemNavigation = state.hideSystemNavigation,
+                    onConfirm = onSearchSuggestionsApiConfirmed,
+                    onCustomSearchSuggestionsApiSaved = onCustomSearchSuggestionsApiSaved,
+                    onDismiss = { state.searchSuggestionsApiDialogOpen = false }
+                )
+            }
+        }
+    ) {
+        SectionLabel(stringResource(R.string.pref_category_search).uppercase(), colors.primary, Modifier.padding(start = 4.dp, bottom = 8.dp))
+        SettingsSection(colors.cardBackground) {
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.Filled.Search,
+                title = stringResource(R.string.search_engine),
+                summary = engineSummaryText(state.searchEngine, state.customSearchEngineName),
+                colors = colors,
+                onClick = { state.searchEngineDialogOpen = true }
+            )
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.AutoMirrored.Filled.ManageSearch,
+                title = stringResource(R.string.search_suggestions_api),
+                summary = engineSummaryText(state.searchSuggestionsApi, state.customSearchSuggestionsApiName),
+                colors = colors,
+                onClick = { state.searchSuggestionsApiDialogOpen = true }
+            )
+        }
+
+        SectionLabel(stringResource(R.string.browser_settings).uppercase(), colors.primary, Modifier.padding(start = 4.dp, bottom = 8.dp))
+        SettingsSection(colors.cardBackground) {
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.Filled.DesktopWindows,
+                title = stringResource(R.string.javascript_enabled),
+                summary = stringResource(R.string.javascript_enabled_summary),
+                colors = colors,
+                onClick = onJavascriptRowClicked,
+                trailing = {
+                    ClintSwitch(checked = state.javascriptEnabled)
+                }
+            )
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.Filled.Code,
+                title = stringResource(R.string.user_scripts_title),
+                summary = stringResource(R.string.user_scripts_settings_summary),
+                colors = colors,
+                onClick = onUserScriptsRowClicked
+            )
+        }
+
+        SectionLabel(stringResource(R.string.pref_category_shortcuts).uppercase(), colors.primary, Modifier.padding(start = 4.dp, bottom = 8.dp))
+        SettingsSection(colors.cardBackground) {
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.AutoMirrored.Filled.OpenInNew,
+                title = stringResource(R.string.frameless_shortcut_title),
+                summary = stringResource(R.string.frameless_shortcut_summary),
+                colors = colors,
+                onClick = onFramelessShortcutRowClicked,
+                trailing = {
+                    ClintSwitch(checked = state.framelessShortcut)
+                }
+            )
+        }
+
+        SectionLabel(stringResource(R.string.pref_category_protection).uppercase(), colors.primary, Modifier.padding(start = 4.dp, bottom = 8.dp))
+        SettingsSection(colors.cardBackground) {
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.Filled.Shield,
+                title = stringResource(R.string.website_blocker_title),
+                summary = stringResource(R.string.website_blocker_settings_summary),
+                colors = colors,
+                onClick = onWebsiteBlockerRowClicked
+            )
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.Filled.Security,
+                title = stringResource(R.string.quiver_guard),
+                summary = stringResource(R.string.quiver_guard_description),
+                colors = colors,
+                onClick = onQuiverGuardRowClicked
+            )
+        }
+
+        SectionLabel(stringResource(R.string.pref_category_incognito).uppercase(), colors.primary, Modifier.padding(start = 4.dp, bottom = 8.dp))
+        SettingsSection(colors.cardBackground) {
+            SettingsRow(
+                icon = androidx.compose.material.icons.Icons.Filled.VisibilityOff,
+                title = stringResource(R.string.incognito_search_history_title),
+                summary = stringResource(R.string.incognito_search_history_summary),
+                colors = colors,
+                onClick = onIncognitoSearchHistoryRowClicked,
+                trailing = {
+                    ClintSwitch(checked = state.incognitoSearchHistory)
+                }
+            )
+        }
+    }
+}
+
+@Composable
+private fun engineSummaryText(engine: String, customName: String): String = when (engine) {
+    "brave" -> stringResource(R.string.engine_brave)
+    "ecosia" -> stringResource(R.string.engine_ecosia)
+    "google" -> stringResource(R.string.engine_google)
+    "custom" -> customName.ifBlank { stringResource(R.string.engine_custom) }
+    else -> stringResource(R.string.engine_duckduckgo)
+}

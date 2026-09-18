@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generated from the AetherNet C4 v3 mark (200x200 design viewBox). -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <group android:translateX="1" android:translateY="1" android:scaleX="0.11" android:scaleY="0.11">
+        <path android:pathData="M6,100 A94,94 0 1,0 194,100 A94,94 0 1,0 6,100 Z M22,100 A78,78 0 1,0 178,100 A78,78 0 1,0 22,100 Z" android:fillColor="#FFFFFF" android:fillType="evenOdd" />
+        <group android:translateX="100" android:translateY="100" android:scaleX="1.2" android:scaleY="1.2">
+            <group android:translateX="-106" android:translateY="-101">
+                <path android:pathData="M100,64 C121,64 134,79 134,98 C134,117 120,133 100,138 C80,133 66,117 66,98 C66,79 79,64 100,64 Z M72,91 L128,86 L126,104 L74,107 Z M80,96 L96,100 L95,103 L81,102 Z M104,100 L120,95 L119,101 L105,103 Z" android:fillColor="#FFFFFF" android:fillType="evenOdd" />
+                <path android:pathData="M128,82 L186,56 L150,90 Z M129,93 L162,100 L145,103 Z" android:fillColor="#FFFFFF" />
+            </group>
+        </group>
+    </group>
+</vector>

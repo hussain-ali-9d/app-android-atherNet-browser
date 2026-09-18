@@ -1,0 +1,14 @@
+-keep class com.jhaiian.clint.** { *; }
+-keepattributes SourceFile,LineNumberTable
+-keep class android.webkit.** { *; }
+-dontwarn okhttp3.**
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+-keep class okhttp3.** { *; }
+-keep class okio.** { *; }
+-keep public class com.caverock.androidsvg.** { *; }
+-keep class com.google.flatbuffers.** { *; }
+-dontwarn com.google.flatbuffers.**
+-dontwarn pl.droidsonroids.gif.**
+-keep class com.wireguard.android.backend.** { *; }
+-keep class com.wireguard.crypto.** { *; }
